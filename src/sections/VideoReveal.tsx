@@ -102,14 +102,16 @@ export function VideoReveal() {
             <video
               ref={videoRef}
               className="video-frame__video"
-              src={ASSETS.introVideo}
               poster={ASSETS.introPoster}
               playsInline
               controls={isPlaying}
               onError={() => setVideoAvailable(false)}
               onPlay={() => setIsPlaying(true)}
               onPause={() => setIsPlaying(false)}
-            />
+            >
+              <source src={ASSETS.introVideoWebm} type="video/webm" />
+              <source src={ASSETS.introVideo} type="video/mp4" />
+            </video>
           ) : (
             <div className="video-frame__placeholder">
               <span className="video-frame__placeholder-text">Vidéo de présentation UPFLOW</span>

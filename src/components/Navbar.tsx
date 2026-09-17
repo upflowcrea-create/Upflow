@@ -51,7 +51,7 @@ export function Navbar({ onBookCall }: { onBookCall: () => void }) {
               handleNav("#top");
             }}
           >
-            <Logo height={26} />
+            <Logo height={38} />
           </a>
 
           <nav className="navbar__links">

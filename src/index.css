@@ -68,7 +68,8 @@ h1, h2, h3, h4 {
   font-family: var(--font-display);
   font-weight: 800;
   letter-spacing: -0.02em;
-  line-height: 0.98;
+  line-height: 1.08;
+  text-wrap: balance;
 }
 
 p {
@@ -103,11 +104,17 @@ ul {
 
 .gradient-text {
   background: var(--gradient-text);
-  background-size: 200% 200%;
+  background-size: 250% 250%;
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
   color: transparent;
+  animation: gradientTextShift 7s ease-in-out infinite;
+}
+
+@keyframes gradientTextShift {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
 }
 
 .container {
@@ -294,7 +301,9 @@ ul {
   display: inline-block;
   overflow: hidden;
   vertical-align: top;
-  padding-bottom: 0.05em;
+  padding-top: 0.14em;
+  padding-bottom: 0.22em;
+  margin-top: -0.14em;
 }
 
 .hero-word {
@@ -515,11 +524,31 @@ ul {
 /* ---------------------------------------------------------------------- */
 
 .humor {
+  position: relative;
   background: var(--bg-panel);
   text-align: center;
+  overflow: hidden;
+}
+
+.humor::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 60vw;
+  height: 60vw;
+  max-width: 700px;
+  max-height: 700px;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(circle, rgba(178, 38, 255, 0.35) 0%, transparent 70%);
+  filter: blur(50px);
+  animation: humorGlowPulse 5s ease-in-out infinite;
+  pointer-events: none;
 }
 
 .humor__inner {
+  position: relative;
+  z-index: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -544,6 +573,11 @@ ul {
 .humor__video-word {
   display: inline-block;
   will-change: transform, filter;
+}
+
+@keyframes humorGlowPulse {
+  0%, 100% { opacity: 0.5; transform: translate(-50%, -50%) scale(1); }
+  50% { opacity: 0.85; transform: translate(-50%, -50%) scale(1.15); }
 }
 
 .humor__cta {
@@ -657,9 +691,11 @@ ul {
 
 .pricing-card--highlight {
   background: var(--gradient-main);
+  background-size: 220% 220%;
   border-color: transparent;
   transform: translateY(-10px);
   box-shadow: 0 30px 70px -20px rgba(178, 38, 255, 0.5);
+  animation: gradientTextShift 6s ease-in-out infinite;
 }
 
 .pricing-card__name {
@@ -1010,11 +1046,17 @@ ul {
   background: var(--gradient-soft);
   filter: blur(80px);
   opacity: 0.6;
+  animation: serviceBlobDrift 10s ease-in-out infinite;
   pointer-events: none;
 }
 
 .service-card--alt::before {
   inset: auto auto -40% -40%;
+}
+
+@keyframes serviceBlobDrift {
+  0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.55; }
+  50% { transform: translate(-6%, 6%) scale(1.15); opacity: 0.8; }
 }
 
 .service-card__index {
@@ -1510,7 +1552,9 @@ ul {
   display: inline-block;
   overflow: hidden;
   vertical-align: top;
-  padding-bottom: 0.08em;
+  padding-top: 0.14em;
+  padding-bottom: 0.22em;
+  margin-top: -0.14em;
 }
 
 .reveal-word {

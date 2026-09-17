@@ -31,6 +31,7 @@ export const CALENDLY_URL = "https://calendly.com/upflow/appel-decouverte";
 export const ASSETS = {
   logo: "/assets/logo/upflow-logo.png",
   introVideo: "/assets/video/upflow-intro.mp4",
+  introVideoWebm: "/assets/video/upflow-intro.webm",
   introPoster: "/assets/video/upflow-intro-poster.jpg",
 };
 
