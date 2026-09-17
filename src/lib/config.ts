@@ -21,8 +21,24 @@ export const WHATSAPP_URL = `https://wa.me/${CONTACT.whatsappNumber.replace(/\D/
   CONTACT.whatsappMessage,
 )}`;
 
-// Remplace par ton lien Calendly perso quand tu l'as.
-export const CALENDLY_URL = "https://calendly.com/upflow/appel-decouverte";
+// ---------------------------------------------------------------------------
+// Lien de réservation (bouton "Book a call" / "Parler du projet").
+//
+// Pour un lien connecté DIRECTEMENT à ton Google Calendar (upflow.crea@gmail.com),
+// sans passer par Calendly :
+//   1. Va sur calendar.google.com, connecté avec le compte upflow.crea@gmail.com.
+//   2. Clique "Créer" → "Calendrier de rendez-vous" (Appointment schedule).
+//   3. Configure tes créneaux disponibles, puis clique "Enregistrer et publier".
+//   4. Copie le lien de réservation public qui s'affiche
+//      (il ressemble à https://calendar.google.com/calendar/appointments/schedules/XXXXXXX)
+//      et colle-le ci-dessous, à la place du lien d'exemple.
+// Les rendez-vous pris via ce lien apparaissent automatiquement dans ton Google Calendar.
+//
+// (Alternative : garder Calendly et connecter ton Google Calendar dans
+// Calendly > Availability > Connected Calendars — dans ce cas, mets ton lien
+// Calendly ici à la place.)
+// ---------------------------------------------------------------------------
+export const BOOKING_URL = "https://calendar.google.com/calendar/appointments/schedules/REPLACE_ME";
 
 // ---------------------------------------------------------------------------
 // Assets — voir ASSETS.md à la racine du projet pour les instructions.

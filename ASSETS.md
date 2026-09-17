@@ -1,30 +1,39 @@
-# Assets à fournir
+# Assets & configuration
 
-Le site est déjà câblé pour utiliser tes fichiers réels. Tant qu'ils ne sont pas là,
-des remplacements élégants (wordmark animé, panneau dégradé) s'affichent à leur place —
-dès que tu déposes les fichiers aux emplacements ci-dessous, ils apparaissent automatiquement,
-sans toucher au code.
+## 1. Logo UPFLOW ✅ déjà en place
 
-## 1. Logo UPFLOW
+Emplacement : `public/assets/logo/upflow-logo.png` — ton logo blanc est déjà dedans.
+Pour le remplacer plus tard, dépose simplement un nouveau PNG (fond transparent
+de préférence) au même endroit, rien d'autre à toucher.
 
-Emplacement : `public/assets/logo/upflow-logo.png`
+## 2. Vidéo de présentation ✅ déjà en place
 
-- PNG avec fond transparent de préférence
-- Hauteur conseillée : au moins 400px (il est redimensionné en CSS)
-- Format horizontal (wordmark) ou carré (icône) — les deux fonctionnent, le composant
-  `src/components/Logo.tsx` s'adapte via `object-fit: contain`
+Emplacements : `public/assets/video/upflow-intro.mp4` (H.264, compatible partout),
+`upflow-intro.webm` (VP9, plus léger) et `upflow-intro-poster.jpg`.
+Elle se lance automatiquement (en muet) dès qu'on arrive sur sa section.
+Pour la remplacer, dépose un nouveau fichier et retranscode-le en H.264 :
+```
+ffmpeg -i ta-video.mov -vf "scale=1920:-2" -c:v libx264 -crf 22 -c:a aac -movflags +faststart public/assets/video/upflow-intro.mp4
+```
 
-## 2. Vidéo de présentation
+## 3. Calendrier de réservation ⚠️ à configurer
 
-Emplacement : `public/assets/video/upflow-intro.mp4`
+Variable : `BOOKING_URL` dans `src/lib/config.ts`.
 
-- Format H.264 / mp4, idéalement 1080p ou plus
-- Ratio 16:9 conseillé (le composant s'adapte aussi au 9:16 / vertical)
-- Poids conseillé : compresse si possible sous 15-20 Mo pour de bonnes perfs web
-- Un poster (image de la première frame) peut être ajouté en
-  `public/assets/video/upflow-intro-poster.jpg` (optionnel, sinon générée automatiquement au chargement)
+Pour un lien connecté **directement à ton Google Calendar** (upflow.crea@gmail.com),
+sans passer par un service tiers :
+1. Va sur [calendar.google.com](https://calendar.google.com), connecté avec `upflow.crea@gmail.com`.
+2. Clique **Créer** → **Calendrier de rendez-vous** (Appointment schedule).
+3. Configure tes créneaux disponibles, puis **Enregistrer et publier**.
+4. Copie le lien de réservation public affiché
+   (`https://calendar.google.com/calendar/appointments/schedules/...`)
+   et colle-le à la place de `BOOKING_URL` dans `src/lib/config.ts`.
 
-## 3. (Optionnel) Vidéos du portfolio
+Les rendez-vous pris via ce lien apparaissent automatiquement dans ton Google Calendar.
+(Alternative : garder Calendly et connecter ton Google Calendar dans
+Calendly > Availability > Connected Calendars, puis mettre ton lien Calendly ici à la place.)
+
+## 4. (Optionnel) Vidéos du portfolio
 
 Emplacement : `public/assets/portfolio/*.mp4`
 

@@ -48,16 +48,10 @@ export function Hero({ onBookCall, ready }: { onBookCall: () => void; ready: boo
           "-=0.3",
         )
         .fromTo(
-          ".hero__subtitle",
-          { autoAlpha: 0, y: 14 },
-          { autoAlpha: 1, y: 0, duration: 0.8, ease: "power3.out" },
-          "-=0.5",
-        )
-        .fromTo(
           ".hero__ctas > *",
           { autoAlpha: 0, y: 14 },
           { autoAlpha: 1, y: 0, duration: 0.7, stagger: 0.1, ease: "power3.out" },
-          "-=0.4",
+          "-=0.5",
         )
         .fromTo(".hero__scrollcue", { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.6 }, "-=0.2");
     }, el);
@@ -116,14 +110,6 @@ export function Hero({ onBookCall, ready }: { onBookCall: () => void; ready: boo
           <span className="hero__title-line">{renderLine("MAKE YOUR")}</span>
           <span className="hero__title-line">{renderLine("BUSINESS MOVE.", true)}</span>
         </h1>
-
-        <p className="hero__subtitle">
-          Des vidéos qui expliquent.
-          <br />
-          Des vidéos qui attirent.
-          <br />
-          Des vidéos qui font bouger les choses.
-        </p>
 
         <div className="hero__ctas">
           <button ref={workBtn} className="btn btn-primary" onClick={() => scrollTo("#video")}>
