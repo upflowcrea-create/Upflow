@@ -52,9 +52,12 @@ export default function Offers() {
       ref={sectionRef}
       className="relative bg-white px-6 py-28 text-black sm:px-10 sm:py-40"
     >
+      <p className="mb-4 font-display text-xs font-medium uppercase tracking-[0.5em] text-black/40">
+        Vous avez une offre.
+      </p>
       <RevealText
         as="h2"
-        lines={['Nos offres.']}
+        lines={['Nous, on a une idée.']}
         className="mb-16 font-display text-[clamp(2rem,5vw,4rem)] font-extrabold leading-none text-black sm:mb-24"
       />
 

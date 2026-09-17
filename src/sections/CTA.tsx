@@ -12,7 +12,7 @@ export default function CTA() {
       <AuroraGlow className="inset-0 opacity-60" variant="mixed" />
 
       <p className="font-display text-xs font-medium uppercase tracking-[0.5em] text-black/50">
-        Un projet en tête ?
+        Si vous êtes arrivé jusque-là, c&apos;est que ça marche.
       </p>
 
       <RevealText

@@ -79,14 +79,14 @@ export default function Hero() {
 
       <div ref={contentRef} className="flex flex-1 flex-col justify-center">
         <p className="mb-6 font-display text-xs font-medium uppercase tracking-[0.5em] text-black/50 sm:mb-8">
-          Upflow — Motion &amp; Video Studio
+          Upflow — Studio motion &amp; vidéo
         </p>
 
         <RevealText
           as="h1"
           mode="line"
-          lines={['Make it move.', 'Make it clear.', 'Make it convert.']}
-          className="font-display text-[clamp(2.6rem,9vw,7.5rem)] font-extrabold leading-[0.95] text-black"
+          lines={["Votre client n'a", 'pas 20 minutes.', 'Il a 3 secondes.', 'Bon courage.']}
+          className="font-display text-[clamp(2.2rem,7.4vw,6.2rem)] font-extrabold leading-[0.98] text-black"
           start="top 95%"
           stagger={0.14}
         />
@@ -96,10 +96,10 @@ export default function Hero() {
             className="bg-black px-7 py-3.5 text-sm font-medium uppercase tracking-[0.2em] text-white"
             onClick={() => document.querySelector('#contact')?.scrollIntoView({ behavior: 'smooth' })}
           >
-            Démarrer un projet
+            Lancer un projet
           </MagneticButton>
-          <p className="max-w-[22ch] font-body text-sm font-light leading-relaxed text-black/55">
-            Vidéo &amp; motion design pour apps, SaaS, marques et événements sportifs.
+          <p className="max-w-[24ch] font-body text-sm font-light leading-relaxed text-black/55">
+            On transforme vos idées compliquées en vidéos qu&apos;on comprend du premier coup.
           </p>
         </div>
       </div>
@@ -120,7 +120,7 @@ export default function Hero() {
         </div>
 
         <div className="flex items-center justify-between text-black/40">
-          <span className="font-body text-[0.7rem] uppercase tracking-[0.3em]">Scroll to explore</span>
+          <span className="font-body text-[0.7rem] uppercase tracking-[0.3em]">Défiler pour découvrir</span>
           <span className="relative h-16 w-px overflow-hidden bg-black/15">
             <span className="scroll-line absolute inset-x-0 top-0 h-1/2 bg-violet" />
           </span>

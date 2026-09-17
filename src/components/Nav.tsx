@@ -6,19 +6,21 @@ import { useSound } from '../lib/sound'
 import { useSectionTheme } from '../lib/useSectionTheme'
 import Logo from './Logo'
 import MagneticButton from './MagneticButton'
+import MobileMenu from './MobileMenu'
 
 const LINKS = [
-  { label: 'Studio', href: '#manifesto' },
-  { label: 'Work', href: '#work' },
-  { label: 'Offres', href: '#offers' },
+  { label: 'Projets', href: '#work' },
+  { label: 'Services', href: '#offers' },
+  { label: 'Contact', href: '#contact' },
 ]
 
 export default function Nav() {
   const navRef = useRef<HTMLElement>(null)
   const [hidden, setHidden] = useState(false)
+  const [menuOpen, setMenuOpen] = useState(false)
   const { enabled, toggle, play } = useSound()
   const theme = useSectionTheme()
-  const isDark = theme === 'dark'
+  const isDark = theme === 'dark' && !menuOpen
 
   useEffect(() => {
     let lastY = window.scrollY
@@ -51,6 +53,7 @@ export default function Nav() {
   }, [hidden])
 
   const scrollTo = (href: string) => {
+    setMenuOpen(false)
     const el = document.querySelector(href)
     if (!el) return
     play('click')
@@ -63,73 +66,99 @@ export default function Nav() {
   const borderColor = isDark ? 'border-white' : 'border-black'
 
   return (
-    <nav
-      ref={navRef}
-      className="fixed inset-x-0 top-0 z-50 flex flex-nowrap items-center justify-between gap-3 px-4 py-4 transition-colors duration-500 sm:px-10 sm:py-5"
-    >
-      <a
-        href="#top"
-        data-cursor="hover"
-        className="flex shrink-0 items-center gap-2 sm:gap-3"
-        onMouseEnter={() => play('hover')}
-        onClick={(e) => {
-          e.preventDefault()
-          scrollTo('#top')
-        }}
+    <>
+      <nav
+        ref={navRef}
+        className="fixed inset-x-0 top-0 z-50 flex flex-nowrap items-center justify-between gap-3 px-4 py-4 transition-colors duration-500 sm:px-10 sm:py-5"
       >
-        <Logo className="h-7 w-7 sm:h-8 sm:w-8" />
-        <span
-          className={clsx(
-            'hidden font-display text-sm font-bold uppercase tracking-[0.3em] transition-colors duration-500 sm:inline',
-            textColor,
-          )}
+        <a
+          href="#top"
+          data-cursor="hover"
+          className="flex shrink-0 items-center gap-2 sm:gap-3"
+          onMouseEnter={() => play('hover')}
+          onClick={(e) => {
+            e.preventDefault()
+            scrollTo('#top')
+          }}
         >
-          Upflow
-        </span>
-      </a>
-
-      <div className="hidden items-center gap-10 md:flex">
-        {LINKS.map((link) => (
-          <button
-            key={link.href}
-            data-cursor="hover"
-            onMouseEnter={() => play('hover')}
-            onClick={() => scrollTo(link.href)}
+          <Logo className="h-7 w-7 sm:h-8 sm:w-8" />
+          <span
             className={clsx(
-              'font-body text-sm font-medium uppercase tracking-[0.15em] transition-all duration-300 hover:-translate-y-0.5',
+              'hidden font-display text-sm font-bold uppercase tracking-[0.3em] transition-colors duration-500 sm:inline',
               textColor,
             )}
           >
-            {link.label}
+            Upflow
+          </span>
+        </a>
+
+        <div className="hidden items-center gap-10 md:flex">
+          {LINKS.map((link) => (
+            <button
+              key={link.href}
+              data-cursor="hover"
+              onMouseEnter={() => play('hover')}
+              onClick={() => scrollTo(link.href)}
+              className={clsx(
+                'font-body text-sm font-medium uppercase tracking-[0.15em] transition-all duration-300 hover:-translate-y-0.5',
+                textColor,
+              )}
+            >
+              {link.label}
+            </button>
+          ))}
+        </div>
+
+        <div className="flex shrink-0 items-center gap-2 sm:gap-4">
+          <button
+            type="button"
+            data-cursor="hover"
+            onClick={toggle}
+            className={clsx(
+              'hidden whitespace-nowrap font-body text-[0.7rem] font-medium uppercase tracking-[0.2em] transition-all duration-300 hover:-translate-y-0.5 md:inline-block',
+              textColor,
+            )}
+          >
+            Son&nbsp;: {enabled ? 'ON' : 'OFF'}
           </button>
-        ))}
-      </div>
 
-      <div className="flex shrink-0 items-center gap-2 sm:gap-4">
-        <button
-          type="button"
-          data-cursor="hover"
-          onClick={toggle}
-          className={clsx(
-            'whitespace-nowrap font-body text-[0.6rem] font-medium uppercase tracking-[0.15em] transition-all duration-300 hover:-translate-y-0.5 sm:text-[0.7rem] sm:tracking-[0.2em]',
-            textColor,
-          )}
-        >
-          <span className="hidden sm:inline">Son&nbsp;: </span>
-          {enabled ? 'ON' : 'OFF'}
-        </button>
+          <div className="hidden md:block">
+            <MagneticButton
+              className={clsx(
+                'whitespace-nowrap border px-5 py-2.5 text-xs font-medium uppercase tracking-[0.2em] transition-colors duration-500',
+                textColor,
+                borderColor,
+              )}
+              onClick={() => scrollTo('#contact')}
+            >
+              Lancer un projet
+            </MagneticButton>
+          </div>
 
-        <MagneticButton
-          className={clsx(
-            'whitespace-nowrap border px-3 py-2 text-[0.65rem] font-medium uppercase tracking-[0.15em] transition-colors duration-500 sm:px-5 sm:py-2.5 sm:text-xs sm:tracking-[0.2em]',
-            textColor,
-            borderColor,
-          )}
-          onClick={() => scrollTo('#contact')}
-        >
-          Let&apos;s talk
-        </MagneticButton>
-      </div>
-    </nav>
+          <button
+            type="button"
+            data-cursor="hover"
+            aria-label={menuOpen ? 'Fermer le menu' : 'Ouvrir le menu'}
+            onClick={() => setMenuOpen((v) => !v)}
+            className="relative flex h-9 w-9 shrink-0 flex-col items-center justify-center gap-[5px] md:hidden"
+          >
+            <span
+              className={clsx(
+                'h-px w-5 transition-all duration-300',
+                menuOpen ? 'translate-y-[3px] rotate-45 bg-white' : `${isDark ? 'bg-white' : 'bg-black'}`,
+              )}
+            />
+            <span
+              className={clsx(
+                'h-px w-5 transition-all duration-300',
+                menuOpen ? '-translate-y-[3px] -rotate-45 bg-white' : `${isDark ? 'bg-white' : 'bg-black'}`,
+              )}
+            />
+          </button>
+        </div>
+      </nav>
+
+      <MobileMenu open={menuOpen} onClose={() => setMenuOpen(false)} links={LINKS} onNavigate={scrollTo} />
+    </>
   )
 }

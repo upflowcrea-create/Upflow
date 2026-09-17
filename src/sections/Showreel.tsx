@@ -1,4 +1,4 @@
-import { useLayoutEffect, useRef } from 'react'
+import { useEffect, useLayoutEffect, useRef } from 'react'
 import { gsap } from '../lib/gsap'
 import { useSound } from '../lib/sound'
 
@@ -38,6 +38,22 @@ export default function Showreel() {
     return () => ctx.revert()
   }, [])
 
+  useEffect(() => {
+    const video = videoRef.current
+    const section = sectionRef.current
+    if (!video || !section) return
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) video.play().catch(() => {})
+        else video.pause()
+      },
+      { threshold: 0.15 },
+    )
+    observer.observe(section)
+    return () => observer.disconnect()
+  }, [])
+
   return (
     <section data-theme="dark" ref={sectionRef} className="relative h-screen overflow-hidden bg-black">
       <div ref={frameRef} className="absolute inset-0">
@@ -47,7 +63,6 @@ export default function Showreel() {
             className="h-full w-full object-cover"
             src="/videos/showreel.mp4"
             poster="/videos/showreel-poster.jpg"
-            autoPlay
             muted={!enabled}
             loop
             playsInline
@@ -71,10 +86,10 @@ export default function Showreel() {
         className="pointer-events-none absolute inset-0 z-10 flex flex-col items-center justify-center gap-4 px-6 text-center"
       >
         <p className="font-display text-xs font-medium uppercase tracking-[0.5em] text-white/60">
-          Notre présentation
+          Assez parlé.
         </p>
         <h2 className="max-w-3xl font-display text-[clamp(2rem,6vw,4.5rem)] font-semibold leading-[1.02] text-white">
-          Une histoire se raconte en mouvement.
+          Regardez plutôt.
         </h2>
       </div>
     </section>

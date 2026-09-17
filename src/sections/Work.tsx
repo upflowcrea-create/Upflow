@@ -1,8 +1,17 @@
 import { useLayoutEffect, useRef } from 'react'
 import { gsap } from '../lib/gsap'
 import GenerativeReel from '../components/GenerativeReel'
+import ResponsiveMedia, { type ProjectMedia } from '../components/ResponsiveMedia'
 
-const PROJECTS = [
+interface Project {
+  title: string
+  category: string
+  /** Undefined until the client drops in real footage — falls back to the
+   * generative placeholder. Set `media.mobile` for a dedicated vertical cut. */
+  media?: ProjectMedia
+}
+
+const PROJECTS: Project[] = [
   { title: 'Nova', category: 'Motion Design / 3D' },
   { title: 'Kaon', category: 'Film de marque / Motion' },
   { title: 'Circuit', category: 'Sport / Aftermovie' },
@@ -38,10 +47,11 @@ export default function Work() {
 
   return (
     <section id="work" data-theme="dark" ref={sectionRef} className="relative bg-black py-28 sm:py-40">
-      <div className="mb-20 px-6 sm:px-10">
-        <p className="font-display text-xs font-medium uppercase tracking-[0.5em] text-white/50">
-          Selected work
-        </p>
+      <div className="mb-20 flex flex-col gap-4 px-6 sm:px-10">
+        <p className="font-display text-xs font-medium uppercase tracking-[0.5em] text-white/50">Projets</p>
+        <h2 className="max-w-2xl font-display text-[clamp(1.8rem,4.4vw,3rem)] font-extrabold leading-tight text-white">
+          Moins de texte. Plus de mouvement.
+        </h2>
       </div>
 
       <div className="flex flex-col gap-28 sm:gap-40">
@@ -58,9 +68,13 @@ export default function Work() {
             <div
               data-work-frame
               data-cursor="hover"
-              className="relative aspect-video w-full overflow-hidden rounded-2xl"
+              className="relative aspect-[4/5] w-full overflow-hidden rounded-2xl sm:aspect-video"
             >
-              <GenerativeReel className="h-full w-full" />
+              {project.media ? (
+                <ResponsiveMedia media={project.media} className="h-full w-full" />
+              ) : (
+                <GenerativeReel className="h-full w-full" />
+              )}
             </div>
 
             <div className="flex flex-wrap items-baseline justify-between gap-4">

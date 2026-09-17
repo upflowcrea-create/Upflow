@@ -2,7 +2,7 @@ import { useLayoutEffect, useRef } from 'react'
 import { gsap } from '../lib/gsap'
 
 const TEXT =
-  "UPFLOW est un studio de motion et vidéo. Nous transformons des idées complexes en récits visuels clairs, pensés pour capter l'attention, expliquer l'essentiel et convertir dès la première seconde."
+  "Votre entreprise est géniale. Dommage qu'on ne comprenne rien. Alors on fait des vidéos. Pas des romans. Parce que personne ne lit les pavés — et que votre offre mérite mieux qu'un mur de texte."
 
 export default function Manifesto() {
   const sectionRef = useRef<HTMLElement>(null)
