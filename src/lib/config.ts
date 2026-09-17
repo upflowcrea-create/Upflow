@@ -38,7 +38,7 @@ export const WHATSAPP_URL = `https://wa.me/${CONTACT.whatsappNumber.replace(/\D/
 // Calendly > Availability > Connected Calendars — dans ce cas, mets ton lien
 // Calendly ici à la place.)
 // ---------------------------------------------------------------------------
-export const BOOKING_URL = "https://calendar.google.com/calendar/appointments/schedules/REPLACE_ME";
+export const BOOKING_URL = "https://calendar.app.google/whHQqGqFS54Uxccr5";
 
 // ---------------------------------------------------------------------------
 // Assets — voir ASSETS.md à la racine du projet pour les instructions.
