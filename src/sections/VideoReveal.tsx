@@ -21,28 +21,16 @@ export function VideoReveal() {
     const text = textRef.current;
     if (!section || !frame || !text) return;
 
+    const end = isMobile ? { w: "94vw", h: "80vh", radius: 16 } : { w: "96vw", h: "92vh", radius: 14 };
+    const start = isMobile ? { w: "82vw", h: "36vh", radius: 24 } : { w: "52vw", h: "42vh", radius: 32 };
+
     const ctx = gsap.context(() => {
       if (reducedMotion) {
-        gsap.set(frame, { width: "94vw", height: "82vh", borderRadius: 18 });
+        gsap.set(frame, { width: end.w, height: end.h, borderRadius: end.radius });
         return;
       }
 
-      if (isMobile) {
-        gsap.fromTo(
-          frame,
-          { width: "88vw", height: "38vh", borderRadius: 24 },
-          {
-            width: "94vw",
-            height: "56vh",
-            borderRadius: 16,
-            ease: "power2.out",
-            scrollTrigger: { trigger: section, start: "top 70%", end: "top 20%", scrub: 0.6 },
-          },
-        );
-        return;
-      }
-
-      gsap.set(frame, { width: "52vw", height: "42vh", borderRadius: 32 });
+      gsap.set(frame, { width: start.w, height: start.h, borderRadius: start.radius });
 
       const tl = gsap.timeline({
         scrollTrigger: {
@@ -58,9 +46,9 @@ export function VideoReveal() {
       tl.to(text, { autoAlpha: 0, yPercent: -30, duration: 0.35, ease: "power1.out" }, 0).to(
         frame,
         {
-          width: "96vw",
-          height: "92vh",
-          borderRadius: 14,
+          width: end.w,
+          height: end.h,
+          borderRadius: end.radius,
           duration: 1,
           ease: "power2.inOut",
         },

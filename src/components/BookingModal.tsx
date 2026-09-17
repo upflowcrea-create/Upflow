@@ -1,17 +1,20 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { X, CalendarCheck, Loader2 } from "lucide-react";
 import { WEB3FORMS_ACCESS_KEY, WHATSAPP_URL } from "../lib/config";
 import { useScrollLock } from "../hooks/useScrollLock";
+import { BookingCalendar } from "./BookingCalendar";
 
 type Status = "idle" | "submitting" | "success" | "error";
 
-function todayISO() {
-  return new Date().toISOString().split("T")[0];
-}
+const DATE_LABEL = new Intl.DateTimeFormat("fr-FR", { weekday: "long", day: "numeric", month: "long" });
 
 export function BookingModal({ open, onClose }: { open: boolean; onClose: () => void }) {
   const [status, setStatus] = useState<Status>("idle");
-  const formRef = useRef<HTMLFormElement | null>(null);
+  const [selectedDate, setSelectedDate] = useState<Date | null>(null);
+  const [selectedTime, setSelectedTime] = useState<string | null>(null);
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [message, setMessage] = useState("");
 
   useScrollLock(open);
 
@@ -22,32 +25,43 @@ export function BookingModal({ open, onClose }: { open: boolean; onClose: () => 
     return () => window.removeEventListener("keydown", onKey);
   }, [open, onClose]);
 
-  // Reset the form each time the modal is reopened.
   useEffect(() => {
-    if (open) setStatus("idle");
+    if (!open) return;
+    setStatus("idle");
+    setSelectedDate(null);
+    setSelectedTime(null);
+    setName("");
+    setEmail("");
+    setMessage("");
   }, [open]);
 
   if (!open) return null;
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const canSubmit = Boolean(selectedDate && selectedTime && name.trim() && email.trim());
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const form = e.currentTarget;
-    const data = new FormData(form);
+    if (!canSubmit || !selectedDate || !selectedTime) return;
 
     setStatus("submitting");
     try {
       const res = await fetch("https://api.web3forms.com/submit", {
         method: "POST",
-        headers: { Accept: "application/json" },
-        body: data,
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify({
+          access_key: WEB3FORMS_ACCESS_KEY,
+          subject: "Nouvelle demande de rendez-vous — UPFLOW",
+          from_name: "Site UPFLOW",
+          name,
+          email,
+          date: DATE_LABEL.format(selectedDate),
+          heure: selectedTime,
+          message,
+        }),
       });
       const json = await res.json();
-      if (json.success) {
-        setStatus("success");
-        form.reset();
-      } else {
-        setStatus("error");
-      }
+      if (json.success) setStatus("success");
+      else setStatus("error");
     } catch {
       setStatus("error");
     }
@@ -64,60 +78,71 @@ export function BookingModal({ open, onClose }: { open: boolean; onClose: () => 
           <div className="booking-success">
             <CalendarCheck size={40} />
             <h3>C'est noté !</h3>
-            <p>
-              Votre demande est bien partie. On vous recontacte très vite pour confirmer le créneau.
-            </p>
+            <p>Votre demande est bien partie. On vous recontacte très vite pour confirmer le créneau.</p>
             <button className="btn btn-primary" onClick={onClose}>
               Fermer
             </button>
           </div>
         ) : (
-          <form ref={formRef} className="booking-form" onSubmit={handleSubmit}>
+          <form className="booking-form" onSubmit={handleSubmit}>
             <p className="eyebrow">Book a call</p>
             <h3 className="booking-form__title">Choisissez un créneau</h3>
 
-            <input type="hidden" name="access_key" value={WEB3FORMS_ACCESS_KEY} />
-            <input type="hidden" name="subject" value="Nouvelle demande de rendez-vous — UPFLOW" />
-            <input type="hidden" name="from_name" value="Site UPFLOW" />
+            <BookingCalendar
+              selectedDate={selectedDate}
+              selectedTime={selectedTime}
+              onSelectDate={(d) => {
+                setSelectedDate(d);
+                setSelectedTime(null);
+              }}
+              onSelectTime={setSelectedTime}
+            />
 
-            <div className="booking-form__row">
-              <label>
-                Date
-                <input type="date" name="date" min={todayISO()} required />
-              </label>
-              <label>
-                Heure
-                <input type="time" name="heure" min="09:00" max="19:00" required />
-              </label>
-            </div>
+            {selectedDate && selectedTime && (
+              <div className="booking-form__contact">
+                <label>
+                  Nom
+                  <input
+                    type="text"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    placeholder="Votre nom"
+                    required
+                  />
+                </label>
+                <label>
+                  Email
+                  <input
+                    type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder="vous@exemple.com"
+                    required
+                  />
+                </label>
+                <label>
+                  Votre projet (optionnel)
+                  <textarea
+                    value={message}
+                    onChange={(e) => setMessage(e.target.value)}
+                    rows={2}
+                    placeholder="Quelques mots sur ce que vous voulez faire..."
+                  />
+                </label>
+              </div>
+            )}
 
-            <label>
-              Nom
-              <input type="text" name="name" placeholder="Votre nom" required />
-            </label>
-
-            <label>
-              Email
-              <input type="email" name="email" placeholder="vous@exemple.com" required />
-            </label>
-
-            <label>
-              Téléphone (optionnel)
-              <input type="tel" name="telephone" placeholder="06 12 34 56 78" />
-            </label>
-
-            <label>
-              Votre projet
-              <textarea name="message" rows={3} placeholder="Quelques mots sur ce que vous voulez faire..." />
-            </label>
-
-            <button type="submit" className="btn btn-primary booking-form__submit" disabled={status === "submitting"}>
+            <button
+              type="submit"
+              className="btn btn-primary booking-form__submit"
+              disabled={!canSubmit || status === "submitting"}
+            >
               {status === "submitting" ? (
                 <>
                   <Loader2 size={16} className="booking-form__spinner" /> Envoi...
                 </>
               ) : (
-                "Envoyer la demande →"
+                "Confirmer le rendez-vous →"
               )}
             </button>
 
