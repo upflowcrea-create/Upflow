@@ -1,5 +1,6 @@
-import { useLayoutEffect, useRef, useState } from 'react'
+import { useLayoutEffect, useRef } from 'react'
 import { gsap } from '../lib/gsap'
+import { useSound } from '../lib/sound'
 
 export default function Showreel() {
   const sectionRef = useRef<HTMLElement>(null)
@@ -7,7 +8,7 @@ export default function Showreel() {
   const reelRef = useRef<HTMLDivElement>(null)
   const labelRef = useRef<HTMLDivElement>(null)
   const videoRef = useRef<HTMLVideoElement>(null)
-  const [muted, setMuted] = useState(true)
+  const { enabled, toggle } = useSound()
 
   useLayoutEffect(() => {
     const ctx = gsap.context(() => {
@@ -37,15 +38,8 @@ export default function Showreel() {
     return () => ctx.revert()
   }, [])
 
-  const toggleSound = () => {
-    const video = videoRef.current
-    if (!video) return
-    video.muted = !video.muted
-    setMuted(video.muted)
-  }
-
   return (
-    <section ref={sectionRef} className="relative h-screen overflow-hidden bg-noir">
+    <section data-theme="dark" ref={sectionRef} className="relative h-screen overflow-hidden bg-black">
       <div ref={frameRef} className="absolute inset-0">
         <div ref={reelRef} className="absolute inset-0 h-full w-full">
           <video
@@ -54,21 +48,21 @@ export default function Showreel() {
             src="/videos/showreel.mp4"
             poster="/videos/showreel-poster.jpg"
             autoPlay
-            muted
+            muted={!enabled}
             loop
             playsInline
             preload="metadata"
           />
         </div>
-        <div className="absolute inset-0 bg-noir/15" />
+        <div className="absolute inset-0 bg-black/15" />
 
         <button
           type="button"
-          onClick={toggleSound}
+          onClick={toggle}
           data-cursor="hover"
-          className="absolute bottom-6 right-6 z-20 flex items-center gap-2 rounded-full border border-ivory/30 bg-noir/40 px-4 py-2 font-body text-xs font-medium uppercase tracking-[0.2em] text-ivory backdrop-blur-sm transition-colors hover:border-ivory/70 sm:bottom-10 sm:right-10"
+          className="absolute bottom-6 right-6 z-20 flex items-center gap-2 rounded-full border border-white/30 bg-black/40 px-4 py-2 font-body text-xs font-medium uppercase tracking-[0.2em] text-white backdrop-blur-sm transition-colors hover:border-violet-electric sm:bottom-10 sm:right-10"
         >
-          {muted ? 'Activer le son' : 'Couper le son'}
+          Son&nbsp;: {enabled ? 'ON' : 'OFF'}
         </button>
       </div>
 
@@ -76,10 +70,10 @@ export default function Showreel() {
         ref={labelRef}
         className="pointer-events-none absolute inset-0 z-10 flex flex-col items-center justify-center gap-4 px-6 text-center"
       >
-        <p className="font-display text-xs font-medium uppercase tracking-[0.5em] text-ivory/60">
+        <p className="font-display text-xs font-medium uppercase tracking-[0.5em] text-white/60">
           Notre présentation
         </p>
-        <h2 className="max-w-3xl font-display text-[clamp(2rem,6vw,4.5rem)] font-semibold leading-[1.02] text-ivory">
+        <h2 className="max-w-3xl font-display text-[clamp(2rem,6vw,4.5rem)] font-semibold leading-[1.02] text-white">
           Une histoire se raconte en mouvement.
         </h2>
       </div>

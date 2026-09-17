@@ -1,15 +1,16 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef } from 'react'
 import { gsap } from '../lib/gsap'
+import Logo from './Logo'
 
 interface PreloaderProps {
   onComplete: () => void
 }
 
 export default function Preloader({ onComplete }: PreloaderProps) {
-  const [count, setCount] = useState(0)
   const rootRef = useRef<HTMLDivElement>(null)
   const panelRef = useRef<HTMLDivElement>(null)
-  const counterRef = useRef({ value: 0 })
+  const logoRef = useRef<SVGSVGElement>(null)
+  const glowRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     document.body.style.overflow = 'hidden'
@@ -21,20 +22,23 @@ export default function Preloader({ onComplete }: PreloaderProps) {
       },
     })
 
-    tl.to(counterRef.current, {
-      value: 100,
-      duration: 1.6,
-      ease: 'power2.inOut',
-      onUpdate: () => setCount(Math.round(counterRef.current.value)),
-    })
-      .to('[data-preloader-label]', { opacity: 0, y: -12, duration: 0.4, ease: 'power2.in' }, '-=0.15')
+    tl.fromTo(
+      glowRef.current,
+      { opacity: 0, scale: 0.6 },
+      { opacity: 0.7, scale: 1, duration: 0.7, ease: 'power2.out' },
+    )
+      .fromTo(
+        logoRef.current,
+        { opacity: 0, scale: 0.7, rotate: -18 },
+        { opacity: 1, scale: 1, rotate: 0, duration: 0.7, ease: 'back.out(1.7)' },
+        '<0.05',
+      )
+      .to(logoRef.current, { rotate: 10, duration: 0.35, ease: 'power2.inOut' }, '+=0.05')
+      .to(logoRef.current, { rotate: 0, scale: 1.08, duration: 0.35, ease: 'power2.inOut' })
+      .to([logoRef.current, glowRef.current], { opacity: 0, scale: 0.85, duration: 0.3, ease: 'power2.in' }, '+=0.05')
       .to(
         panelRef.current,
-        {
-          clipPath: 'inset(0% 0% 100% 0%)',
-          duration: 1.05,
-          ease: 'expo.inOut',
-        },
+        { clipPath: 'inset(0% 0% 100% 0%)', duration: 0.9, ease: 'expo.inOut' },
         '-=0.1',
       )
       .set(rootRef.current, { display: 'none' })
@@ -42,28 +46,17 @@ export default function Preloader({ onComplete }: PreloaderProps) {
     return () => {
       tl.kill()
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [onComplete])
 
   return (
     <div ref={rootRef} className="fixed inset-0 z-[100]">
       <div
         ref={panelRef}
-        className="absolute inset-0 flex flex-col items-center justify-center gap-6 bg-noir"
+        className="absolute inset-0 flex items-center justify-center bg-black"
         style={{ clipPath: 'inset(0% 0% 0% 0%)' }}
       >
-        <div data-preloader-label className="flex flex-col items-center gap-5">
-          <img src="/favicon.svg" alt="" className="h-10 w-10 opacity-90" />
-          <div className="font-display text-sm font-medium uppercase tracking-[0.4em] text-ivory/60">
-            Upflow Studio
-          </div>
-        </div>
-        <div
-          data-preloader-label
-          className="font-display text-[clamp(3rem,10vw,7rem)] font-semibold tabular-nums leading-none text-ivory"
-        >
-          {count}
-        </div>
+        <div ref={glowRef} className="absolute h-64 w-64 rounded-full bg-violet-electric/40 blur-[80px]" />
+        <Logo ref={logoRef} className="relative h-16 w-16 sm:h-20 sm:w-20" />
       </div>
     </div>
   )

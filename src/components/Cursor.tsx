@@ -1,9 +1,13 @@
 import { useEffect, useRef } from 'react'
 import { gsap } from '../lib/gsap'
+import { useSound } from '../lib/sound'
+import { useSectionTheme } from '../lib/useSectionTheme'
 
 export default function Cursor() {
   const dotRef = useRef<HTMLDivElement>(null)
   const ringRef = useRef<HTMLDivElement>(null)
+  const { play } = useSound()
+  const theme = useSectionTheme()
 
   useEffect(() => {
     if (window.matchMedia('(hover: none)').matches) return
@@ -25,11 +29,12 @@ export default function Cursor() {
     }
 
     const onEnterHover = () => {
-      gsap.to(ring, { scale: 2.4, opacity: 0.5, duration: 0.35, ease: 'power3.out' })
+      gsap.to(ring, { scale: 2.4, duration: 0.35, ease: 'power3.out' })
       gsap.to(dot, { scale: 0, duration: 0.25 })
+      play('hover')
     }
     const onLeaveHover = () => {
-      gsap.to(ring, { scale: 1, opacity: 1, duration: 0.35, ease: 'power3.out' })
+      gsap.to(ring, { scale: 1, duration: 0.35, ease: 'power3.out' })
       gsap.to(dot, { scale: 1, duration: 0.25 })
     }
 
@@ -66,17 +71,19 @@ export default function Cursor() {
       })
       observer.disconnect()
     }
-  }, [])
+  }, [play])
+
+  const isDark = theme === 'dark'
 
   return (
     <>
       <div
         ref={ringRef}
-        className="cursor-ring pointer-events-none fixed left-0 top-0 z-[70] h-9 w-9 -translate-x-1/2 -translate-y-1/2 rounded-full border border-ivory/60 opacity-0 mix-blend-difference"
+        className={`cursor-ring pointer-events-none fixed left-0 top-0 z-[70] h-9 w-9 -translate-x-1/2 -translate-y-1/2 rounded-full border opacity-0 transition-colors duration-500 ${isDark ? 'border-white' : 'border-black'}`}
       />
       <div
         ref={dotRef}
-        className="cursor-dot pointer-events-none fixed left-0 top-0 z-[70] h-1.5 w-1.5 -translate-x-1/2 -translate-y-1/2 rounded-full bg-ivory opacity-0"
+        className={`cursor-dot pointer-events-none fixed left-0 top-0 z-[70] h-1.5 w-1.5 -translate-x-1/2 -translate-y-1/2 rounded-full opacity-0 transition-colors duration-500 ${isDark ? 'bg-white' : 'bg-black'}`}
       />
     </>
   )

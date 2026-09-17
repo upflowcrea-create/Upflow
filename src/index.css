@@ -1,63 +1,66 @@
 @import 'tailwindcss';
 
 @theme {
-  --font-display: 'Bricolage Grotesque', system-ui, sans-serif;
-  --font-body: 'Inter', system-ui, sans-serif;
+  --font-display: 'Outfit', system-ui, sans-serif;
+  --font-body: 'Outfit', system-ui, sans-serif;
 
-  --color-noir: #08060d;
-  --color-noir-soft: #0f0b18;
-  --color-ivory: #f5f2ee;
-  --color-violet: #863bff;
-  --color-violet-deep: #5a1fd6;
-  --color-magenta: #ff2ea6;
-  --color-magenta-soft: #ff6fc4;
+  --color-black: #050505;
+  --color-black-soft: #0d0812;
+  --color-violet: #5b20d6;
+  --color-violet-electric: #8a3ffc;
+  --color-violet-deep: #1b063d;
 
   --ease-flow: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-* {
-  box-sizing: border-box;
-}
+/* Layered (not plain global rules) so Tailwind utility classes like
+   text-black/text-white can still override these element defaults —
+   an unlayered rule always beats a layered utility regardless of specificity. */
+@layer base {
+  * {
+    box-sizing: border-box;
+  }
 
-html {
-  background: var(--color-noir);
-  color-scheme: dark;
-}
+  html {
+    background: var(--color-black);
+    color-scheme: dark;
+  }
 
-body {
-  margin: 0;
-  background: var(--color-noir);
-  color: var(--color-ivory);
-  font-family: var(--font-body);
-  font-weight: 300;
-  -webkit-font-smoothing: antialiased;
-  overflow-x: clip;
-}
+  body {
+    margin: 0;
+    background: var(--color-black);
+    color: #fff;
+    font-family: var(--font-body);
+    font-weight: 300;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: clip;
+  }
 
-::selection {
-  background: var(--color-magenta);
-  color: var(--color-noir);
-}
+  ::selection {
+    background: var(--color-violet-electric);
+    color: #fff;
+  }
 
-h1, h2, h3, h4 {
-  font-family: var(--font-display);
-  font-weight: 600;
-  letter-spacing: -0.02em;
-  margin: 0;
-}
+  h1, h2, h3, h4 {
+    font-family: var(--font-display);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin: 0;
+  }
 
-p {
-  margin: 0;
-}
+  p {
+    margin: 0;
+  }
 
-a {
-  color: inherit;
-  text-decoration: none;
-}
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
 
-button {
-  font-family: inherit;
-  color: inherit;
+  button {
+    font-family: inherit;
+    color: inherit;
+  }
 }
 
 /* Lenis smooth scroll */
@@ -104,7 +107,7 @@ html.lenis {
   position: fixed;
   inset: 0;
   z-index: 60;
-  opacity: 0.035;
+  opacity: 0.03;
   mix-blend-mode: overlay;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   background-size: 180px;
@@ -119,6 +122,7 @@ html.lenis {
   }
 }
 
+/* Generative reel placeholder — violet-only gradient field */
 @keyframes flow-rotate {
   from { transform: rotate(0deg) scale(1.4); }
   to { transform: rotate(360deg) scale(1.4); }
@@ -133,7 +137,7 @@ html.lenis {
   position: absolute;
   inset: -20%;
   background:
-    conic-gradient(from 0deg at 30% 40%, #863bff 0deg, transparent 90deg, #ff2ea6 180deg, transparent 270deg, #863bff 360deg);
+    conic-gradient(from 0deg at 30% 40%, #8a3ffc 0deg, transparent 90deg, #5b20d6 180deg, transparent 270deg, #8a3ffc 360deg);
   animation: flow-rotate 22s linear infinite;
   opacity: 0.85;
   filter: blur(30px);
@@ -142,8 +146,8 @@ html.lenis {
 .reel-field-2 {
   position: absolute;
   inset: -10%;
-  background: radial-gradient(circle at 60% 30%, rgba(255, 46, 166, 0.55), transparent 55%),
-    radial-gradient(circle at 25% 70%, rgba(134, 59, 255, 0.55), transparent 55%);
+  background: radial-gradient(circle at 60% 30%, rgba(138, 63, 252, 0.5), transparent 55%),
+    radial-gradient(circle at 25% 70%, rgba(27, 6, 61, 0.7), transparent 55%);
   animation: flow-drift 14s ease-in-out infinite;
 }
 
@@ -155,6 +159,48 @@ html.lenis {
 
 .scroll-line {
   animation: scroll-line 2.2s var(--ease-flow) infinite;
+}
+
+/* Hero abstract mark — layered glow inspired by the UPFLOW symbol */
+@keyframes mark-rotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes mark-pulse {
+  0%, 100% { opacity: 0.55; transform: scale(1); }
+  50% { opacity: 0.85; transform: scale(1.06); }
+}
+
+.mark-glow {
+  animation: mark-pulse 6s var(--ease-flow) infinite;
+}
+
+.mark-ring {
+  animation: mark-rotate 40s linear infinite;
+}
+
+.mark-ring-reverse {
+  animation: mark-rotate 55s linear infinite reverse;
+}
+
+.offer-active .offer-fill {
+  transform: scaleX(1);
+}
+
+.offer-active h3 {
+  color: #fff;
+  transform: translateX(0.75rem);
+}
+
+.offer-active span,
+.offer-active p {
+  color: rgb(255 255 255 / 0.7);
+}
+
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-33.3333%); }
 }
 
 @media (hover: none) {

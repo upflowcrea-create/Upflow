@@ -14,7 +14,7 @@ export default function Manifesto() {
       if (!words) return
 
       gsap.to(words, {
-        color: '#f5f2ee',
+        color: '#ffffff',
         stagger: 1,
         ease: 'none',
         scrollTrigger: {
@@ -36,15 +36,16 @@ export default function Manifesto() {
   return (
     <section
       id="manifesto"
+      data-theme="dark"
       ref={sectionRef}
-      className="relative flex min-h-screen items-center justify-center bg-noir px-6 py-32 sm:px-10"
+      className="relative flex min-h-screen items-center justify-center bg-black px-6 py-32 sm:px-10"
     >
       <p
         ref={wordsRef}
         className="max-w-5xl text-center font-display text-[clamp(1.6rem,4.4vw,3.4rem)] font-medium leading-[1.25]"
       >
         {words.map((word, i) => (
-          <span key={i} data-word className="mx-[0.18em] inline-block text-ivory/15">
+          <span key={i} data-word className="mx-[0.18em] inline-block text-white/15">
             {word}
           </span>
         ))}

@@ -1,17 +1,24 @@
 import { useEffect, useRef, useState } from 'react'
+import clsx from 'clsx'
 import { gsap } from '../lib/gsap'
 import { getLenis } from '../lib/smoothScroll'
+import { useSound } from '../lib/sound'
+import { useSectionTheme } from '../lib/useSectionTheme'
+import Logo from './Logo'
 import MagneticButton from './MagneticButton'
 
 const LINKS = [
   { label: 'Studio', href: '#manifesto' },
   { label: 'Work', href: '#work' },
-  { label: 'Services', href: '#services' },
+  { label: 'Offres', href: '#offers' },
 ]
 
 export default function Nav() {
   const navRef = useRef<HTMLElement>(null)
   const [hidden, setHidden] = useState(false)
+  const { enabled, toggle, play } = useSound()
+  const theme = useSectionTheme()
+  const isDark = theme === 'dark'
 
   useEffect(() => {
     let lastY = window.scrollY
@@ -34,8 +41,10 @@ export default function Nav() {
   }, [])
 
   useEffect(() => {
+    // Animate `top`, not a transform: a transform on this element (even at rest)
+    // would create a stacking context and complicate compositing beneath it.
     gsap.to(navRef.current, {
-      yPercent: hidden ? -140 : 0,
+      top: hidden ? -120 : 0,
       duration: 0.6,
       ease: 'power3.inOut',
     })
@@ -44,27 +53,39 @@ export default function Nav() {
   const scrollTo = (href: string) => {
     const el = document.querySelector(href)
     if (!el) return
+    play('click')
     const lenis = getLenis()
     if (lenis) lenis.scrollTo(el as HTMLElement, { duration: 1.4 })
     else el.scrollIntoView({ behavior: 'smooth' })
   }
 
+  const textColor = isDark ? 'text-white' : 'text-black'
+  const borderColor = isDark ? 'border-white' : 'border-black'
+
   return (
     <nav
       ref={navRef}
-      className="fixed inset-x-0 top-0 z-50 flex items-center justify-between px-6 py-6 mix-blend-difference sm:px-10"
+      className="fixed inset-x-0 top-0 z-50 flex flex-nowrap items-center justify-between gap-3 px-4 py-4 transition-colors duration-500 sm:px-10 sm:py-5"
     >
       <a
         href="#top"
         data-cursor="hover"
-        className="flex items-center gap-3 font-display text-sm font-semibold uppercase tracking-[0.3em] text-ivory"
+        className="flex shrink-0 items-center gap-2 sm:gap-3"
+        onMouseEnter={() => play('hover')}
         onClick={(e) => {
           e.preventDefault()
           scrollTo('#top')
         }}
       >
-        <img src="/favicon.svg" alt="Upflow" className="h-6 w-6" />
-        Upflow
+        <Logo className="h-7 w-7 sm:h-8 sm:w-8" />
+        <span
+          className={clsx(
+            'hidden font-display text-sm font-bold uppercase tracking-[0.3em] transition-colors duration-500 sm:inline',
+            textColor,
+          )}
+        >
+          Upflow
+        </span>
       </a>
 
       <div className="hidden items-center gap-10 md:flex">
@@ -72,20 +93,43 @@ export default function Nav() {
           <button
             key={link.href}
             data-cursor="hover"
+            onMouseEnter={() => play('hover')}
             onClick={() => scrollTo(link.href)}
-            className="font-body text-sm font-medium uppercase tracking-[0.15em] text-ivory/80 transition-colors hover:text-ivory"
+            className={clsx(
+              'font-body text-sm font-medium uppercase tracking-[0.15em] transition-all duration-300 hover:-translate-y-0.5',
+              textColor,
+            )}
           >
             {link.label}
           </button>
         ))}
       </div>
 
-      <MagneticButton
-        className="border border-ivory/70 px-5 py-2.5 text-xs font-medium uppercase tracking-[0.2em] text-ivory"
-        onClick={() => scrollTo('#contact')}
-      >
-        Let&apos;s talk
-      </MagneticButton>
+      <div className="flex shrink-0 items-center gap-2 sm:gap-4">
+        <button
+          type="button"
+          data-cursor="hover"
+          onClick={toggle}
+          className={clsx(
+            'whitespace-nowrap font-body text-[0.6rem] font-medium uppercase tracking-[0.15em] transition-all duration-300 hover:-translate-y-0.5 sm:text-[0.7rem] sm:tracking-[0.2em]',
+            textColor,
+          )}
+        >
+          <span className="hidden sm:inline">Son&nbsp;: </span>
+          {enabled ? 'ON' : 'OFF'}
+        </button>
+
+        <MagneticButton
+          className={clsx(
+            'whitespace-nowrap border px-3 py-2 text-[0.65rem] font-medium uppercase tracking-[0.15em] transition-colors duration-500 sm:px-5 sm:py-2.5 sm:text-xs sm:tracking-[0.2em]',
+            textColor,
+            borderColor,
+          )}
+          onClick={() => scrollTo('#contact')}
+        >
+          Let&apos;s talk
+        </MagneticButton>
+      </div>
     </nav>
   )
 }
