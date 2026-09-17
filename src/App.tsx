@@ -3,11 +3,13 @@ import Cursor from './components/Cursor'
 import Nav from './components/Nav'
 import Preloader from './components/Preloader'
 import PurpleWipe from './components/PurpleWipe'
+import WhatsAppButton from './components/WhatsAppButton'
 import Hero from './sections/Hero'
-import Manifesto from './sections/Manifesto'
+import WhyVideo from './sections/WhyVideo'
 import Showreel from './sections/Showreel'
 import Offers from './sections/Offers'
 import Work from './sections/Work'
+import Process from './sections/Process'
 import CTA from './sections/CTA'
 import Footer from './sections/Footer'
 import { useSmoothScroll } from './lib/smoothScroll'
@@ -23,16 +25,19 @@ function App() {
       <div className="grain" />
       <Cursor />
       <Nav />
+      <WhatsAppButton />
 
       <main className="relative bg-black">
         <Hero />
         <PurpleWipe />
-        <Manifesto />
+        <WhyVideo />
         <Showreel />
         <PurpleWipe />
         <Offers />
         <PurpleWipe />
         <Work />
+        <PurpleWipe />
+        <Process />
         <PurpleWipe />
         <CTA />
         <Footer />

@@ -51,7 +51,7 @@ export default function MobileMenu({ open, onClose, links, onNavigate }: MobileM
     <div
       ref={panelRef}
       style={{ display: 'none', clipPath: 'inset(0% 0% 100% 0%)' }}
-      className="fixed inset-0 z-[90] flex flex-col justify-between bg-black px-6 pb-10 pt-24 md:hidden"
+      className="fixed inset-0 z-[90] flex flex-col justify-between bg-black px-6 pb-10 pt-24 lg:hidden"
     >
       <nav className="flex flex-col gap-2">
         {links.map((link) => (

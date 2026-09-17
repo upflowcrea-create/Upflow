@@ -5,9 +5,9 @@ import GenerativeReel from '../components/GenerativeReel'
 import RevealText from '../components/RevealText'
 
 const OFFERS = [
-  { label: 'Vidéo de présentation', detail: 'Pitch, teaser, image de marque' },
-  { label: 'Vidéo explicative', detail: 'Onboarding, démos, feature reveals' },
-  { label: 'Campagne Ads', detail: 'Formats courts, motion pour la performance' },
+  { label: 'Vidéo de présentation', detail: "Expliquez-vous avant qu'ils partent." },
+  { label: 'Vidéo explicative', detail: 'Parce que 14 paragraphes, c\'est un peu long.' },
+  { label: 'Campagne Ads', detail: 'Le problème. La solution. Et un peu de bruit.' },
 ]
 
 export default function Offers() {

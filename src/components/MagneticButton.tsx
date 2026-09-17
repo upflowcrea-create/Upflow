@@ -8,6 +8,8 @@ interface MagneticButtonProps {
   strength?: number
   as?: 'button' | 'a'
   href?: string
+  target?: string
+  rel?: string
   onClick?: () => void
 }
 
@@ -17,6 +19,8 @@ export default function MagneticButton({
   strength = 0.4,
   as = 'button',
   href,
+  target,
+  rel,
   onClick,
 }: MagneticButtonProps) {
   const ref = useRef<HTMLDivElement>(null)
@@ -45,7 +49,7 @@ export default function MagneticButton({
   return (
     <div ref={ref} onMouseMove={handleMove} onMouseLeave={handleLeave} className="inline-block">
       <Tag
-        {...(as === 'a' ? { href } : { onClick, type: 'button' as const })}
+        {...(as === 'a' ? { href, target, rel, onClick } : { onClick, type: 'button' as const })}
         data-cursor="hover"
         style={{ x: springX, y: springY }}
         className={clsx(

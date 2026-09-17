@@ -85,22 +85,29 @@ export default function Hero() {
         <RevealText
           as="h1"
           mode="line"
-          lines={["Votre client n'a", 'pas 20 minutes.', 'Il a 3 secondes.', 'Bon courage.']}
+          lines={['Votre entreprise', 'est géniale.', "Dommage qu'on ne", 'comprenne rien.']}
           className="font-display text-[clamp(2.2rem,7.4vw,6.2rem)] font-extrabold leading-[0.98] text-black"
           start="top 95%"
           stagger={0.14}
         />
 
-        <div className="mt-10 flex flex-wrap items-center gap-6 sm:mt-14">
+        <p className="mt-8 max-w-[36ch] font-body text-lg font-light leading-relaxed text-black/55 sm:text-xl">
+          On transforme vos idées en vidéos qu&apos;on a envie de regarder.
+        </p>
+
+        <div className="mt-8 flex flex-wrap items-center gap-4 sm:mt-10">
           <MagneticButton
             className="bg-black px-7 py-3.5 text-sm font-medium uppercase tracking-[0.2em] text-white"
             onClick={() => document.querySelector('#contact')?.scrollIntoView({ behavior: 'smooth' })}
           >
             Lancer un projet
           </MagneticButton>
-          <p className="max-w-[24ch] font-body text-sm font-light leading-relaxed text-black/55">
-            On transforme vos idées compliquées en vidéos qu&apos;on comprend du premier coup.
-          </p>
+          <MagneticButton
+            className="border border-black/20 px-7 py-3.5 text-sm font-medium uppercase tracking-[0.2em] text-black"
+            onClick={() => document.querySelector('#work')?.scrollIntoView({ behavior: 'smooth' })}
+          >
+            Voir les projets
+          </MagneticButton>
         </div>
       </div>
 

@@ -11,11 +11,13 @@ interface Project {
   media?: ProjectMedia
 }
 
+// Placeholder slots for the 4 real projects — swap title/category and add
+// `media` (desktop + optional mobile cut) per project once they're provided.
 const PROJECTS: Project[] = [
-  { title: 'Nova', category: 'Motion Design / 3D' },
-  { title: 'Kaon', category: 'Film de marque / Motion' },
-  { title: 'Circuit', category: 'Sport / Aftermovie' },
-  { title: 'Athlon', category: 'Campagne / Ads' },
+  { title: 'Nom du projet', category: 'Motion Design / 3D / Vidéo' },
+  { title: 'Nom du projet', category: 'Motion Design / 3D / Vidéo' },
+  { title: 'Nom du projet', category: 'Motion Design / 3D / Vidéo' },
+  { title: 'Nom du projet', category: 'Motion Design / 3D / Vidéo' },
 ]
 
 export default function Work() {
@@ -56,7 +58,7 @@ export default function Work() {
 
       <div className="flex flex-col gap-28 sm:gap-40">
         {PROJECTS.map((project, i) => (
-          <div key={project.title} data-work-item className="mx-auto flex w-full max-w-4xl flex-col gap-8 px-6 sm:px-10">
+          <div key={i} data-work-item className="mx-auto flex w-full max-w-4xl flex-col gap-8 px-6 sm:px-10">
             <div className="flex items-center gap-4">
               <span
                 data-work-accent

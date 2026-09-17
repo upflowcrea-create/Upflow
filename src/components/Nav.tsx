@@ -10,7 +10,7 @@ import MobileMenu from './MobileMenu'
 
 const LINKS = [
   { label: 'Projets', href: '#work' },
-  { label: 'Services', href: '#offers' },
+  { label: 'Offres', href: '#offers' },
   { label: 'Contact', href: '#contact' },
 ]
 
@@ -92,7 +92,7 @@ export default function Nav() {
           </span>
         </a>
 
-        <div className="hidden items-center gap-10 md:flex">
+        <div className="hidden items-center gap-10 lg:flex">
           {LINKS.map((link) => (
             <button
               key={link.href}
@@ -115,14 +115,14 @@ export default function Nav() {
             data-cursor="hover"
             onClick={toggle}
             className={clsx(
-              'hidden whitespace-nowrap font-body text-[0.7rem] font-medium uppercase tracking-[0.2em] transition-all duration-300 hover:-translate-y-0.5 md:inline-block',
+              'hidden whitespace-nowrap font-body text-[0.7rem] font-medium uppercase tracking-[0.2em] transition-all duration-300 hover:-translate-y-0.5 lg:inline-block',
               textColor,
             )}
           >
             Son&nbsp;: {enabled ? 'ON' : 'OFF'}
           </button>
 
-          <div className="hidden md:block">
+          <div className="hidden lg:block">
             <MagneticButton
               className={clsx(
                 'whitespace-nowrap border px-5 py-2.5 text-xs font-medium uppercase tracking-[0.2em] transition-colors duration-500',
@@ -140,7 +140,7 @@ export default function Nav() {
             data-cursor="hover"
             aria-label={menuOpen ? 'Fermer le menu' : 'Ouvrir le menu'}
             onClick={() => setMenuOpen((v) => !v)}
-            className="relative flex h-9 w-9 shrink-0 flex-col items-center justify-center gap-[5px] md:hidden"
+            className="relative flex h-9 w-9 shrink-0 flex-col items-center justify-center gap-[5px] lg:hidden"
           >
             <span
               className={clsx(
