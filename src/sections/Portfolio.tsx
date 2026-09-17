@@ -3,13 +3,16 @@ import { ArrowUpRight, X, ChevronLeft, ChevronRight } from "lucide-react";
 import { RevealText } from "../components/RevealText";
 import { useScrollReveal } from "../hooks/useScrollReveal";
 import { useScrollLock } from "../hooks/useScrollLock";
+import { useTilt } from "../hooks/useTilt";
 import { PORTFOLIO_ITEMS } from "../lib/config";
 
 function PortfolioCard({ item, onOpen }: { item: (typeof PORTFOLIO_ITEMS)[number]; onOpen: () => void }) {
   const videoRef = useRef<HTMLVideoElement | null>(null);
+  const tiltRef = useTilt<HTMLButtonElement>(9);
 
   return (
     <button
+      ref={tiltRef}
       className="portfolio-card"
       onClick={onOpen}
       onMouseEnter={() => videoRef.current?.play().catch(() => {})}

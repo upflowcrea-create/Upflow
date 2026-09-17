@@ -3,6 +3,7 @@ import { Navbar } from "./components/Navbar";
 import { Footer } from "./components/Footer";
 import { WhatsAppButton } from "./components/WhatsAppButton";
 import { CalendlyModal } from "./components/CalendlyModal";
+import { Preloader } from "./components/Preloader";
 import { Hero } from "./sections/Hero";
 import { VideoReveal } from "./sections/VideoReveal";
 import { Services } from "./sections/Services";
@@ -15,6 +16,7 @@ import { initSmoothScroll } from "./lib/smoothScroll";
 
 function App() {
   const [calendlyOpen, setCalendlyOpen] = useState(false);
+  const [ready, setReady] = useState(false);
 
   useEffect(() => {
     initSmoothScroll();
@@ -25,10 +27,11 @@ function App() {
   return (
     <>
       <div className="grain-overlay" aria-hidden="true" />
+      <Preloader onDone={() => setReady(true)} />
       <Navbar onBookCall={openCalendly} />
 
       <main>
-        <Hero onBookCall={openCalendly} />
+        <Hero onBookCall={openCalendly} ready={ready} />
         <VideoReveal />
         <Services onCta={openCalendly} />
         <Portfolio />
