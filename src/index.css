@@ -1,0 +1,165 @@
+@import 'tailwindcss';
+
+@theme {
+  --font-display: 'Bricolage Grotesque', system-ui, sans-serif;
+  --font-body: 'Inter', system-ui, sans-serif;
+
+  --color-noir: #08060d;
+  --color-noir-soft: #0f0b18;
+  --color-ivory: #f5f2ee;
+  --color-violet: #863bff;
+  --color-violet-deep: #5a1fd6;
+  --color-magenta: #ff2ea6;
+  --color-magenta-soft: #ff6fc4;
+
+  --ease-flow: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  background: var(--color-noir);
+  color-scheme: dark;
+}
+
+body {
+  margin: 0;
+  background: var(--color-noir);
+  color: var(--color-ivory);
+  font-family: var(--font-body);
+  font-weight: 300;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: clip;
+}
+
+::selection {
+  background: var(--color-magenta);
+  color: var(--color-noir);
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  margin: 0;
+}
+
+p {
+  margin: 0;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font-family: inherit;
+  color: inherit;
+}
+
+/* Lenis smooth scroll */
+html.lenis {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+/* Reveal helpers */
+.mask-line {
+  overflow: hidden;
+  display: block;
+}
+
+.mask-word {
+  overflow: hidden;
+  display: inline-block;
+  vertical-align: top;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Grain overlay */
+.grain {
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  opacity: 0.035;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 180px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+@keyframes flow-rotate {
+  from { transform: rotate(0deg) scale(1.4); }
+  to { transform: rotate(360deg) scale(1.4); }
+}
+
+@keyframes flow-drift {
+  0%, 100% { transform: translate3d(-4%, -3%, 0) scale(1.15); }
+  50% { transform: translate3d(4%, 3%, 0) scale(1.3); }
+}
+
+.reel-field {
+  position: absolute;
+  inset: -20%;
+  background:
+    conic-gradient(from 0deg at 30% 40%, #863bff 0deg, transparent 90deg, #ff2ea6 180deg, transparent 270deg, #863bff 360deg);
+  animation: flow-rotate 22s linear infinite;
+  opacity: 0.85;
+  filter: blur(30px);
+}
+
+.reel-field-2 {
+  position: absolute;
+  inset: -10%;
+  background: radial-gradient(circle at 60% 30%, rgba(255, 46, 166, 0.55), transparent 55%),
+    radial-gradient(circle at 25% 70%, rgba(134, 59, 255, 0.55), transparent 55%);
+  animation: flow-drift 14s ease-in-out infinite;
+}
+
+@keyframes scroll-line {
+  0% { transform: translateY(-100%); }
+  50% { transform: translateY(120%); }
+  100% { transform: translateY(120%); }
+}
+
+.scroll-line {
+  animation: scroll-line 2.2s var(--ease-flow) infinite;
+}
+
+@media (hover: none) {
+  .cursor-dot,
+  .cursor-ring {
+    display: none !important;
+  }
+}
