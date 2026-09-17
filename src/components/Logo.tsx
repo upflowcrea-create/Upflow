@@ -4,28 +4,40 @@ interface LogoProps {
   className?: string
 }
 
-// Placeholder redraw of the UPFLOW mark (hexagon + swoosh/spark) pending the brand's source file.
+// Placeholder redraw of the UPFLOW mark (hexagon + folded card + swoosh/spark)
+// pending the brand's source file — no exact vector file has reached this session.
 const Logo = forwardRef<SVGSVGElement, LogoProps>(function Logo({ className }, ref) {
   return (
     <svg ref={ref} viewBox="0 0 100 100" className={className} aria-label="Upflow" role="img">
       <defs>
-        <linearGradient id="upflow-hex" x1="10%" y1="5%" x2="95%" y2="95%">
+        <linearGradient id="upflow-hex" x1="8%" y1="4%" x2="96%" y2="96%">
           <stop offset="0%" stopColor="#1b063d" />
           <stop offset="55%" stopColor="#5b20d6" />
           <stop offset="100%" stopColor="#8a3ffc" />
         </linearGradient>
       </defs>
-      <polygon points="96,50 73,91 27,91 4,50 27,9 73,9" fill="url(#upflow-hex)" />
-      <g transform="translate(50 52) rotate(-6)">
-        <rect x="-24" y="-26" width="48" height="48" rx="12" fill="#fff" />
+
+      {/* Pointy-top hexagon, corners rounded via a round-joined stroke of the same fill. */}
+      <polygon points="50,4 90,27 90,73 50,96 10,73 10,27" fill="url(#upflow-hex)" />
+      <polygon
+        points="50,4 90,27 90,73 50,96 10,73 10,27"
+        fill="none"
+        stroke="url(#upflow-hex)"
+        strokeWidth="11"
+        strokeLinejoin="round"
+      />
+
+      <g transform="translate(50 50) rotate(-14)">
+        <path
+          d="M -14 -26 L 14 -26 A 10 10 0 0 1 24 -16 L 24 12 A 10 10 0 0 1 14 22 L -8 22 L -24 6 L -24 -16 A 10 10 0 0 1 -14 -26 Z"
+          fill="#fff"
+        />
+        <path d="M -21 13 L -9 9 L -15 23 Z" fill="#1b063d" />
         <g stroke="#1b063d" strokeWidth="5.5" strokeLinecap="round">
           <line x1="-14" y1="10" x2="4" y2="-8" />
           <line x1="-6" y1="16" x2="12" y2="-2" />
         </g>
-        <path
-          d="M16 -16 L18.6 -10.6 L24 -8 L18.6 -5.4 L16 0 L13.4 -5.4 L8 -8 L13.4 -10.6 Z"
-          fill="#1b063d"
-        />
+        <path d="M16 -16 L18.6 -10.6 L24 -8 L18.6 -5.4 L16 0 L13.4 -5.4 L8 -8 L13.4 -10.6 Z" fill="#1b063d" />
       </g>
     </svg>
   )
