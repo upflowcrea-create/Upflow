@@ -16,22 +16,21 @@ Pour la remplacer, dépose un nouveau fichier et retranscode-le en H.264 :
 ffmpeg -i ta-video.mov -vf "scale=1920:-2" -c:v libx264 -crf 22 -c:a aac -movflags +faststart public/assets/video/upflow-intro.mp4
 ```
 
-## 3. Calendrier de réservation ⚠️ à configurer
+## 3. Formulaire de réservation ⚠️ à configurer
 
-Variable : `BOOKING_URL` dans `src/lib/config.ts`.
+Variable : `WEB3FORMS_ACCESS_KEY` dans `src/lib/config.ts`.
 
-Pour un lien connecté **directement à ton Google Calendar** (upflow.crea@gmail.com),
-sans passer par un service tiers :
-1. Va sur [calendar.google.com](https://calendar.google.com), connecté avec `upflow.crea@gmail.com`.
-2. Clique **Créer** → **Calendrier de rendez-vous** (Appointment schedule).
-3. Configure tes créneaux disponibles, puis **Enregistrer et publier**.
-4. Copie le lien de réservation public affiché
-   (`https://calendar.google.com/calendar/appointments/schedules/...`)
-   et colle-le à la place de `BOOKING_URL` dans `src/lib/config.ts`.
+Le bouton "Book a call" / "Parler du projet" ouvre un vrai formulaire intégré au
+site (date, heure, nom, email, téléphone, message) — pas d'iframe externe qui
+peut être bloquée. À l'envoi, un email avec toutes les infos part directement
+à ta boîte mail, via [Web3Forms](https://web3forms.com) (gratuit, sans backend) :
 
-Les rendez-vous pris via ce lien apparaissent automatiquement dans ton Google Calendar.
-(Alternative : garder Calendly et connecter ton Google Calendar dans
-Calendly > Availability > Connected Calendars, puis mettre ton lien Calendly ici à la place.)
+1. Va sur [web3forms.com](https://web3forms.com).
+2. Entre `upflow.crea@gmail.com` — pas besoin de créer de compte.
+3. Tu reçois une **Access Key** par email : copie-la.
+4. Colle-la à la place de `WEB3FORMS_ACCESS_KEY` dans `src/lib/config.ts`.
+
+C'est tout : chaque demande de rendez-vous atterrit directement dans ta boîte mail.
 
 ## 4. (Optionnel) Vidéos du portfolio
 

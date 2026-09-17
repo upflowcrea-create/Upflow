@@ -22,23 +22,20 @@ export const WHATSAPP_URL = `https://wa.me/${CONTACT.whatsappNumber.replace(/\D/
 )}`;
 
 // ---------------------------------------------------------------------------
-// Lien de réservation (bouton "Book a call" / "Parler du projet").
+// Formulaire de réservation (bouton "Book a call" / "Parler du projet").
 //
-// Pour un lien connecté DIRECTEMENT à ton Google Calendar (upflow.crea@gmail.com),
-// sans passer par Calendly :
-//   1. Va sur calendar.google.com, connecté avec le compte upflow.crea@gmail.com.
-//   2. Clique "Créer" → "Calendrier de rendez-vous" (Appointment schedule).
-//   3. Configure tes créneaux disponibles, puis clique "Enregistrer et publier".
-//   4. Copie le lien de réservation public qui s'affiche
-//      (il ressemble à https://calendar.google.com/calendar/appointments/schedules/XXXXXXX)
-//      et colle-le ci-dessous, à la place du lien d'exemple.
-// Les rendez-vous pris via ce lien apparaissent automatiquement dans ton Google Calendar.
+// Le site a un vrai formulaire intégré (date, heure, coordonnées, message) —
+// pas d'iframe Google qui peut être bloquée. À la validation, le formulaire
+// envoie un email avec toutes les infos directement à upflow.crea@gmail.com,
+// via Web3Forms (gratuit, sans backend à héberger).
 //
-// (Alternative : garder Calendly et connecter ton Google Calendar dans
-// Calendly > Availability > Connected Calendars — dans ce cas, mets ton lien
-// Calendly ici à la place.)
+// Pour l'activer :
+//   1. Va sur https://web3forms.com
+//   2. Entre ton adresse email (upflow.crea@gmail.com) — pas besoin de créer de compte.
+//   3. Tu reçois une "Access Key" par email : copie-la.
+//   4. Colle-la ci-dessous, à la place de la valeur d'exemple.
 // ---------------------------------------------------------------------------
-export const BOOKING_URL = "https://calendar.app.google/whHQqGqFS54Uxccr5";
+export const WEB3FORMS_ACCESS_KEY = "REPLACE_ME_WITH_YOUR_WEB3FORMS_ACCESS_KEY";
 
 // ---------------------------------------------------------------------------
 // Assets — voir ASSETS.md à la racine du projet pour les instructions.
