@@ -109,7 +109,7 @@ ul {
   background-clip: text;
   -webkit-text-fill-color: transparent;
   color: transparent;
-  animation: gradientTextShift 7s ease-in-out infinite;
+  animation: gradientTextShift 3.5s ease-in-out infinite;
 }
 
 @keyframes gradientTextShift {
@@ -542,7 +542,7 @@ ul {
   transform: translate(-50%, -50%);
   background: radial-gradient(circle, rgba(178, 38, 255, 0.35) 0%, transparent 70%);
   filter: blur(50px);
-  animation: humorGlowPulse 5s ease-in-out infinite;
+  animation: humorGlowPulse 3.5s ease-in-out infinite;
   pointer-events: none;
 }
 
@@ -695,7 +695,7 @@ ul {
   border-color: transparent;
   transform: translateY(-10px);
   box-shadow: 0 30px 70px -20px rgba(178, 38, 255, 0.5);
-  animation: gradientTextShift 6s ease-in-out infinite;
+  animation: gradientTextShift 3.5s ease-in-out infinite;
 }
 
 .pricing-card__name {
@@ -1046,7 +1046,7 @@ ul {
   background: var(--gradient-soft);
   filter: blur(80px);
   opacity: 0.6;
-  animation: serviceBlobDrift 10s ease-in-out infinite;
+  animation: serviceBlobDrift 6s ease-in-out infinite;
   pointer-events: none;
 }
 

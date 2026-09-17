@@ -104,6 +104,8 @@ export function VideoReveal() {
               className="video-frame__video"
               poster={ASSETS.introPoster}
               playsInline
+              autoPlay
+              muted
               controls={isPlaying}
               onError={() => setVideoAvailable(false)}
               onPlay={() => setIsPlaying(true)}
