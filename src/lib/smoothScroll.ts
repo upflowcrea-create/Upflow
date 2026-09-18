@@ -40,6 +40,35 @@ export function getLenis() {
   return lenis;
 }
 
+/**
+ * Keeps ScrollTrigger's pin/scrub measurements correct even when layout
+ * settles late (web fonts, images, video metadata). A stale measurement is
+ * what makes a pinned section (like the video reveal) feel "stuck" — the
+ * scroll distance ScrollTrigger reserved no longer matches the real page.
+ */
+export function setupScrollTriggerRefresh() {
+  const refresh = () => ScrollTrigger.refresh();
+
+  const timers = [300, 1000, 2500].map((delay) => window.setTimeout(refresh, delay));
+
+  window.addEventListener("load", refresh);
+  document.fonts?.ready?.then(refresh).catch(() => {});
+
+  let resizeTimer: ReturnType<typeof setTimeout>;
+  const onResize = () => {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(refresh, 200);
+  };
+  window.addEventListener("resize", onResize);
+
+  return () => {
+    timers.forEach(clearTimeout);
+    clearTimeout(resizeTimer);
+    window.removeEventListener("load", refresh);
+    window.removeEventListener("resize", onResize);
+  };
+}
+
 export function destroySmoothScroll() {
   lenis?.destroy();
   lenis = null;

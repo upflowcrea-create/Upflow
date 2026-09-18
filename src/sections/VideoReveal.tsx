@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { Play } from "lucide-react";
-import { gsap, ScrollTrigger } from "../lib/smoothScroll";
+import { gsap } from "../lib/smoothScroll";
 import { useIsMobile, usePrefersReducedMotion } from "../hooks/useMediaQuery";
 import { ASSETS } from "../lib/config";
 
@@ -58,12 +58,6 @@ export function VideoReveal() {
 
     return () => ctx.revert();
   }, [isMobile, reducedMotion]);
-
-  useEffect(() => {
-    // Keep ScrollTrigger measurements correct once fonts/layout settle.
-    const t = setTimeout(() => ScrollTrigger.refresh(), 300);
-    return () => clearTimeout(t);
-  }, []);
 
   const togglePlay = () => {
     const v = videoRef.current;

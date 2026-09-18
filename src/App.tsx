@@ -12,7 +12,7 @@ import { Humor } from "./sections/Humor";
 import { Process } from "./sections/Process";
 import { Pricing } from "./sections/Pricing";
 import { FinalCta } from "./sections/FinalCta";
-import { initSmoothScroll } from "./lib/smoothScroll";
+import { initSmoothScroll, setupScrollTriggerRefresh } from "./lib/smoothScroll";
 
 function App() {
   const [bookingOpen, setBookingOpen] = useState(false);
@@ -20,6 +20,7 @@ function App() {
 
   useEffect(() => {
     initSmoothScroll();
+    return setupScrollTriggerRefresh();
   }, []);
 
   const openBooking = () => setBookingOpen(true);
