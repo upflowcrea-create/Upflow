@@ -1,24 +1,32 @@
-import { useEffect, useRef, useState } from "react";
+import { useLayoutEffect, useEffect, useRef, useState } from "react";
 import { ArrowUpRight, X, ChevronLeft, ChevronRight } from "lucide-react";
 import { RevealText } from "../components/RevealText";
 import { useScrollReveal } from "../hooks/useScrollReveal";
 import { useScrollLock } from "../hooks/useScrollLock";
 import { useTilt } from "../hooks/useTilt";
+import { gsap } from "../lib/smoothScroll";
 import { PORTFOLIO_ITEMS } from "../lib/config";
 
-function PortfolioCard({ item, onOpen }: { item: (typeof PORTFOLIO_ITEMS)[number]; onOpen: () => void }) {
+function PortfolioCard({
+  item,
+  onOpen,
+}: {
+  item: (typeof PORTFOLIO_ITEMS)[number];
+  onOpen: (rect: DOMRect) => void;
+}) {
   const videoRef = useRef<HTMLVideoElement | null>(null);
+  const mediaRef = useRef<HTMLDivElement | null>(null);
   const tiltRef = useTilt<HTMLButtonElement>(9);
 
   return (
     <button
       ref={tiltRef}
       className={`portfolio-card ${item.featured ? "portfolio-card--featured" : ""}`}
-      onClick={onOpen}
+      onClick={() => onOpen(mediaRef.current!.getBoundingClientRect())}
       onMouseEnter={() => videoRef.current?.play().catch(() => {})}
       onMouseLeave={() => videoRef.current?.pause()}
     >
-      <div className="portfolio-card__media">
+      <div ref={mediaRef} className="portfolio-card__media">
         {item.video ? (
           <video ref={videoRef} poster={item.poster} muted loop playsInline preload="metadata">
             {item.videoWebm && <source src={item.videoWebm} type="video/webm" />}
@@ -45,13 +53,60 @@ function PortfolioCard({ item, onOpen }: { item: (typeof PORTFOLIO_ITEMS)[number
 export function Portfolio() {
   const gridRef = useScrollReveal<HTMLDivElement>({ selector: ".portfolio-card", y: 40, blur: 6, stagger: 0.06 });
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
+  const [originRect, setOriginRect] = useState<DOMRect | null>(null);
+  const contentRef = useRef<HTMLDivElement | null>(null);
+  const mediaRef = useRef<HTMLDivElement | null>(null);
 
-  const close = () => setActiveIndex(null);
-  const next = () => setActiveIndex((i) => (i === null ? null : (i + 1) % PORTFOLIO_ITEMS.length));
-  const prev = () =>
+  const open = (i: number, rect: DOMRect) => {
+    setOriginRect(rect);
+    setActiveIndex(i);
+  };
+  const close = () => {
+    setActiveIndex(null);
+    setOriginRect(null);
+  };
+  const next = () => {
+    setOriginRect(null);
+    setActiveIndex((i) => (i === null ? null : (i + 1) % PORTFOLIO_ITEMS.length));
+  };
+  const prev = () => {
+    setOriginRect(null);
     setActiveIndex((i) => (i === null ? null : (i - 1 + PORTFOLIO_ITEMS.length) % PORTFOLIO_ITEMS.length));
+  };
 
   useScrollLock(activeIndex !== null);
+
+  // Shared-element "grow from the card" transition: the clicked thumbnail
+  // visually expands into the lightbox's video instead of a generic popup.
+  useLayoutEffect(() => {
+    if (activeIndex === null || !originRect || !mediaRef.current) return;
+
+    const target = mediaRef.current;
+    const targetRect = target.getBoundingClientRect();
+    const dx = originRect.left - targetRect.left;
+    const dy = originRect.top - targetRect.top;
+    const scaleX = originRect.width / targetRect.width;
+    const scaleY = originRect.height / targetRect.height;
+
+    gsap.set(target, { transformOrigin: "top left" });
+    gsap.fromTo(
+      target,
+      { x: dx, y: dy, scaleX, scaleY },
+      { x: 0, y: 0, scaleX: 1, scaleY: 1, duration: 0.7, ease: "power3.inOut" },
+    );
+
+    const rest = contentRef.current?.querySelectorAll(
+      ".lightbox__badge, .lightbox__category, .lightbox__title, .lightbox__description, .lightbox__extra-videos, .lightbox__photos",
+    );
+    if (rest?.length) {
+      gsap.fromTo(
+        rest,
+        { autoAlpha: 0, y: 18 },
+        { autoAlpha: 1, y: 0, duration: 0.5, delay: 0.28, stagger: 0.05, ease: "power2.out" },
+      );
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [activeIndex]);
 
   useEffect(() => {
     if (activeIndex === null) return;
@@ -75,7 +130,7 @@ export function Portfolio() {
 
         <div ref={gridRef} className="portfolio__grid">
           {PORTFOLIO_ITEMS.map((item, i) => (
-            <PortfolioCard key={item.id} item={item} onOpen={() => setActiveIndex(i)} />
+            <PortfolioCard key={item.id} item={item} onOpen={(rect) => open(i, rect)} />
           ))}
         </div>
       </div>
@@ -96,8 +151,13 @@ export function Portfolio() {
             <ChevronLeft size={26} />
           </button>
 
-          <div className="lightbox__content" data-lenis-prevent onClick={(e) => e.stopPropagation()}>
-            <div className="lightbox__media">
+          <div
+            ref={contentRef}
+            className="lightbox__content"
+            data-lenis-prevent
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div ref={mediaRef} className="lightbox__media">
               {active.video ? (
                 <video poster={active.poster} controls autoPlay playsInline>
                   {active.videoWebm && <source src={active.videoWebm} type="video/webm" />}
