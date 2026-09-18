@@ -32,12 +32,14 @@ peut être bloquée. À l'envoi, un email avec toutes les infos part directement
 
 C'est tout : chaque demande de rendez-vous atterrit directement dans ta boîte mail.
 
-## 4. (Optionnel) Vidéos du portfolio
-
-Emplacement : `public/assets/portfolio/*.mp4`
+## 4. Portfolio
 
 Le tableau des projets est défini dans `src/lib/config.ts` (`PORTFOLIO_ITEMS`).
-Remplace les `src` par tes propres fichiers vidéo/miniatures quand tu les as.
+Un item peut avoir `video` / `videoWebm` / `poster`, une galerie `photos: string[]`,
+une `description`, un `badge` (petit tag genre "On fait ça aussi") et `featured: true`
+pour occuper une tuile plus large dans la grille (comme le projet Adidas × Bucket déjà en place,
+dans `public/assets/portfolio/event-adidas-bucket/`). Ajoute un item sur le même modèle
+pour tes prochains projets.
 
 ---
 

@@ -92,10 +92,33 @@ export type PortfolioItem = {
   title: string;
   category: string;
   video?: string;
+  videoWebm?: string;
   poster?: string;
+  photos?: string[];
+  description?: string;
+  badge?: string;
+  featured?: boolean;
 };
 
 export const PORTFOLIO_ITEMS: PortfolioItem[] = [
+  {
+    id: "adidas-bucket",
+    title: "Adidas × Bucket — Live Event",
+    category: "ÉVÉNEMENTIEL / LIVE",
+    badge: "On fait ça aussi",
+    description:
+      "Un tournoi de streetball en plein Paris, écran géant, et mes animations diffusées en direct pendant l'event : scores, noms des équipes, règles du jeu, moments forts. Le motion design, en temps réel.",
+    video: "assets/portfolio/event-adidas-bucket/video.mp4",
+    videoWebm: "assets/portfolio/event-adidas-bucket/video.webm",
+    poster: "assets/portfolio/event-adidas-bucket/poster.jpg",
+    photos: [
+      "assets/portfolio/event-adidas-bucket/photo-1.jpg",
+      "assets/portfolio/event-adidas-bucket/photo-2.jpg",
+      "assets/portfolio/event-adidas-bucket/photo-3.jpg",
+      "assets/portfolio/event-adidas-bucket/photo-4.jpg",
+    ],
+    featured: true,
+  },
   { id: "p1", title: "Nova — Sport App", category: "MOTION / SPORT" },
   { id: "p2", title: "Fluxa — SaaS Onboarding", category: "SaaS / EXPLICATIVE" },
   { id: "p3", title: "Origin — Product Reveal", category: "3D" },

@@ -13,18 +13,24 @@ function PortfolioCard({ item, onOpen }: { item: (typeof PORTFOLIO_ITEMS)[number
   return (
     <button
       ref={tiltRef}
-      className="portfolio-card"
+      className={`portfolio-card ${item.featured ? "portfolio-card--featured" : ""}`}
       onClick={onOpen}
       onMouseEnter={() => videoRef.current?.play().catch(() => {})}
       onMouseLeave={() => videoRef.current?.pause()}
     >
       <div className="portfolio-card__media">
         {item.video ? (
-          <video ref={videoRef} src={item.video} poster={item.poster} muted loop playsInline preload="metadata" />
+          <video ref={videoRef} poster={item.poster} muted loop playsInline preload="metadata">
+            {item.videoWebm && <source src={item.videoWebm} type="video/webm" />}
+            <source src={item.video} type="video/mp4" />
+          </video>
         ) : (
           <div className="portfolio-card__placeholder" />
         )}
       </div>
+
+      {item.badge && <span className="portfolio-card__badge">{item.badge}</span>}
+
       <div className="portfolio-card__overlay">
         <span className="portfolio-card__category">{item.category}</span>
         <span className="portfolio-card__title">
@@ -93,13 +99,27 @@ export function Portfolio() {
           <div className="lightbox__content" onClick={(e) => e.stopPropagation()}>
             <div className="lightbox__media">
               {active.video ? (
-                <video src={active.video} poster={active.poster} controls autoPlay playsInline />
+                <video poster={active.poster} controls autoPlay playsInline>
+                  {active.videoWebm && <source src={active.videoWebm} type="video/webm" />}
+                  <source src={active.video} type="video/mp4" />
+                </video>
               ) : (
                 <div className="lightbox__placeholder" />
               )}
             </div>
+
+            {active.badge && <p className="lightbox__badge">{active.badge}</p>}
             <p className="lightbox__category eyebrow">{active.category}</p>
             <h3 className="lightbox__title">{active.title}</h3>
+            {active.description && <p className="lightbox__description">{active.description}</p>}
+
+            {active.photos && (
+              <div className="lightbox__photos">
+                {active.photos.map((src) => (
+                  <img key={src} src={src} alt="" loading="lazy" />
+                ))}
+              </div>
+            )}
           </div>
 
           <button
