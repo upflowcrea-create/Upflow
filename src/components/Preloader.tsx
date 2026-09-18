@@ -2,21 +2,26 @@ import { useEffect, useRef, useState } from "react";
 import { gsap } from "../lib/smoothScroll";
 import { usePrefersReducedMotion } from "../hooks/useMediaQuery";
 import { useScrollLock } from "../hooks/useScrollLock";
-import { Logo } from "./Logo";
+
+const BRAND_WORDS = ["UP", "YOUR", "FLOW"];
 
 export function Preloader({ onDone }: { onDone: () => void }) {
   const [exiting, setExiting] = useState(false);
   const [done, setDone] = useState(false);
+  const rootRef = useRef<HTMLDivElement | null>(null);
   const numberRef = useRef<HTMLSpanElement | null>(null);
   const barRef = useRef<HTMLDivElement | null>(null);
-  const rootRef = useRef<HTMLDivElement | null>(null);
   const reducedMotion = usePrefersReducedMotion();
 
   useScrollLock(!done);
 
   useEffect(() => {
+    const root = rootRef.current;
+    if (!root) return;
+
     const counter = { v: 0 };
-    const duration = reducedMotion ? 0.35 : 2.1;
+    const countDuration = reducedMotion ? 0.35 : 2.1;
+    const brandDuration = reducedMotion ? 0.2 : 0.65;
 
     const startExit = () => {
       // Fire onDone as the reveal starts so the hero animates in while the
@@ -24,7 +29,7 @@ export function Preloader({ onDone }: { onDone: () => void }) {
       onDone();
       setExiting(true);
 
-      const panel = rootRef.current?.querySelector(".preloader__panel--top");
+      const panel = root.querySelector(".preloader__panel--top");
       const finish = () => setDone(true);
       let fallback: ReturnType<typeof setTimeout> | null = null;
 
@@ -43,19 +48,36 @@ export function Preloader({ onDone }: { onDone: () => void }) {
 
     const tl = gsap.timeline({ onComplete: () => setTimeout(startExit, 120) });
 
-    tl.to(counter, {
-      v: 100,
-      duration,
-      ease: "power2.out",
-      onUpdate: () => {
-        if (numberRef.current) numberRef.current.textContent = String(Math.round(counter.v));
-        if (barRef.current) barRef.current.style.transform = `scaleX(${counter.v / 100})`;
+    tl.fromTo(
+      root.querySelectorAll(".preloader__brand-word"),
+      { autoAlpha: 0, yPercent: 100, filter: "blur(10px)" },
+      {
+        autoAlpha: 1,
+        yPercent: 0,
+        filter: "blur(0px)",
+        duration: brandDuration,
+        stagger: 0.08,
+        ease: "power3.out",
       },
-    }).to(
-      [".preloader__number-row", ".preloader__kicker", ".preloader__bar-track"],
-      { autoAlpha: 0, y: -10, duration: 0.35, ease: "power2.in" },
-      "-=0.15",
-    );
+    )
+      .to(
+        counter,
+        {
+          v: 100,
+          duration: countDuration,
+          ease: "power2.out",
+          onUpdate: () => {
+            if (numberRef.current) numberRef.current.textContent = String(Math.round(counter.v));
+            if (barRef.current) barRef.current.style.transform = `scaleX(${counter.v / 100})`;
+          },
+        },
+        reducedMotion ? 0 : "-=0.35",
+      )
+      .to(
+        [".preloader__number-row", ".preloader__kicker", ".preloader__bar-track"],
+        { autoAlpha: 0, y: -10, duration: 0.35, ease: "power2.in" },
+        "-=0.15",
+      );
 
     return () => {
       tl.kill();
@@ -71,7 +93,13 @@ export function Preloader({ onDone }: { onDone: () => void }) {
       <div className="preloader__panel preloader__panel--bottom" />
       <div className="preloader__content">
         <div className="preloader__kicker">
-          <Logo height={22} />
+          <span className="preloader__brand">
+            {BRAND_WORDS.map((word, i) => (
+              <span className="preloader__brand-word-wrap" key={i}>
+                <span className="preloader__brand-word gradient-text">{word}</span>
+              </span>
+            ))}
+          </span>
         </div>
         <div className="preloader__number-row">
           <span ref={numberRef} className="preloader__number">

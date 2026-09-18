@@ -312,8 +312,17 @@ ul {
   will-change: transform, filter, opacity;
 }
 
-.hero__ctas {
+.hero__subtitle {
+  opacity: 0;
+  font-size: clamp(1rem, 1.6vw, 1.25rem);
+  color: rgba(244, 238, 252, 0.75);
+  max-width: 34ch;
+  line-height: 1.45;
   margin-top: 0.4rem;
+}
+
+.hero__ctas {
+  margin-top: 0.9rem;
   display: flex;
   flex-wrap: wrap;
   gap: 1rem;
@@ -357,6 +366,9 @@ ul {
 @media (max-width: 720px) {
   .hero__content {
     padding-top: 5rem;
+  }
+  .hero__subtitle {
+    max-width: none;
   }
   .hero__blob--1, .hero__blob--2 {
     width: 80vw;
@@ -1577,6 +1589,28 @@ ul {
 
 .preloader__kicker {
   opacity: 0.9;
+}
+
+.preloader__brand {
+  display: flex;
+  gap: 0.5em;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(1.1rem, 3.4vw, 1.6rem);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.preloader__brand-word-wrap {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: top;
+  padding: 0.14em 0 0.2em;
+  margin-top: -0.14em;
+}
+
+.preloader__brand-word {
+  display: inline-block;
 }
 
 .preloader__number-row {
