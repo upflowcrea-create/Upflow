@@ -95,6 +95,7 @@ export type PortfolioItem = {
   videoWebm?: string;
   poster?: string;
   photos?: string[];
+  extraVideos?: { video: string; videoWebm?: string; poster?: string; label?: string }[];
   description?: string;
   badge?: string;
   featured?: boolean;
@@ -116,6 +117,14 @@ export const PORTFOLIO_ITEMS: PortfolioItem[] = [
       "assets/portfolio/event-adidas-bucket/photo-2.jpg",
       "assets/portfolio/event-adidas-bucket/photo-3.jpg",
       "assets/portfolio/event-adidas-bucket/photo-4.jpg",
+    ],
+    extraVideos: [
+      {
+        label: "Diffusée en direct sur l'écran géant",
+        video: "assets/portfolio/event-adidas-bucket/screen-clip.mp4",
+        videoWebm: "assets/portfolio/event-adidas-bucket/screen-clip.webm",
+        poster: "assets/portfolio/event-adidas-bucket/screen-clip-poster.jpg",
+      },
     ],
     featured: true,
   },

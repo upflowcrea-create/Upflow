@@ -113,6 +113,20 @@ export function Portfolio() {
             <h3 className="lightbox__title">{active.title}</h3>
             {active.description && <p className="lightbox__description">{active.description}</p>}
 
+            {active.extraVideos && (
+              <div className="lightbox__extra-videos">
+                {active.extraVideos.map((clip, i) => (
+                  <div className="lightbox__extra-video" key={i}>
+                    <video poster={clip.poster} controls playsInline preload="metadata">
+                      {clip.videoWebm && <source src={clip.videoWebm} type="video/webm" />}
+                      <source src={clip.video} type="video/mp4" />
+                    </video>
+                    {clip.label && <p className="lightbox__extra-video-label">{clip.label}</p>}
+                  </div>
+                ))}
+              </div>
+            )}
+
             {active.photos && (
               <div className="lightbox__photos">
                 {active.photos.map((src) => (

@@ -966,6 +966,26 @@ ul {
   line-height: 1.5;
 }
 
+.lightbox__extra-videos {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 0.8rem;
+}
+
+.lightbox__extra-video video {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  border-radius: var(--radius-sm);
+  background: var(--bg-panel);
+}
+
+.lightbox__extra-video-label {
+  margin-top: 0.4rem;
+  font-size: 0.78rem;
+  color: rgba(244, 238, 252, 0.6);
+}
+
 .lightbox__photos {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
