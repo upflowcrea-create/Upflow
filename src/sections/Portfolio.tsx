@@ -68,10 +68,12 @@ export function Portfolio() {
   };
   const next = () => {
     setOriginRect(null);
+    contentRef.current?.scrollTo({ top: 0 });
     setActiveIndex((i) => (i === null ? null : (i + 1) % PORTFOLIO_ITEMS.length));
   };
   const prev = () => {
     setOriginRect(null);
+    contentRef.current?.scrollTo({ top: 0 });
     setActiveIndex((i) => (i === null ? null : (i - 1 + PORTFOLIO_ITEMS.length) % PORTFOLIO_ITEMS.length));
   };
 
@@ -85,25 +87,18 @@ export function Portfolio() {
     if (activeIndex === null || !mediaRef.current) return;
 
     const ctx = gsap.context(() => {
-      if (originRect && mediaRef.current) {
-        const target = mediaRef.current;
-        const targetRect = target.getBoundingClientRect();
-        const dx = originRect.left - targetRect.left;
-        const dy = originRect.top - targetRect.top;
-        const scaleX = originRect.width / targetRect.width;
-        const scaleY = originRect.height / targetRect.height;
-
-        gsap.set(target, { transformOrigin: "top left" });
-        gsap.fromTo(
-          target,
-          { x: dx, y: dy, scaleX, scaleY, borderRadius: 16 },
-          { x: 0, y: 0, scaleX: 1, scaleY: 1, borderRadius: 0, duration: 0.7, ease: "power3.inOut" },
-        );
-      }
-
+      // Hide the body content immediately (before first paint) so it never
+      // flashes visible while the video is still small/growing.
       const items = bodyRef.current?.querySelectorAll(":scope > *");
-      if (items?.length) {
-        gsap.set(items, { autoAlpha: 0, y: 40 });
+      if (items?.length) gsap.set(items, { autoAlpha: 0, y: 40 });
+
+      // Wire up the reveal-on-scroll only once layout has settled at the
+      // video's final size — setting it up while the grow animation still
+      // has the video small would measure the body content as already
+      // being in view (it sits right below a tiny video) and reveal it
+      // immediately instead of waiting for a real scroll.
+      const setupBodyReveal = () => {
+        if (!items?.length) return;
         items.forEach((el) => {
           gsap.to(el, {
             autoAlpha: 1,
@@ -113,14 +108,47 @@ export function Portfolio() {
             scrollTrigger: {
               trigger: el,
               scroller: contentRef.current,
-              start: "top 88%",
+              start: "top bottom",
             },
           });
         });
-      }
+        ScrollTrigger.refresh();
+      };
 
-      const refreshTimer = setTimeout(() => ScrollTrigger.refresh(), 200);
-      return () => clearTimeout(refreshTimer);
+      if (originRect && mediaRef.current) {
+        const target = mediaRef.current;
+        const targetRect = target.getBoundingClientRect();
+
+        // Animate real width/height/position (not transform scale) so the
+        // video's own aspect ratio never gets stretched mid-transition —
+        // it just grows cleanly from the card's rect to fill the screen.
+        // All values are measured in px (not mixed with vw/vh units) so
+        // GSAP can interpolate them smoothly.
+        gsap.set(target, {
+          position: "fixed",
+          top: originRect.top,
+          left: originRect.left,
+          width: originRect.width,
+          height: originRect.height,
+          borderRadius: 16,
+          zIndex: 5,
+        });
+        gsap.to(target, {
+          top: targetRect.top,
+          left: targetRect.left,
+          width: targetRect.width,
+          height: targetRect.height,
+          borderRadius: 0,
+          duration: 0.75,
+          ease: "power3.inOut",
+          onComplete: () => {
+            gsap.set(target, { clearProps: "position,top,left,width,height,zIndex" });
+            setupBodyReveal();
+          },
+        });
+      } else {
+        setupBodyReveal();
+      }
     }, contentRef);
 
     return () => ctx.revert();

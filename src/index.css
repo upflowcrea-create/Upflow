@@ -1051,6 +1051,16 @@ ul {
   pointer-events: none;
 }
 
+@media (max-width: 720px) {
+  /* The source footage is landscape (16/9). Forcing it into a full-height
+     portrait box would crop it down to a heavily zoomed sliver, so on phones
+     it keeps its native ratio instead of filling the whole viewport height. */
+  .lightbox__media {
+    height: auto;
+    aspect-ratio: 16 / 9;
+  }
+}
+
 .lightbox__placeholder {
   width: 100%;
   height: 100%;
