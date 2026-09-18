@@ -1,10 +1,10 @@
 import { useLayoutEffect, useEffect, useRef, useState } from "react";
-import { ArrowUpRight, X, ChevronLeft, ChevronRight } from "lucide-react";
+import { ArrowUpRight, ChevronDown, X, ChevronLeft, ChevronRight } from "lucide-react";
 import { RevealText } from "../components/RevealText";
 import { useScrollReveal } from "../hooks/useScrollReveal";
 import { useScrollLock } from "../hooks/useScrollLock";
 import { useTilt } from "../hooks/useTilt";
-import { gsap } from "../lib/smoothScroll";
+import { gsap, ScrollTrigger } from "../lib/smoothScroll";
 import { PORTFOLIO_ITEMS } from "../lib/config";
 
 function PortfolioCard({
@@ -56,6 +56,7 @@ export function Portfolio() {
   const [originRect, setOriginRect] = useState<DOMRect | null>(null);
   const contentRef = useRef<HTMLDivElement | null>(null);
   const mediaRef = useRef<HTMLDivElement | null>(null);
+  const bodyRef = useRef<HTMLDivElement | null>(null);
 
   const open = (i: number, rect: DOMRect) => {
     setOriginRect(rect);
@@ -76,35 +77,53 @@ export function Portfolio() {
 
   useScrollLock(activeIndex !== null);
 
-  // Shared-element "grow from the card" transition: the clicked thumbnail
-  // visually expands into the lightbox's video instead of a generic popup.
+  // Shared-element "grow from the card" transition: the clicked thumbnail's
+  // video visually expands into the fullscreen lightbox video. The rest of
+  // the content (title, description, extra videos, photos) sits below that
+  // fullscreen video and only reveals as the visitor scrolls down to it.
   useLayoutEffect(() => {
-    if (activeIndex === null || !originRect || !mediaRef.current) return;
+    if (activeIndex === null || !mediaRef.current) return;
 
-    const target = mediaRef.current;
-    const targetRect = target.getBoundingClientRect();
-    const dx = originRect.left - targetRect.left;
-    const dy = originRect.top - targetRect.top;
-    const scaleX = originRect.width / targetRect.width;
-    const scaleY = originRect.height / targetRect.height;
+    const ctx = gsap.context(() => {
+      if (originRect && mediaRef.current) {
+        const target = mediaRef.current;
+        const targetRect = target.getBoundingClientRect();
+        const dx = originRect.left - targetRect.left;
+        const dy = originRect.top - targetRect.top;
+        const scaleX = originRect.width / targetRect.width;
+        const scaleY = originRect.height / targetRect.height;
 
-    gsap.set(target, { transformOrigin: "top left" });
-    gsap.fromTo(
-      target,
-      { x: dx, y: dy, scaleX, scaleY },
-      { x: 0, y: 0, scaleX: 1, scaleY: 1, duration: 0.7, ease: "power3.inOut" },
-    );
+        gsap.set(target, { transformOrigin: "top left" });
+        gsap.fromTo(
+          target,
+          { x: dx, y: dy, scaleX, scaleY, borderRadius: 16 },
+          { x: 0, y: 0, scaleX: 1, scaleY: 1, borderRadius: 0, duration: 0.7, ease: "power3.inOut" },
+        );
+      }
 
-    const rest = contentRef.current?.querySelectorAll(
-      ".lightbox__badge, .lightbox__category, .lightbox__title, .lightbox__description, .lightbox__extra-videos, .lightbox__photos",
-    );
-    if (rest?.length) {
-      gsap.fromTo(
-        rest,
-        { autoAlpha: 0, y: 18 },
-        { autoAlpha: 1, y: 0, duration: 0.5, delay: 0.28, stagger: 0.05, ease: "power2.out" },
-      );
-    }
+      const items = bodyRef.current?.querySelectorAll(":scope > *");
+      if (items?.length) {
+        gsap.set(items, { autoAlpha: 0, y: 40 });
+        items.forEach((el) => {
+          gsap.to(el, {
+            autoAlpha: 1,
+            y: 0,
+            duration: 0.7,
+            ease: "power2.out",
+            scrollTrigger: {
+              trigger: el,
+              scroller: contentRef.current,
+              start: "top 88%",
+            },
+          });
+        });
+      }
+
+      const refreshTimer = setTimeout(() => ScrollTrigger.refresh(), 200);
+      return () => clearTimeout(refreshTimer);
+    }, contentRef);
+
+    return () => ctx.revert();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeIndex]);
 
@@ -166,34 +185,40 @@ export function Portfolio() {
               ) : (
                 <div className="lightbox__placeholder" />
               )}
+              <div className="lightbox__scroll-hint" aria-hidden="true">
+                <span>Scroll</span>
+                <ChevronDown size={18} />
+              </div>
             </div>
 
-            {active.badge && <p className="lightbox__badge">{active.badge}</p>}
-            <p className="lightbox__category eyebrow">{active.category}</p>
-            <h3 className="lightbox__title">{active.title}</h3>
-            {active.description && <p className="lightbox__description">{active.description}</p>}
+            <div ref={bodyRef} className="lightbox__body">
+              {active.badge && <p className="lightbox__badge">{active.badge}</p>}
+              <p className="lightbox__category eyebrow">{active.category}</p>
+              <h3 className="lightbox__title">{active.title}</h3>
+              {active.description && <p className="lightbox__description">{active.description}</p>}
 
-            {active.extraVideos && (
-              <div className="lightbox__extra-videos">
-                {active.extraVideos.map((clip, i) => (
-                  <div className="lightbox__extra-video" key={i}>
-                    <video poster={clip.poster} controls playsInline preload="metadata">
-                      {clip.videoWebm && <source src={clip.videoWebm} type="video/webm" />}
-                      <source src={clip.video} type="video/mp4" />
-                    </video>
-                    {clip.label && <p className="lightbox__extra-video-label">{clip.label}</p>}
-                  </div>
-                ))}
-              </div>
-            )}
+              {active.extraVideos && (
+                <div className="lightbox__extra-videos">
+                  {active.extraVideos.map((clip, i) => (
+                    <div className="lightbox__extra-video" key={i}>
+                      <video poster={clip.poster} controls playsInline preload="metadata">
+                        {clip.videoWebm && <source src={clip.videoWebm} type="video/webm" />}
+                        <source src={clip.video} type="video/mp4" />
+                      </video>
+                      {clip.label && <p className="lightbox__extra-video-label">{clip.label}</p>}
+                    </div>
+                  ))}
+                </div>
+              )}
 
-            {active.photos && (
-              <div className="lightbox__photos">
-                {active.photos.map((src) => (
-                  <img key={src} src={src} alt="" loading="lazy" />
-                ))}
-              </div>
-            )}
+              {active.photos && (
+                <div className="lightbox__photos">
+                  {active.photos.map((src) => (
+                    <img key={src} src={src} alt="" loading="lazy" />
+                  ))}
+                </div>
+              )}
+            </div>
           </div>
 
           <button
