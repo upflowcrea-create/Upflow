@@ -1,0 +1,149 @@
+import { useEffect, useRef, useState } from "react";
+import { Play } from "lucide-react";
+import { gsap } from "../lib/smoothScroll";
+import { useIsMobile, usePrefersReducedMotion } from "../hooks/useMediaQuery";
+import { ASSETS } from "../lib/config";
+
+export function VideoReveal() {
+  const sectionRef = useRef<HTMLElement | null>(null);
+  const frameRef = useRef<HTMLDivElement | null>(null);
+  const textRef = useRef<HTMLDivElement | null>(null);
+  const videoRef = useRef<HTMLVideoElement | null>(null);
+  const vignetteRef = useRef<HTMLDivElement | null>(null);
+
+  const [videoAvailable, setVideoAvailable] = useState(true);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const isMobile = useIsMobile();
+  const reducedMotion = usePrefersReducedMotion();
+
+  useEffect(() => {
+    const section = sectionRef.current;
+    const frame = frameRef.current;
+    const text = textRef.current;
+    const video = videoRef.current;
+    const vignette = vignetteRef.current;
+    if (!section || !frame || !text) return;
+
+    const end = isMobile ? { w: "94vw", h: "80vh", radius: 16 } : { w: "96vw", h: "92vh", radius: 14 };
+    const start = isMobile ? { w: "82vw", h: "36vh", radius: 24 } : { w: "52vw", h: "42vh", radius: 32 };
+
+    const ctx = gsap.context(() => {
+      const words = text.querySelectorAll(".eyebrow, .video-section__title");
+
+      if (reducedMotion) {
+        gsap.set(frame, { width: end.w, height: end.h, borderRadius: end.radius });
+        gsap.set(words, { autoAlpha: 1, y: 0 });
+        return;
+      }
+
+      gsap.set(frame, { width: start.w, height: start.h, borderRadius: start.radius });
+      if (video) gsap.set(video, { scale: 1.22, filter: "blur(6px)" });
+      if (vignette) gsap.set(vignette, { autoAlpha: 1 });
+
+      // Entrance: kicker + title reveal as the section comes into view.
+      gsap.fromTo(
+        words,
+        { autoAlpha: 0, y: 36, filter: "blur(8px)" },
+        {
+          autoAlpha: 1,
+          y: 0,
+          filter: "blur(0px)",
+          duration: 0.9,
+          stagger: 0.12,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: section,
+            start: "top 80%",
+          },
+        },
+      );
+
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: section,
+          start: "top top",
+          end: "+=120%",
+          scrub: 0.8,
+          pin: true,
+          anticipatePin: 1,
+        },
+      });
+
+      tl.to(text, { autoAlpha: 0, yPercent: -30, duration: 0.35, ease: "power1.out" }, 0).to(
+        frame,
+        {
+          width: end.w,
+          height: end.h,
+          borderRadius: end.radius,
+          duration: 1,
+          ease: "power2.inOut",
+        },
+        0.05,
+      );
+
+      if (video) {
+        tl.to(video, { scale: 1, filter: "blur(0px)", duration: 1, ease: "power2.inOut" }, 0.05);
+      }
+      if (vignette) {
+        tl.to(vignette, { autoAlpha: 0, duration: 0.9, ease: "power1.inOut" }, 0.1);
+      }
+    }, section);
+
+    return () => ctx.revert();
+  }, [isMobile, reducedMotion]);
+
+  const togglePlay = () => {
+    const v = videoRef.current;
+    if (!v) return;
+    if (v.paused) {
+      v.play();
+      setIsPlaying(true);
+    } else {
+      v.pause();
+      setIsPlaying(false);
+    }
+  };
+
+  return (
+    <section id="video" ref={sectionRef} className="video-section">
+      <div className="video-section__inner">
+        <div ref={textRef} className="video-section__text">
+          <p className="eyebrow">C'est moi. C'est UPFLOW.</p>
+          <h2 className="video-section__title">30 secondes pour tout comprendre.</h2>
+        </div>
+
+        <div ref={frameRef} className="video-frame">
+          {videoAvailable ? (
+            <video
+              ref={videoRef}
+              className="video-frame__video"
+              poster={ASSETS.introPoster}
+              playsInline
+              autoPlay
+              muted
+              controls={isPlaying}
+              onError={() => setVideoAvailable(false)}
+              onPlay={() => setIsPlaying(true)}
+              onPause={() => setIsPlaying(false)}
+            >
+              <source src={ASSETS.introVideoWebm} type="video/webm" />
+              <source src={ASSETS.introVideo} type="video/mp4" />
+            </video>
+          ) : (
+            <div className="video-frame__placeholder">
+              <span className="video-frame__placeholder-text">Vidéo de présentation UPFLOW</span>
+            </div>
+          )}
+
+          {!isPlaying && (
+            <button className="video-frame__play" onClick={togglePlay} aria-label="Lire la vidéo">
+              <Play size={28} fill="currentColor" strokeWidth={0} />
+            </button>
+          )}
+
+          <div ref={vignetteRef} className="video-frame__vignette" aria-hidden="true" />
+        </div>
+      </div>
+    </section>
+  );
+}
