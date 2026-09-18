@@ -69,7 +69,7 @@ export function BookingModal({ open, onClose }: { open: boolean; onClose: () => 
 
   return (
     <div className="booking-overlay" onClick={onClose}>
-      <div className="booking-modal" onClick={(e) => e.stopPropagation()}>
+      <div className="booking-modal" data-lenis-prevent onClick={(e) => e.stopPropagation()}>
         <button className="booking-modal__close" onClick={onClose} aria-label="Fermer">
           <X size={20} />
         </button>

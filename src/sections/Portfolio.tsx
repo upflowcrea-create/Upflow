@@ -96,7 +96,7 @@ export function Portfolio() {
             <ChevronLeft size={26} />
           </button>
 
-          <div className="lightbox__content" onClick={(e) => e.stopPropagation()}>
+          <div className="lightbox__content" data-lenis-prevent onClick={(e) => e.stopPropagation()}>
             <div className="lightbox__media">
               {active.video ? (
                 <video poster={active.poster} controls autoPlay playsInline>
