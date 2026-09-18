@@ -112,16 +112,12 @@ export function Hero({ onBookCall, ready }: { onBookCall: () => void; ready: boo
           {BRAND.name} — {BRAND.tagline}
         </p>
 
-        <h1 className="hero__title">
-          <span className="hero__title-line">{renderLine("MAKE YOUR")}</span>
-          <span className="hero__title-line">{renderLine("BUSINESS MOVE.", true)}</span>
+        <h1 className="hero__title hero__title--long">
+          <span className="hero__title-line">{renderLine("TU PARLES BEAUCOUP, HEIN ?")}</span>
+          <span className="hero__title-line">{renderLine("ÇA VA ALLER, RESPIRE.", true)}</span>
         </h1>
 
-        <p className="hero__subtitle">
-          Tu parles beaucoup, hein ? Ça va aller, respire.
-          <br />
-          J'ai que 30 secondes.
-        </p>
+        <p className="hero__subtitle">J'ai que 30 secondes.</p>
 
         <div className="hero__ctas">
           <button ref={workBtn} className="btn btn-primary" onClick={() => scrollTo("#video")}>

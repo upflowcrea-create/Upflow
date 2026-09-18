@@ -292,6 +292,10 @@ ul {
   margin-block: 0.3rem;
 }
 
+.hero__title--long {
+  font-size: clamp(2rem, 6.2vw, 5rem);
+}
+
 .hero__title-line {
   display: block;
   overflow: hidden;
