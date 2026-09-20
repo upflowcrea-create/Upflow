@@ -151,6 +151,7 @@ export const PORTFOLIO_ITEMS: PortfolioItem[] = [
         poster: "assets/portfolio/winter-classique/poster.jpg",
       },
     ],
+    featured: true,
   },
   { id: "p1", title: "Nova — Sport App", category: "MOTION / SPORT" },
   { id: "p2", title: "Fluxa — SaaS Onboarding", category: "SaaS / EXPLICATIVE" },
