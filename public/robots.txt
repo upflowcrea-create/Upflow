@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://upflowcrea-create.github.io/Upflow/sitemap.xml
+Sitemap: https://upflowmotion.fr/sitemap.xml
