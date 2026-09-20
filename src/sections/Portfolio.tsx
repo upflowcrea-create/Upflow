@@ -21,7 +21,7 @@ function PortfolioCard({
   return (
     <button
       ref={tiltRef}
-      className={`portfolio-card ${item.featured ? "portfolio-card--featured" : ""}`}
+      className="portfolio-card"
       onClick={() => onOpen(mediaRef.current!.getBoundingClientRect())}
       onMouseEnter={() => videoRef.current?.play().catch(() => {})}
       onMouseLeave={() => videoRef.current?.pause()}

@@ -98,7 +98,6 @@ export type PortfolioItem = {
   extraVideos?: { video: string; videoWebm?: string; poster?: string; label?: string }[];
   description?: string;
   badge?: string;
-  featured?: boolean;
 };
 
 export const PORTFOLIO_ITEMS: PortfolioItem[] = [
@@ -111,7 +110,6 @@ export const PORTFOLIO_ITEMS: PortfolioItem[] = [
     video: "assets/portfolio/lendy/video.mp4",
     videoWebm: "assets/portfolio/lendy/video.webm",
     poster: "assets/portfolio/lendy/poster.jpg",
-    featured: true,
   },
   {
     id: "rendup",
@@ -122,7 +120,6 @@ export const PORTFOLIO_ITEMS: PortfolioItem[] = [
     video: "assets/portfolio/rendup/video.mp4",
     videoWebm: "assets/portfolio/rendup/video.webm",
     poster: "assets/portfolio/rendup/poster.jpg",
-    featured: true,
   },
   {
     id: "adidas-bucket",
@@ -148,7 +145,6 @@ export const PORTFOLIO_ITEMS: PortfolioItem[] = [
         poster: "assets/portfolio/event-adidas-bucket/screen-clip-poster.jpg",
       },
     ],
-    featured: true,
   },
   {
     id: "winter-classique",
@@ -179,7 +175,6 @@ export const PORTFOLIO_ITEMS: PortfolioItem[] = [
         poster: "assets/portfolio/winter-classique/animations-live-poster.jpg",
       },
     ],
-    featured: true,
   },
 ];
 

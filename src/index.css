@@ -802,24 +802,19 @@ ul {
 
 .portfolio__grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   gap: 1.4rem;
 }
 
 .portfolio-card {
   position: relative;
-  aspect-ratio: 4 / 5;
+  aspect-ratio: 16 / 9;
   border-radius: var(--radius-md);
   overflow: hidden;
   border: 1px solid rgba(244, 238, 252, 0.1);
   background: var(--bg-panel);
   padding: 0;
   will-change: transform;
-}
-
-.portfolio-card--featured {
-  grid-column: span 2;
-  aspect-ratio: 16 / 9;
 }
 
 .portfolio-card__badge {
@@ -896,22 +891,9 @@ ul {
   transition: transform 0.6s var(--ease-out);
 }
 
-@media (max-width: 900px) {
-  .portfolio__grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-  .portfolio-card--featured {
-    grid-column: span 2;
-  }
-}
-
-@media (max-width: 560px) {
+@media (max-width: 700px) {
   .portfolio__grid {
     grid-template-columns: 1fr;
-  }
-  .portfolio-card--featured {
-    grid-column: span 1;
-    aspect-ratio: 4 / 3;
   }
 }
 
