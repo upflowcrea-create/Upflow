@@ -1,5 +1,5 @@
 import { useLayoutEffect, useEffect, useRef, useState } from "react";
-import { ArrowUpRight, ChevronDown, X, ChevronLeft, ChevronRight } from "lucide-react";
+import { ArrowUpRight, ChevronDown, Home, X, ChevronLeft, ChevronRight } from "lucide-react";
 import { RevealText } from "../components/RevealText";
 import { useScrollReveal } from "../hooks/useScrollReveal";
 import { useScrollLock } from "../hooks/useScrollLock";
@@ -65,6 +65,13 @@ export function Portfolio() {
   const close = () => {
     setActiveIndex(null);
     setOriginRect(null);
+  };
+  const goHome = () => {
+    close();
+    // useScrollLock's cleanup restores the exact scroll position the page
+    // was at before the lightbox opened; deferring this scroll-to-top lets
+    // that cleanup run first instead of being overwritten by it.
+    setTimeout(() => window.scrollTo({ top: 0, behavior: "smooth" }), 0);
   };
   const next = () => {
     setOriginRect(null);
@@ -184,6 +191,9 @@ export function Portfolio() {
 
       {active && (
         <div className="lightbox" onClick={close}>
+          <button className="lightbox__home" onClick={goHome} aria-label="Retour à l'accueil">
+            <Home size={20} />
+          </button>
           <button className="lightbox__close" onClick={close} aria-label="Fermer">
             <X size={22} />
           </button>
