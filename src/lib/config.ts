@@ -76,9 +76,9 @@ export const PRICING = [
     id: "ads",
     name: "ADS",
     subtitle: "Vidéos courtes multi-angles",
-    price: "Sur devis",
-    prefix: null,
-    features: ["Motion Design", "3D", "Multi-formats"],
+    price: "500€",
+    prefix: "À partir de",
+    features: ["5 vidéos courtes type ads", "Motion Design", "3D", "Multi-formats"],
     cta: "LANCER UNE CAMPAGNE",
   },
 ];
