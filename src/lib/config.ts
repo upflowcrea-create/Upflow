@@ -35,7 +35,7 @@ export const WHATSAPP_URL = `https://wa.me/${CONTACT.whatsappNumber.replace(/\D/
 //   3. Tu reçois une "Access Key" par email : copie-la.
 //   4. Colle-la ci-dessous, à la place de la valeur d'exemple.
 // ---------------------------------------------------------------------------
-export const WEB3FORMS_ACCESS_KEY = "REPLACE_ME_WITH_YOUR_WEB3FORMS_ACCESS_KEY";
+export const WEB3FORMS_ACCESS_KEY = "eb6f6655-29dc-4636-aa77-414064e847c8";
 
 // ---------------------------------------------------------------------------
 // Assets — voir ASSETS.md à la racine du projet pour les instructions.
