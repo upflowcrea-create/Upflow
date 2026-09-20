@@ -24,19 +24,26 @@ export function VideoReveal() {
     const vignette = vignetteRef.current;
     if (!section || !frame || !text) return;
 
-    const end = isMobile ? { w: "94vw", h: "80svh", radius: 16 } : { w: "96vw", h: "92svh", radius: 14 };
-    const start = isMobile ? { w: "82vw", h: "36svh", radius: 24 } : { w: "52vw", h: "42svh", radius: 32 };
+    // Mobile keeps the frame locked to 16:9 (the video's real aspect ratio)
+    // instead of stretching its height toward the portrait viewport — that
+    // stretch was forcing a tall, heavily-cropped frame and made the "zoom"
+    // look broken. Only width is animated; height follows automatically via
+    // the CSS aspect-ratio below (GSAP can't reliably tween a calc() height).
+    const end = isMobile ? { w: "94vw", radius: 16 } : { w: "96vw", h: "92svh", radius: 14 };
+    const start = isMobile ? { w: "82vw", radius: 24 } : { w: "52vw", h: "42svh", radius: 32 };
 
     const ctx = gsap.context(() => {
       const words = text.querySelectorAll(".eyebrow, .video-section__title");
 
+      if (isMobile) gsap.set(frame, { aspectRatio: "16 / 9", height: "auto" });
+
       if (reducedMotion) {
-        gsap.set(frame, { width: end.w, height: end.h, borderRadius: end.radius });
+        gsap.set(frame, { width: end.w, height: "h" in end ? end.h : "auto", borderRadius: end.radius });
         gsap.set(words, { autoAlpha: 1, y: 0 });
         return;
       }
 
-      gsap.set(frame, { width: start.w, height: start.h, borderRadius: start.radius });
+      gsap.set(frame, { width: start.w, height: "h" in start ? start.h : "auto", borderRadius: start.radius });
       if (video) gsap.set(video, { scale: 1.22, filter: "blur(6px)" });
       if (vignette) gsap.set(vignette, { autoAlpha: 1 });
 
@@ -73,7 +80,7 @@ export function VideoReveal() {
         frame,
         {
           width: end.w,
-          height: end.h,
+          ...("h" in end ? { height: end.h } : {}),
           borderRadius: end.radius,
           duration: 1,
           ease: "power2.inOut",
