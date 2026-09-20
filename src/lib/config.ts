@@ -103,6 +103,17 @@ export type PortfolioItem = {
 
 export const PORTFOLIO_ITEMS: PortfolioItem[] = [
   {
+    id: "rendup",
+    title: "RendUp — Vidéo de marque",
+    category: "3D / MOCKUP",
+    description:
+      "RendUp, un prestataire qui propose des mockups 3D pour donner aux marques des visuels produits plus professionnels. J'ai réalisé leur vidéo de présentation, du concept à l'animation.",
+    video: "assets/portfolio/rendup/video.mp4",
+    videoWebm: "assets/portfolio/rendup/video.webm",
+    poster: "assets/portfolio/rendup/poster.jpg",
+    featured: true,
+  },
+  {
     id: "adidas-bucket",
     title: "Adidas × Bucket — Live Event",
     category: "ÉVÉNEMENTIEL / LIVE",
