@@ -47,7 +47,20 @@ export function getLenis() {
  * scroll distance ScrollTrigger reserved no longer matches the real page.
  */
 export function setupScrollTriggerRefresh() {
-  const refresh = () => ScrollTrigger.refresh();
+  // A scroll-locked overlay (the preloader, a modal, the mobile menu) sets
+  // body to position:fixed, which collapses the document's scrollable
+  // height to the viewport size. Refreshing while that's in effect makes
+  // ScrollTrigger measure every pinned section (like the video reveal)
+  // against that wrong, collapsed height — and since nothing else refreshes
+  // it afterward, that corrupt measurement sticks around, leaving a big gap
+  // where the pinned section should be. Retry instead of refreshing blind.
+  const refresh = () => {
+    if (document.body.style.position === "fixed") {
+      window.setTimeout(refresh, 150);
+      return;
+    }
+    ScrollTrigger.refresh();
+  };
 
   const timers = [300, 1000, 2500].map((delay) => window.setTimeout(refresh, delay));
 
