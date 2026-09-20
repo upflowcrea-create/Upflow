@@ -4,7 +4,7 @@ import { RevealText } from "../components/RevealText";
 import { useScrollReveal } from "../hooks/useScrollReveal";
 import { useScrollLock } from "../hooks/useScrollLock";
 import { useTilt } from "../hooks/useTilt";
-import { gsap, ScrollTrigger } from "../lib/smoothScroll";
+import { gsap, getLenis } from "../lib/smoothScroll";
 import { PORTFOLIO_ITEMS } from "../lib/config";
 
 function PortfolioCard({
@@ -70,8 +70,17 @@ export function Portfolio() {
     close();
     // useScrollLock's cleanup restores the exact scroll position the page
     // was at before the lightbox opened; deferring this scroll-to-top lets
-    // that cleanup run first instead of being overwritten by it.
-    setTimeout(() => window.scrollTo({ top: 0, behavior: "smooth" }), 0);
+    // that cleanup run first instead of being overwritten by it. Scrolling
+    // through Lenis (instead of window.scrollTo) matters here: Lenis tracks
+    // its own internal scroll position, and a native scrollTo desyncs it,
+    // which corrupts ScrollTrigger's pin math for the video section further
+    // down the page (it was rendering translated to a stale offset, leaving
+    // a big blank gap where the video should be).
+    setTimeout(() => {
+      const lenis = getLenis();
+      if (lenis) lenis.scrollTo(0, { duration: 1.2 });
+      else window.scrollTo({ top: 0, behavior: "smooth" });
+    }, 0);
   };
   const next = () => {
     setOriginRect(null);
@@ -107,7 +116,7 @@ export function Portfolio() {
       const setupBodyReveal = () => {
         if (!items?.length) return;
         items.forEach((el) => {
-          gsap.to(el, {
+          const tween = gsap.to(el, {
             autoAlpha: 1,
             y: 0,
             duration: 0.7,
@@ -118,8 +127,14 @@ export function Portfolio() {
               start: "top bottom",
             },
           });
+          // Refresh only this lightbox's own triggers, never the global
+          // ScrollTrigger.refresh(): the lightbox is still scroll-locked
+          // here (body is position:fixed), which collapses the document's
+          // scrollable height, so a global refresh would recalculate every
+          // other pinned section (like the video reveal) against that
+          // wrong, collapsed height and corrupt its pin math.
+          tween.scrollTrigger?.refresh();
         });
-        ScrollTrigger.refresh();
       };
 
       if (originRect && mediaRef.current) {
