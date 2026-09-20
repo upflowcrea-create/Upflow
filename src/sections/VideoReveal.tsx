@@ -24,8 +24,8 @@ export function VideoReveal() {
     const vignette = vignetteRef.current;
     if (!section || !frame || !text) return;
 
-    const end = isMobile ? { w: "94vw", h: "80vh", radius: 16 } : { w: "96vw", h: "92vh", radius: 14 };
-    const start = isMobile ? { w: "82vw", h: "36vh", radius: 24 } : { w: "52vw", h: "42vh", radius: 32 };
+    const end = isMobile ? { w: "94vw", h: "80svh", radius: 16 } : { w: "96vw", h: "92svh", radius: 14 };
+    const start = isMobile ? { w: "82vw", h: "36svh", radius: 24 } : { w: "52vw", h: "42svh", radius: 32 };
 
     const ctx = gsap.context(() => {
       const words = text.querySelectorAll(".eyebrow, .video-section__title");

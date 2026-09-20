@@ -16,6 +16,14 @@ export function initSmoothScroll() {
   // drive GSAP ScrollTrigger off the native scroll position.
   if (prefersReducedMotion || isTouch) {
     ScrollTrigger.defaults({ scroller: window as unknown as Element });
+    if (isTouch && !prefersReducedMotion) {
+      // Mobile browsers resize the visual viewport as the address bar
+      // hides/shows mid-scroll, which desyncs ScrollTrigger's pin math
+      // (a pinned section — like the video reveal — stalls partway through
+      // its scrub animation instead of completing). This is GSAP's own
+      // fix for exactly that class of mobile pinning bug.
+      ScrollTrigger.normalizeScroll(true);
+    }
     return null;
   }
 
