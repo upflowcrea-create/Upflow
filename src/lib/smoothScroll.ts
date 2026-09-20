@@ -19,19 +19,15 @@ export function initSmoothScroll() {
   gsap.ticker.lagSmoothing(0);
 
   // On touch devices we keep native scrolling (better feel + battery) but still
-  // drive GSAP ScrollTrigger off the native scroll position.
+  // drive GSAP ScrollTrigger off the native scroll position. We deliberately
+  // don't use ScrollTrigger.normalizeScroll() here: it fixes the address-bar
+  // pin-desync issue, but on iOS Safari it takes over touch scrolling
+  // entirely and has well-documented side effects on pages with several
+  // fixed-position elements (our navbar, WhatsApp button, mobile menu) —
+  // trading one bug for several. The svh-based sizing and the width-only
+  // refresh guard below cover the same root cause more surgically.
   if (prefersReducedMotion || isTouch) {
     ScrollTrigger.defaults({ scroller: window as unknown as Element });
-    if (isTouch && !prefersReducedMotion) {
-      // Mobile browsers resize the visual viewport as the address bar
-      // hides/shows mid-scroll, which desyncs ScrollTrigger's pin math
-      // (a pinned section — like the video reveal — stalls partway through
-      // its scrub animation instead of completing). This is GSAP's own
-      // fix for exactly that class of mobile pinning bug. allowNestedScroll
-      // keeps it from hijacking touch scroll inside the booking modal and
-      // the portfolio lightbox, which scroll their own content natively.
-      ScrollTrigger.normalizeScroll({ allowNestedScroll: true });
-    }
     return null;
   }
 
@@ -87,8 +83,8 @@ export function setupScrollTriggerRefresh() {
   // on those is what was corrupting the pinned video-reveal mid-scroll on
   // mobile (it kept re-measuring the pin against a moving target). Only a
   // real layout change (width change, i.e. orientation/window resize)
-  // should trigger a refresh; ScrollTrigger.normalizeScroll already handles
-  // the address-bar case on touch devices.
+  // should trigger a refresh; the address-bar case is handled below instead,
+  // tied to the user's first scroll rather than every resize event.
   let lastWidth = window.innerWidth;
   let resizeTimer: ReturnType<typeof setTimeout>;
   const onResize = () => {
@@ -99,11 +95,27 @@ export function setupScrollTriggerRefresh() {
   };
   window.addEventListener("resize", onResize);
 
+  // On mobile, the address bar only collapses once the user actually starts
+  // scrolling — so every timer above can fire before that happens, measuring
+  // pins (like the video reveal) against a viewport that's about to grow.
+  // One refresh shortly after the very first scroll catches it right after
+  // that collapse animation finishes, while the user is still in the hero —
+  // well before they've scrolled far enough to reach a pinned section, so
+  // it never fires mid-pin.
+  let firstScrollTimer: ReturnType<typeof setTimeout>;
+  const onFirstScroll = () => {
+    window.removeEventListener("scroll", onFirstScroll);
+    firstScrollTimer = setTimeout(refresh, 350);
+  };
+  window.addEventListener("scroll", onFirstScroll, { passive: true });
+
   return () => {
     timers.forEach(clearTimeout);
     clearTimeout(resizeTimer);
+    clearTimeout(firstScrollTimer);
     window.removeEventListener("load", refresh);
     window.removeEventListener("resize", onResize);
+    window.removeEventListener("scroll", onFirstScroll);
   };
 }
 
