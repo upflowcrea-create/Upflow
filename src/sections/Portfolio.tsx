@@ -4,6 +4,7 @@ import { RevealText } from "../components/RevealText";
 import { useScrollReveal } from "../hooks/useScrollReveal";
 import { useScrollLock } from "../hooks/useScrollLock";
 import { useTilt } from "../hooks/useTilt";
+import { useMediaQuery } from "../hooks/useMediaQuery";
 import { gsap, getLenis } from "../lib/smoothScroll";
 import { PORTFOLIO_ITEMS } from "../lib/config";
 
@@ -17,6 +18,27 @@ function PortfolioCard({
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const mediaRef = useRef<HTMLDivElement | null>(null);
   const tiltRef = useTilt<HTMLButtonElement>(9);
+  const isTouch = useMediaQuery("(pointer: coarse)");
+
+  // Touch devices have no hover, so the preview never autoplayed — instead,
+  // play it while the card is mostly in view (like a feed preview) and pause
+  // once it scrolls away, so battery/bandwidth aren't spent off-screen.
+  useEffect(() => {
+    if (!isTouch) return;
+    const media = mediaRef.current;
+    const video = videoRef.current;
+    if (!media || !video) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) video.play().catch(() => {});
+        else video.pause();
+      },
+      { threshold: 0.6 },
+    );
+    observer.observe(media);
+    return () => observer.disconnect();
+  }, [isTouch]);
 
   return (
     <button

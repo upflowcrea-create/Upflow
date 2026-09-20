@@ -12,6 +12,12 @@ export function initSmoothScroll() {
   const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   const isTouch = window.matchMedia("(pointer: coarse)").matches;
 
+  // Without this, a dropped frame (common on lower-end phones) makes GSAP's
+  // ticker "catch up" on the next tick, producing a visible stutter in every
+  // timed animation on the page. Scroll-driven work isn't affected either
+  // way since it's driven by scroll position, not ticker time.
+  gsap.ticker.lagSmoothing(0);
+
   // On touch devices we keep native scrolling (better feel + battery) but still
   // drive GSAP ScrollTrigger off the native scroll position.
   if (prefersReducedMotion || isTouch) {
@@ -21,8 +27,10 @@ export function initSmoothScroll() {
       // hides/shows mid-scroll, which desyncs ScrollTrigger's pin math
       // (a pinned section — like the video reveal — stalls partway through
       // its scrub animation instead of completing). This is GSAP's own
-      // fix for exactly that class of mobile pinning bug.
-      ScrollTrigger.normalizeScroll(true);
+      // fix for exactly that class of mobile pinning bug. allowNestedScroll
+      // keeps it from hijacking touch scroll inside the booking modal and
+      // the portfolio lightbox, which scroll their own content natively.
+      ScrollTrigger.normalizeScroll({ allowNestedScroll: true });
     }
     return null;
   }
@@ -39,7 +47,6 @@ export function initSmoothScroll() {
   gsap.ticker.add((time) => {
     lenis?.raf(time * 1000);
   });
-  gsap.ticker.lagSmoothing(0);
 
   return lenis;
 }
@@ -75,8 +82,18 @@ export function setupScrollTriggerRefresh() {
   window.addEventListener("load", refresh);
   document.fonts?.ready?.then(refresh).catch(() => {});
 
+  // Mobile browsers fire "resize" purely from the address bar hiding/showing
+  // while scrolling — the width never changes, only the height. Refreshing
+  // on those is what was corrupting the pinned video-reveal mid-scroll on
+  // mobile (it kept re-measuring the pin against a moving target). Only a
+  // real layout change (width change, i.e. orientation/window resize)
+  // should trigger a refresh; ScrollTrigger.normalizeScroll already handles
+  // the address-bar case on touch devices.
+  let lastWidth = window.innerWidth;
   let resizeTimer: ReturnType<typeof setTimeout>;
   const onResize = () => {
+    if (window.innerWidth === lastWidth) return;
+    lastWidth = window.innerWidth;
     clearTimeout(resizeTimer);
     resizeTimer = setTimeout(refresh, 200);
   };
