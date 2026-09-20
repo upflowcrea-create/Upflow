@@ -856,12 +856,6 @@ ul {
   background: var(--gradient-main);
 }
 
-.portfolio__grid .portfolio-card:nth-child(3) .portfolio-card__placeholder { filter: hue-rotate(35deg); }
-.portfolio__grid .portfolio-card:nth-child(4) .portfolio-card__placeholder { filter: hue-rotate(-30deg); }
-.portfolio__grid .portfolio-card:nth-child(5) .portfolio-card__placeholder { filter: hue-rotate(60deg) saturate(1.2); }
-.portfolio__grid .portfolio-card:nth-child(6) .portfolio-card__placeholder { filter: hue-rotate(-60deg); }
-.portfolio__grid .portfolio-card:nth-child(7) .portfolio-card__placeholder { filter: hue-rotate(15deg) saturate(0.9); }
-
 .portfolio-card__overlay {
   position: absolute;
   inset: 0;

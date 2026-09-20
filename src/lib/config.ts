@@ -103,6 +103,17 @@ export type PortfolioItem = {
 
 export const PORTFOLIO_ITEMS: PortfolioItem[] = [
   {
+    id: "lendy",
+    title: "Lendy — Vidéo de lancement",
+    category: "MOTION / APP",
+    description:
+      "Lendy, une appli qui se lance avec un principe simple : louer du matériel multimédia entre particuliers pour créer du contenu. J'ai réalisé leur vidéo de présentation, du concept à l'animation.",
+    video: "assets/portfolio/lendy/video.mp4",
+    videoWebm: "assets/portfolio/lendy/video.webm",
+    poster: "assets/portfolio/lendy/poster.jpg",
+    featured: true,
+  },
+  {
     id: "rendup",
     title: "RendUp — Vidéo de marque",
     category: "3D / MOCKUP",
@@ -170,12 +181,6 @@ export const PORTFOLIO_ITEMS: PortfolioItem[] = [
     ],
     featured: true,
   },
-  { id: "p1", title: "Nova — Sport App", category: "MOTION / SPORT" },
-  { id: "p2", title: "Fluxa — SaaS Onboarding", category: "SaaS / EXPLICATIVE" },
-  { id: "p3", title: "Origin — Product Reveal", category: "3D" },
-  { id: "p4", title: "Byte — Ads Campaign", category: "ADVERTISING" },
-  { id: "p5", title: "Vela — Brand Film", category: "MOTION" },
-  { id: "p6", title: "Kairo — App Launch", category: "3D / SaaS" },
 ];
 
 // ---------------------------------------------------------------------------
