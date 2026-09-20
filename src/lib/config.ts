@@ -161,6 +161,12 @@ export const PORTFOLIO_ITEMS: PortfolioItem[] = [
         videoWebm: "assets/portfolio/winter-classique/video.webm",
         poster: "assets/portfolio/winter-classique/poster.jpg",
       },
+      {
+        label: "Les animations diffusées en direct sur les écrans",
+        video: "assets/portfolio/winter-classique/animations-live.mp4",
+        videoWebm: "assets/portfolio/winter-classique/animations-live.webm",
+        poster: "assets/portfolio/winter-classique/animations-live-poster.jpg",
+      },
     ],
     featured: true,
   },
