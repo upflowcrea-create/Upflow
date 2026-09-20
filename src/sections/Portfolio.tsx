@@ -266,8 +266,8 @@ export function Portfolio() {
 
               {active.photos && (
                 <div className="lightbox__photos">
-                  {active.photos.map((src) => (
-                    <img key={src} src={src} alt="" loading="lazy" />
+                  {active.photos.map((src, i) => (
+                    <img key={src} src={src} alt={`${active.title} — photo ${i + 1}`} loading="lazy" />
                   ))}
                 </div>
               )}

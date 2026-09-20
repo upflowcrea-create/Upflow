@@ -4,7 +4,7 @@
 
 export const BRAND = {
   name: "UPFLOW",
-  tagline: "MOTION / 3D / VIDEO",
+  tagline: "MOTION DESIGN / 3D / VIDÉO",
 };
 
 export const CONTACT = {
