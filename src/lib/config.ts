@@ -134,20 +134,21 @@ export const PORTFOLIO_ITEMS: PortfolioItem[] = [
     category: "ÉVÉNEMENTIEL / LIVE",
     description:
       "Un événement basket organisé par Adidas et UNLOCKED, en collaboration avec Wingstop, réunissant les meilleurs joueurs U21 de France. J'ai réalisé la vidéo teaser de promotion de l'event et géré la diffusion des animations sur l'écran géant en direct.",
-    video: "assets/portfolio/winter-classique/video.mp4",
-    videoWebm: "assets/portfolio/winter-classique/video.webm",
-    poster: "assets/portfolio/winter-classique/poster.jpg",
+    video: "assets/portfolio/winter-classique/screen-clip.mp4",
+    videoWebm: "assets/portfolio/winter-classique/screen-clip.webm",
+    poster: "assets/portfolio/winter-classique/screen-clip-poster.jpg",
     photos: [
       "assets/portfolio/winter-classique/photo-1.jpg",
       "assets/portfolio/winter-classique/photo-2.jpg",
       "assets/portfolio/winter-classique/photo-3.jpg",
+      "assets/portfolio/winter-classique/photo-4.jpg",
     ],
     extraVideos: [
       {
-        label: "Diffusée en direct sur l'écran géant",
-        video: "assets/portfolio/winter-classique/screen-clip.mp4",
-        videoWebm: "assets/portfolio/winter-classique/screen-clip.webm",
-        poster: "assets/portfolio/winter-classique/screen-clip-poster.jpg",
+        label: "La vidéo teaser de promotion de l'event",
+        video: "assets/portfolio/winter-classique/video.mp4",
+        videoWebm: "assets/portfolio/winter-classique/video.webm",
+        poster: "assets/portfolio/winter-classique/poster.jpg",
       },
     ],
   },
