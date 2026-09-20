@@ -24,7 +24,6 @@ function ServiceCard({ service, index, onCta }: { service: (typeof SERVICES)[num
       const desc = card.querySelector(".service-card__desc");
       const usage = card.querySelectorAll(".service-card__usage li");
       const tags = card.querySelectorAll(".tag-pill");
-      const note = card.querySelector(".service-card__note");
       const cta = card.querySelector(".service-card__cta");
 
       const tl = gsap.timeline({ scrollTrigger: { trigger: card, start: "top 82%" } });
@@ -59,10 +58,6 @@ function ServiceCard({ service, index, onCta }: { service: (typeof SERVICES)[num
           { autoAlpha: 1, scale: 1, y: 0, duration: 0.5, stagger: 0.06, ease: "back.out(2)" },
           "-=0.3",
         );
-
-      if (note) {
-        tl.fromTo(note, { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.4 }, "-=0.2");
-      }
 
       tl.fromTo(
         cta,
@@ -103,8 +98,6 @@ function ServiceCard({ service, index, onCta }: { service: (typeof SERVICES)[num
             </span>
           ))}
         </div>
-
-        {service.note && <p className="service-card__note">{service.note}</p>}
 
         <button className="btn btn-primary service-card__cta" onClick={onCta}>
           {service.cta}

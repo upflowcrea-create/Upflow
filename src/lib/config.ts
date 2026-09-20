@@ -225,8 +225,7 @@ export const SERVICES = [
     title: ["3 VIDÉOS.", "PLUS D'ANGLES.", "PLUS DE POSSIBILITÉS."],
     description: "Des vidéos courtes pensées pour présenter un problème, votre solution et votre valeur.",
     usage: ["HOOK", "PROBLÈME", "SOLUTION", "CTA"],
-    tags: ["PACK 3 — 750€", "PACK 5 — 1 100€"],
-    note: "Tarifs de lancement.",
+    tags: ["Motion Design", "3D", "Multi-formats"],
     cta: "LANCER UNE CAMPAGNE →",
   },
 ];

@@ -1259,13 +1259,6 @@ ul {
   border: 1px solid rgba(255, 46, 147, 0.25);
 }
 
-.service-card__note {
-  font-size: 0.85rem;
-  color: rgba(244, 238, 252, 0.5);
-  margin-bottom: 1rem;
-  font-style: italic;
-}
-
 @media (max-width: 900px) {
   .services__intro-grid {
     grid-template-columns: 1fr;
