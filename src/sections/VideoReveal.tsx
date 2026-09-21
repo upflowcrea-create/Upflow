@@ -1,0 +1,198 @@
+import { useEffect, useRef, useState } from "react";
+import { Play } from "lucide-react";
+import { gsap } from "../lib/smoothScroll";
+import { useIsMobile, usePrefersReducedMotion } from "../hooks/useMediaQuery";
+import { isTouchDevice } from "../lib/device";
+import { ASSETS } from "../lib/config";
+
+export function VideoReveal() {
+  const sectionRef = useRef<HTMLElement | null>(null);
+  const frameRef = useRef<HTMLDivElement | null>(null);
+  const textRef = useRef<HTMLDivElement | null>(null);
+  const videoRef = useRef<HTMLVideoElement | null>(null);
+  const vignetteRef = useRef<HTMLDivElement | null>(null);
+
+  const [videoAvailable, setVideoAvailable] = useState(true);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const isMobile = useIsMobile();
+  const reducedMotion = usePrefersReducedMotion();
+
+  useEffect(() => {
+    const section = sectionRef.current;
+    const frame = frameRef.current;
+    const text = textRef.current;
+    const video = videoRef.current;
+    const vignette = vignetteRef.current;
+    if (!section || !frame || !text) return;
+
+    // Mobile keeps the frame locked to 16:9 (the video's real aspect ratio)
+    // instead of stretching its height toward the portrait viewport — that
+    // stretch was forcing a tall, heavily-cropped frame and made the "zoom"
+    // look broken. Only width is animated; height follows automatically via
+    // the CSS aspect-ratio below (GSAP can't reliably tween a calc() height).
+    const end = isMobile ? { w: "94vw", radius: 16 } : { w: "96vw", h: "92svh", radius: 14 };
+    const start = isMobile ? { w: "82vw", radius: 24 } : { w: "52vw", h: "42svh", radius: 32 };
+
+    // Blurring a live, playing <video> forces the browser to re-filter every
+    // decoded frame — on a phone GPU that's often enough on its own to make
+    // the scrub feel like it's stalling. Touch devices keep the zoom (cheap:
+    // transform/width) and drop the blur specifically on the video element.
+    const touch = isTouchDevice();
+
+    const ctx = gsap.context(() => {
+      const words = text.querySelectorAll(".eyebrow, .video-section__title");
+
+      if (isMobile) gsap.set(frame, { aspectRatio: "16 / 9", height: "auto" });
+
+      if (reducedMotion) {
+        gsap.set(frame, { width: end.w, height: "h" in end ? end.h : "auto", borderRadius: end.radius });
+        gsap.set(words, { autoAlpha: 1, y: 0 });
+        return;
+      }
+
+      gsap.set(frame, { width: start.w, height: "h" in start ? start.h : "auto", borderRadius: start.radius });
+      if (video) gsap.set(video, touch ? { scale: 1.22 } : { scale: 1.22, filter: "blur(6px)" });
+      if (vignette) gsap.set(vignette, { autoAlpha: 1 });
+
+      // Entrance: kicker + title reveal as the section comes into view.
+      gsap.fromTo(
+        words,
+        touch ? { autoAlpha: 0, y: 36 } : { autoAlpha: 0, y: 36, filter: "blur(8px)" },
+        {
+          autoAlpha: 1,
+          y: 0,
+          ...(touch ? {} : { filter: "blur(0px)" }),
+          duration: 0.9,
+          stagger: 0.12,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: section,
+            start: "top 80%",
+          },
+        },
+      );
+
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: section,
+          start: "top top",
+          end: "+=120%",
+          scrub: 0.8,
+          pin: true,
+          anticipatePin: 1,
+        },
+      });
+
+      tl.to(text, { autoAlpha: 0, yPercent: -30, duration: 0.35, ease: "power1.out" }, 0).to(
+        frame,
+        {
+          width: end.w,
+          ...("h" in end ? { height: end.h } : {}),
+          borderRadius: end.radius,
+          duration: 1,
+          ease: "power2.inOut",
+        },
+        0.05,
+      );
+
+      if (video) {
+        tl.to(video, { scale: 1, ...(touch ? {} : { filter: "blur(0px)" }), duration: 1, ease: "power2.inOut" }, 0.05);
+      }
+      if (vignette) {
+        tl.to(vignette, { autoAlpha: 0, duration: 0.9, ease: "power1.inOut" }, 0.1);
+      }
+    }, section);
+
+    return () => ctx.revert();
+  }, [isMobile, reducedMotion]);
+
+  // Pausing/resuming the video based on visibility fought with the pin: the
+  // moment the section starts intersecting is also the moment ScrollTrigger
+  // pins it (switching it to position:fixed), which briefly changes its
+  // measured intersection ratio and fired an immediate, unwanted pause()
+  // right as playback was starting — aborting its own load. Plain autoPlay
+  // (below) is simpler and doesn't fight the pin.
+  //
+  // A slow or interrupted connection can still leave it stuck buffering
+  // without ever firing a real error — fall back to the placeholder if it
+  // hasn't actually started playing within a generous window of mounting.
+  // This needs real headroom: it mounts as soon as the page loads, while the
+  // ~4s preloader is still running and the user hasn't even scrolled to it
+  // yet, so an 8s timeout was firing almost as soon as they arrived — right
+  // when it looked like "the video disappears when the zoom happens".
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video || !videoAvailable) return;
+
+    const timer = window.setTimeout(() => {
+      if (video.currentTime === 0) setVideoAvailable(false);
+    }, 20000);
+    const clear = () => window.clearTimeout(timer);
+    video.addEventListener("playing", clear);
+    video.addEventListener("timeupdate", clear);
+
+    return () => {
+      clear();
+      video.removeEventListener("playing", clear);
+      video.removeEventListener("timeupdate", clear);
+    };
+  }, [videoAvailable]);
+
+  const togglePlay = () => {
+    const v = videoRef.current;
+    if (!v) return;
+    if (v.paused) {
+      v.play();
+      setIsPlaying(true);
+    } else {
+      v.pause();
+      setIsPlaying(false);
+    }
+  };
+
+  return (
+    <section id="video" ref={sectionRef} className="video-section">
+      <div className="video-section__inner">
+        <div ref={textRef} className="video-section__text">
+          <p className="eyebrow">C'est moi. C'est UPFLOW.</p>
+          <h2 className="video-section__title">30 secondes pour tout comprendre.</h2>
+        </div>
+
+        <div ref={frameRef} className="video-frame">
+          {videoAvailable ? (
+            <video
+              ref={videoRef}
+              className="video-frame__video"
+              poster={ASSETS.introPoster}
+              playsInline
+              autoPlay
+              muted
+              controls={isPlaying}
+              onError={() => setVideoAvailable(false)}
+              onPlay={() => setIsPlaying(true)}
+              onPause={() => setIsPlaying(false)}
+            >
+              {/* Safari doesn't support WebM/VP9 at all — a multi-source
+                  video element with an unsupported first source has been
+                  known to make Safari misbehave on resource selection, so
+                  it only gets the one format every browser can play. */}
+              <source src={ASSETS.introVideo} type="video/mp4" />
+            </video>
+          ) : (
+            <div className="video-frame__placeholder">
+              <span className="video-frame__placeholder-text">Vidéo de présentation UPFLOW</span>
+            </div>
+          )}
+
+          {!isPlaying && (
+            <button className="video-frame__play" onClick={togglePlay} aria-label="Lire la vidéo">
+              <Play size={28} fill="currentColor" strokeWidth={0} />
+            </button>
+          )}
+
+          <div ref={vignetteRef} className="video-frame__vignette" aria-hidden="true" />
+        </div>
+      </div>
+    </section>
+  );
+}
