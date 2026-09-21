@@ -1,6 +1,7 @@
 import { useEffect, useRef } from "react";
 import type { ElementType, ReactNode } from "react";
 import { gsap, ScrollTrigger } from "../lib/smoothScroll";
+import { isTouchDevice } from "../lib/device";
 import clsx from "clsx";
 
 type Props = {
@@ -25,14 +26,18 @@ export function RevealText({ children, as: Tag = "div", className, delay = 0 }: 
 
     const words = el.querySelectorAll<HTMLElement>(".reveal-word");
 
+    // Filter (blur) animations are much cheaper to skip than to render well
+    // on a phone GPU, especially staggered across every word in a heading.
+    const touch = isTouchDevice();
+
     const ctx = gsap.context(() => {
       gsap.fromTo(
         words,
-        { autoAlpha: 0, yPercent: 110, filter: "blur(14px)" },
+        touch ? { autoAlpha: 0, yPercent: 110 } : { autoAlpha: 0, yPercent: 110, filter: "blur(14px)" },
         {
           autoAlpha: 1,
           yPercent: 0,
-          filter: "blur(0px)",
+          ...(touch ? {} : { filter: "blur(0px)" }),
           duration: 1,
           delay,
           stagger: 0.045,

@@ -4,6 +4,7 @@ import { gsap } from "../lib/smoothScroll";
 import { getLenis } from "../lib/smoothScroll";
 import { useMagnetic } from "../hooks/useMagnetic";
 import { useIsMobile, usePrefersReducedMotion } from "../hooks/useMediaQuery";
+import { isTouchDevice } from "../lib/device";
 import { BRAND } from "../lib/config";
 
 function scrollTo(selector: string) {
@@ -25,6 +26,8 @@ export function Hero({ onBookCall, ready }: { onBookCall: () => void; ready: boo
     const el = rootRef.current;
     if (!el || !ready) return;
 
+    const touch = isTouchDevice();
+
     const ctx = gsap.context(() => {
       const words = el.querySelectorAll(".hero-word");
       const tl = gsap.timeline({ delay: 0.1 });
@@ -36,11 +39,11 @@ export function Hero({ onBookCall, ready }: { onBookCall: () => void; ready: boo
       )
         .fromTo(
           words,
-          { autoAlpha: 0, yPercent: 120, filter: "blur(16px)" },
+          touch ? { autoAlpha: 0, yPercent: 120 } : { autoAlpha: 0, yPercent: 120, filter: "blur(16px)" },
           {
             autoAlpha: 1,
             yPercent: 0,
-            filter: "blur(0px)",
+            ...(touch ? {} : { filter: "blur(0px)" }),
             duration: 1.1,
             stagger: 0.05,
             ease: "power4.out",

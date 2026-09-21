@@ -1,6 +1,7 @@
 import { useEffect, useRef } from "react";
 import { gsap } from "../lib/smoothScroll";
 import { usePrefersReducedMotion } from "../hooks/useMediaQuery";
+import { isTouchDevice } from "../lib/device";
 import { RevealText } from "../components/RevealText";
 import { SERVICES } from "../lib/config";
 
@@ -26,6 +27,7 @@ function ServiceCard({ service, index, onCta }: { service: (typeof SERVICES)[num
       const tags = card.querySelectorAll(".tag-pill");
       const cta = card.querySelector(".service-card__cta");
 
+      const touch = isTouchDevice();
       const tl = gsap.timeline({ scrollTrigger: { trigger: card, start: "top 82%" } });
 
       tl.fromTo(
@@ -41,8 +43,15 @@ function ServiceCard({ service, index, onCta }: { service: (typeof SERVICES)[num
         )
         .fromTo(
           titleLines,
-          { autoAlpha: 0, yPercent: 100, filter: "blur(10px)" },
-          { autoAlpha: 1, yPercent: 0, filter: "blur(0px)", duration: 0.7, stagger: 0.08, ease: "power3.out" },
+          touch ? { autoAlpha: 0, yPercent: 100 } : { autoAlpha: 0, yPercent: 100, filter: "blur(10px)" },
+          {
+            autoAlpha: 1,
+            yPercent: 0,
+            ...(touch ? {} : { filter: "blur(0px)" }),
+            duration: 0.7,
+            stagger: 0.08,
+            ease: "power3.out",
+          },
           "-=0.55",
         )
         .fromTo(desc, { autoAlpha: 0, y: 16 }, { autoAlpha: 1, y: 0, duration: 0.6, ease: "power2.out" }, "-=0.4")

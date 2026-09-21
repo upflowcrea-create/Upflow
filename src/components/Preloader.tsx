@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { gsap } from "../lib/smoothScroll";
 import { usePrefersReducedMotion } from "../hooks/useMediaQuery";
 import { useScrollLock } from "../hooks/useScrollLock";
+import { isTouchDevice } from "../lib/device";
 
 const BRAND_WORDS = ["UP", "YOUR", "FLOW"];
 
@@ -46,15 +47,16 @@ export function Preloader({ onDone }: { onDone: () => void }) {
       };
     };
 
+    const touch = isTouchDevice();
     const tl = gsap.timeline({ onComplete: () => setTimeout(startExit, 120) });
 
     tl.fromTo(
       root.querySelectorAll(".preloader__brand-word"),
-      { autoAlpha: 0, yPercent: 100, filter: "blur(10px)" },
+      touch ? { autoAlpha: 0, yPercent: 100 } : { autoAlpha: 0, yPercent: 100, filter: "blur(10px)" },
       {
         autoAlpha: 1,
         yPercent: 0,
-        filter: "blur(0px)",
+        ...(touch ? {} : { filter: "blur(0px)" }),
         duration: brandDuration,
         stagger: 0.08,
         ease: "power3.out",

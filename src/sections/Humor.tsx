@@ -1,6 +1,7 @@
 import { useEffect, useRef } from "react";
 import { gsap } from "../lib/smoothScroll";
 import { useMagnetic } from "../hooks/useMagnetic";
+import { isTouchDevice } from "../lib/device";
 
 export function Humor({ onCta }: { onCta: () => void }) {
   const rootRef = useRef<HTMLDivElement | null>(null);
@@ -10,14 +11,16 @@ export function Humor({ onCta }: { onCta: () => void }) {
     const el = rootRef.current;
     if (!el) return;
 
+    const touch = isTouchDevice();
+
     const ctx = gsap.context(() => {
       gsap.fromTo(
         ".humor__line1 .reveal-word",
-        { autoAlpha: 0, y: 20, filter: "blur(8px)" },
+        touch ? { autoAlpha: 0, y: 20 } : { autoAlpha: 0, y: 20, filter: "blur(8px)" },
         {
           autoAlpha: 1,
           y: 0,
-          filter: "blur(0px)",
+          ...(touch ? {} : { filter: "blur(0px)" }),
           duration: 0.7,
           stagger: 0.05,
           ease: "power3.out",
@@ -30,11 +33,11 @@ export function Humor({ onCta }: { onCta: () => void }) {
         .fromTo(".humor__or", { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.4 })
         .fromTo(
           ".humor__video-word",
-          { scale: 0.4, autoAlpha: 0, filter: "blur(20px)", rotate: -6 },
+          touch ? { scale: 0.4, autoAlpha: 0, rotate: -6 } : { scale: 0.4, autoAlpha: 0, filter: "blur(20px)", rotate: -6 },
           {
             scale: 1,
             autoAlpha: 1,
-            filter: "blur(0px)",
+            ...(touch ? {} : { filter: "blur(0px)" }),
             rotate: 0,
             duration: 0.9,
             ease: "elastic.out(1, 0.55)",
