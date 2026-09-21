@@ -106,24 +106,50 @@ export function VideoReveal() {
     return () => ctx.revert();
   }, [isMobile, reducedMotion]);
 
-  // Pause the video once it's scrolled well out of view instead of leaving
-  // it decoding in the background for the rest of its ~45s runtime — one
-  // less thing competing for the GPU/CPU while the user scrolls elsewhere.
+  // The video only starts loading once it's actually about to be seen (see
+  // preload="none" below), so it doesn't compete for bandwidth with the
+  // initial page load. This pauses it again once scrolled well out of view
+  // instead of leaving it decoding in the background for the rest of its
+  // ~45s runtime, and falls back to the placeholder if a slow or interrupted
+  // connection leaves it stuck buffering for more than a few seconds without
+  // ever firing an actual error.
   useEffect(() => {
     const section = sectionRef.current;
     const video = videoRef.current;
-    if (!section || !video) return;
+    if (!section || !video || !videoAvailable) return;
 
-    const observer = new IntersectionObserver(([entry]) => {
-      if (entry.isIntersecting) {
-        if (!video.ended) video.play().catch(() => {});
-      } else {
-        video.pause();
-      }
-    }, { threshold: 0 });
+    let stallTimer: ReturnType<typeof setTimeout> | null = null;
+    const clearStallTimer = () => {
+      if (stallTimer) window.clearTimeout(stallTimer);
+      stallTimer = null;
+    };
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          if (!video.ended) video.play().catch(() => {});
+          if (!stallTimer && video.currentTime === 0) {
+            stallTimer = window.setTimeout(() => {
+              if (video.currentTime === 0) setVideoAvailable(false);
+            }, 6000);
+          }
+        } else {
+          video.pause();
+        }
+      },
+      { threshold: 0 },
+    );
     observer.observe(section);
-    return () => observer.disconnect();
-  }, []);
+    video.addEventListener("playing", clearStallTimer);
+    video.addEventListener("timeupdate", clearStallTimer);
+
+    return () => {
+      observer.disconnect();
+      clearStallTimer();
+      video.removeEventListener("playing", clearStallTimer);
+      video.removeEventListener("timeupdate", clearStallTimer);
+    };
+  }, [videoAvailable]);
 
   const togglePlay = () => {
     const v = videoRef.current;
@@ -152,7 +178,7 @@ export function VideoReveal() {
               className="video-frame__video"
               poster={ASSETS.introPoster}
               playsInline
-              autoPlay
+              preload="none"
               muted
               controls={isPlaying}
               onError={() => setVideoAvailable(false)}

@@ -48,7 +48,24 @@ export function Preloader({ onDone }: { onDone: () => void }) {
     };
 
     const touch = isTouchDevice();
-    const tl = gsap.timeline({ onComplete: () => setTimeout(startExit, 120) });
+
+    // Safety net: whatever might stall the timeline on a given device (a
+    // throttled tab, a dropped ticker frame, anything we haven't hit in
+    // testing), the site must never be stuck showing 0% forever. Force the
+    // exit once this fires if the timeline hasn't finished naturally.
+    let exited = false;
+    const finishOnce = () => {
+      if (exited) return;
+      exited = true;
+      clearTimeout(safetyTimer);
+      setTimeout(startExit, 120);
+    };
+    const safetyTimer = setTimeout(() => {
+      tl.kill();
+      finishOnce();
+    }, 6000);
+
+    const tl = gsap.timeline({ onComplete: finishOnce });
 
     tl.fromTo(
       root.querySelectorAll(".preloader__brand-word"),
@@ -82,6 +99,8 @@ export function Preloader({ onDone }: { onDone: () => void }) {
       );
 
     return () => {
+      exited = true;
+      clearTimeout(safetyTimer);
       tl.kill();
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps

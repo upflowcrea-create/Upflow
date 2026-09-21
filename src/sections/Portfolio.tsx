@@ -34,7 +34,7 @@ function PortfolioCard({
         if (entry.isIntersecting) video.play().catch(() => {});
         else video.pause();
       },
-      { threshold: 0.6 },
+      { threshold: 0.4 },
     );
     observer.observe(media);
     return () => observer.disconnect();
@@ -50,7 +50,14 @@ function PortfolioCard({
     >
       <div ref={mediaRef} className="portfolio-card__media">
         {item.video ? (
-          <video ref={videoRef} poster={item.poster} muted loop playsInline preload="metadata">
+          <video
+            ref={videoRef}
+            poster={item.poster}
+            muted
+            loop
+            playsInline
+            preload={isTouch ? "none" : "metadata"}
+          >
             {item.videoWebm && <source src={item.videoWebm} type="video/webm" />}
             <source src={item.video} type="video/mp4" />
           </video>
