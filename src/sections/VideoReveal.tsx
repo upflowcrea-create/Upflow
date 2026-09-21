@@ -106,48 +106,31 @@ export function VideoReveal() {
     return () => ctx.revert();
   }, [isMobile, reducedMotion]);
 
-  // The video only starts loading once it's actually about to be seen (see
-  // preload="none" below), so it doesn't compete for bandwidth with the
-  // initial page load. This pauses it again once scrolled well out of view
-  // instead of leaving it decoding in the background for the rest of its
-  // ~45s runtime, and falls back to the placeholder if a slow or interrupted
-  // connection leaves it stuck buffering for more than a few seconds without
-  // ever firing an actual error.
+  // Pausing/resuming the video based on visibility fought with the pin: the
+  // moment the section starts intersecting is also the moment ScrollTrigger
+  // pins it (switching it to position:fixed), which briefly changes its
+  // measured intersection ratio and fired an immediate, unwanted pause()
+  // right as playback was starting — aborting its own load. Plain autoPlay
+  // (below) is simpler and doesn't fight the pin.
+  //
+  // A slow or interrupted connection can still leave it stuck buffering
+  // without ever firing a real error — fall back to the placeholder if it
+  // hasn't actually started playing within a few seconds of mounting.
   useEffect(() => {
-    const section = sectionRef.current;
     const video = videoRef.current;
-    if (!section || !video || !videoAvailable) return;
+    if (!video || !videoAvailable) return;
 
-    let stallTimer: ReturnType<typeof setTimeout> | null = null;
-    const clearStallTimer = () => {
-      if (stallTimer) window.clearTimeout(stallTimer);
-      stallTimer = null;
-    };
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          if (!video.ended) video.play().catch(() => {});
-          if (!stallTimer && video.currentTime === 0) {
-            stallTimer = window.setTimeout(() => {
-              if (video.currentTime === 0) setVideoAvailable(false);
-            }, 6000);
-          }
-        } else {
-          video.pause();
-        }
-      },
-      { threshold: 0 },
-    );
-    observer.observe(section);
-    video.addEventListener("playing", clearStallTimer);
-    video.addEventListener("timeupdate", clearStallTimer);
+    const timer = window.setTimeout(() => {
+      if (video.currentTime === 0) setVideoAvailable(false);
+    }, 8000);
+    const clear = () => window.clearTimeout(timer);
+    video.addEventListener("playing", clear);
+    video.addEventListener("timeupdate", clear);
 
     return () => {
-      observer.disconnect();
-      clearStallTimer();
-      video.removeEventListener("playing", clearStallTimer);
-      video.removeEventListener("timeupdate", clearStallTimer);
+      clear();
+      video.removeEventListener("playing", clear);
+      video.removeEventListener("timeupdate", clear);
     };
   }, [videoAvailable]);
 
@@ -178,14 +161,17 @@ export function VideoReveal() {
               className="video-frame__video"
               poster={ASSETS.introPoster}
               playsInline
-              preload="none"
+              autoPlay
               muted
               controls={isPlaying}
               onError={() => setVideoAvailable(false)}
               onPlay={() => setIsPlaying(true)}
               onPause={() => setIsPlaying(false)}
             >
-              <source src={ASSETS.introVideoWebm} type="video/webm" />
+              {/* Safari doesn't support WebM/VP9 at all — a multi-source
+                  video element with an unsupported first source has been
+                  known to make Safari misbehave on resource selection, so
+                  it only gets the one format every browser can play. */}
               <source src={ASSETS.introVideo} type="video/mp4" />
             </video>
           ) : (
