@@ -92,6 +92,10 @@ export type PortfolioItem = {
   category: string;
   video?: string;
   videoWebm?: string;
+  /** Lightweight, muted, no-audio variant for the small grid-card preview
+   * (the full `video` is used in the lightbox where it's shown full-screen).
+   * Falls back to `video` when a project's source footage is already small. */
+  previewVideo?: string;
   poster?: string;
   photos?: string[];
   extraVideos?: { video: string; videoWebm?: string; poster?: string; label?: string }[];
@@ -129,6 +133,7 @@ export const PORTFOLIO_ITEMS: PortfolioItem[] = [
       "Un tournoi de streetball en plein Paris, écran géant, et mes animations diffusées en direct pendant l'event : scores, noms des équipes, règles du jeu, moments forts. Le motion design, en temps réel.",
     video: "assets/portfolio/event-adidas-bucket/video.mp4",
     videoWebm: "assets/portfolio/event-adidas-bucket/video.webm",
+    previewVideo: "assets/portfolio/event-adidas-bucket/preview.mp4",
     poster: "assets/portfolio/event-adidas-bucket/poster.jpg",
     photos: [
       "assets/portfolio/event-adidas-bucket/photo-1.jpg",
@@ -153,6 +158,7 @@ export const PORTFOLIO_ITEMS: PortfolioItem[] = [
       "Un événement basket organisé par Adidas et UNLOCKED, en collaboration avec Wingstop, réunissant les meilleurs joueurs U21 de France. J'ai réalisé la vidéo teaser de promotion de l'event et géré la diffusion des animations sur l'écran géant en direct.",
     video: "assets/portfolio/winter-classique/screen-clip.mp4",
     videoWebm: "assets/portfolio/winter-classique/screen-clip.webm",
+    previewVideo: "assets/portfolio/winter-classique/preview.mp4",
     poster: "assets/portfolio/winter-classique/screen-clip-poster.jpg",
     photos: [
       "assets/portfolio/winter-classique/photo-1.jpg",

@@ -58,8 +58,7 @@ function PortfolioCard({
             playsInline
             preload={isTouch ? "none" : "metadata"}
           >
-            {item.videoWebm && <source src={item.videoWebm} type="video/webm" />}
-            <source src={item.video} type="video/mp4" />
+            <source src={item.previewVideo ?? item.video} type="video/mp4" />
           </video>
         ) : (
           <div className="portfolio-card__placeholder" />

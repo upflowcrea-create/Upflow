@@ -115,14 +115,18 @@ export function VideoReveal() {
   //
   // A slow or interrupted connection can still leave it stuck buffering
   // without ever firing a real error — fall back to the placeholder if it
-  // hasn't actually started playing within a few seconds of mounting.
+  // hasn't actually started playing within a generous window of mounting.
+  // This needs real headroom: it mounts as soon as the page loads, while the
+  // ~4s preloader is still running and the user hasn't even scrolled to it
+  // yet, so an 8s timeout was firing almost as soon as they arrived — right
+  // when it looked like "the video disappears when the zoom happens".
   useEffect(() => {
     const video = videoRef.current;
     if (!video || !videoAvailable) return;
 
     const timer = window.setTimeout(() => {
       if (video.currentTime === 0) setVideoAvailable(false);
-    }, 8000);
+    }, 20000);
     const clear = () => window.clearTimeout(timer);
     video.addEventListener("playing", clear);
     video.addEventListener("timeupdate", clear);
