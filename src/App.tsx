@@ -39,7 +39,7 @@ function App() {
         <Humor onCta={openBooking} />
         <Process />
         <Pricing onCta={openBooking} />
-        <FinalCta onBookCall={openBooking} />
+        <FinalCta />
       </main>
 
       <Footer />

@@ -431,12 +431,215 @@ ul {
   max-width: 40ch;
 }
 
-.final-cta__buttons {
-  margin-top: 1.2rem;
+.final-cta__title--accent {
+  background: var(--gradient-text);
+  background-size: 250% 250%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  animation: gradientTextShift 3.5s ease-in-out infinite;
+}
+
+.script-cta__grid {
+  width: 100%;
+  margin-top: 2.6rem;
+  display: grid;
+  grid-template-columns: 1.3fr auto 1fr;
+  align-items: stretch;
+  gap: 2rem;
+  max-width: 980px;
+  margin-inline: auto;
+  text-align: left;
+}
+
+.script-cta__panel {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(244, 238, 252, 0.12);
+  border-radius: var(--radius-lg);
+  padding: clamp(1.6rem, 3vw, 2.2rem);
+}
+
+.script-form {
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
+  gap: 1.1rem;
+}
+
+.script-form__field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.script-form__label {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.85rem;
+  color: var(--off-white);
+}
+
+.script-form input,
+.script-form textarea {
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  color: var(--off-white);
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(244, 238, 252, 0.18);
+  border-radius: var(--radius-sm);
+  padding: 0.85rem 1rem;
+  outline: none;
+  transition: border-color 0.2s;
+  color-scheme: dark;
+}
+
+.script-form input:focus,
+.script-form textarea:focus {
+  border-color: var(--pink);
+}
+
+.script-form textarea {
+  resize: vertical;
+  min-height: 12rem;
+  line-height: 1.5;
+}
+
+.script-form__hint {
+  font-size: 0.8rem;
+  color: rgba(244, 238, 252, 0.55);
+}
+
+.script-form__submit {
   justify-content: center;
-  gap: 1rem;
+  margin-top: 0.2rem;
+}
+
+.script-form__submit:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+  animation: none;
+}
+
+.script-form__spinner {
+  animation: spinnerRotate 0.8s linear infinite;
+}
+
+.script-form__error {
+  font-size: 0.85rem;
+  color: rgba(244, 238, 252, 0.7);
+  text-align: center;
+}
+
+.script-form__error a {
+  color: var(--pink-pastel);
+  text-decoration: underline;
+}
+
+.script-cta__success {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 0.9rem;
+  padding: 2.4rem 0.5rem;
+  color: var(--off-white);
+}
+
+.script-cta__success svg {
+  color: var(--pink);
+}
+
+.script-cta__success h3 {
+  font-size: 1.5rem;
+}
+
+.script-cta__success p {
+  color: rgba(244, 238, 252, 0.75);
+  max-width: 34ch;
+}
+
+.script-cta__divider {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.script-cta__divider::before,
+.script-cta__divider::after {
+  content: "";
+  flex: 1;
+  width: 1px;
+  min-height: 2rem;
+  background: rgba(244, 238, 252, 0.15);
+}
+
+.script-cta__divider span {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  color: rgba(244, 238, 252, 0.4);
+}
+
+.script-cta__whatsapp {
+  background: var(--gradient-main);
+  background-size: 220% 220%;
+  animation: gradientTextShift 4s ease-in-out infinite;
+  border-radius: var(--radius-lg);
+  padding: clamp(1.8rem, 3vw, 2.4rem);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 0.5rem;
+  color: var(--white);
+}
+
+.script-cta__whatsapp-icon {
+  margin-bottom: 0.4rem;
+}
+
+.script-cta__whatsapp-title {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 1.25rem;
+  line-height: 1.25;
+}
+
+.script-cta__whatsapp-sub {
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.script-cta__whatsapp-btn {
+  margin-top: 0.8rem;
+  background: rgba(255, 255, 255, 0.16);
+  border-color: rgba(255, 255, 255, 0.5);
+  color: var(--white);
+}
+
+.script-cta__whatsapp-btn:hover {
+  background: rgba(255, 255, 255, 0.26);
+  border-color: var(--white);
+}
+
+@media (max-width: 900px) {
+  .script-cta__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .script-cta__divider {
+    flex-direction: row;
+    padding-block: 0.2rem;
+  }
+
+  .script-cta__divider::before,
+  .script-cta__divider::after {
+    height: 1px;
+    width: auto;
+    min-height: 0;
+  }
 }
 
 /* ---------------------------------------------------------------------- */
