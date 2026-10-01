@@ -1,5 +1,6 @@
 import { useEffect, useRef } from "react";
 import { gsap, ScrollTrigger } from "../lib/smoothScroll";
+import { isTouchDevice } from "../lib/device";
 
 type RevealOptions = {
   y?: number;
@@ -23,15 +24,19 @@ export function useScrollReveal<T extends HTMLElement>(options: RevealOptions = 
 
     const { y = 40, blur = 10, duration = 1, stagger = 0.08, start = "top 82%", selector } = options;
     const targets = selector ? el.querySelectorAll(selector) : el;
+    // Filter animations are far costlier to composite than opacity/transform,
+    // especially on a phone GPU — touch devices keep the slide/fade and skip
+    // the blur instead of dropping frames trying to render it.
+    const touch = isTouchDevice();
 
     const ctx = gsap.context(() => {
       gsap.fromTo(
         targets,
-        { autoAlpha: 0, y, filter: `blur(${blur}px)` },
+        touch ? { autoAlpha: 0, y } : { autoAlpha: 0, y, filter: `blur(${blur}px)` },
         {
           autoAlpha: 1,
           y: 0,
-          filter: "blur(0px)",
+          ...(touch ? {} : { filter: "blur(0px)" }),
           duration,
           stagger,
           ease: "power3.out",
