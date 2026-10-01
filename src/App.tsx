@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 import { Navbar } from "./components/Navbar";
 import { Footer } from "./components/Footer";
-import { WhatsAppButton } from "./components/WhatsAppButton";
 import { Preloader } from "./components/Preloader";
+import { ScrollProgress } from "./components/ScrollProgress";
+import { Marquee } from "./components/Marquee";
 import { Hero } from "./sections/Hero";
 import { VideoReveal } from "./sections/VideoReveal";
 import { Services } from "./sections/Services";
@@ -31,11 +32,13 @@ function App() {
     <>
       <div className="grain-overlay" aria-hidden="true" />
       <Preloader onDone={() => setReady(true)} />
-      <Navbar onBookCall={openWhatsApp} />
+      <ScrollProgress />
+      <Navbar />
 
       <main>
         <Hero onBookCall={openWhatsApp} ready={ready} />
         <VideoReveal />
+        <Marquee />
         <Services onCta={openWhatsApp} />
         <Portfolio />
         <Humor onCta={openWhatsApp} />
@@ -45,7 +48,6 @@ function App() {
       </main>
 
       <Footer />
-      <WhatsAppButton />
     </>
   );
 }

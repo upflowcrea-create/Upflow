@@ -1,9 +1,9 @@
 import { RevealText } from "../components/RevealText";
-import { useScrollReveal } from "../hooks/useScrollReveal";
+import { useCardsReveal } from "../hooks/useCardsReveal";
 import { PRICING } from "../lib/config";
 
 export function Pricing({ onCta }: { onCta: () => void }) {
-  const gridRef = useScrollReveal<HTMLDivElement>({ selector: ".pricing-card", y: 30, blur: 8, stagger: 0.1 });
+  const gridRef = useCardsReveal<HTMLDivElement>(".pricing-card", 5);
 
   return (
     <section id="pricing" className="section pricing">

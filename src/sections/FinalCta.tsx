@@ -15,7 +15,6 @@ export function FinalCta() {
   const subRef = useScrollReveal<HTMLParagraphElement>({ y: 16, blur: 6 });
   const gridRef = useScrollReveal<HTMLDivElement>({ y: 30, blur: 8, start: "top 85%" });
   const waSendBtn = useMagnetic<HTMLAnchorElement>(0.2);
-  const waBtn = useMagnetic<HTMLAnchorElement>(0.25);
 
   const canSubmit = Boolean(script.trim() && phone.trim());
 
@@ -140,6 +139,14 @@ export function FinalCta() {
 
                 <p className="script-form__promise">On vous répond en moins de 48h, promis.</p>
 
+                <p className="script-form__question">
+                  Juste une question avant de vous lancer ?{" "}
+                  <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer">
+                    Écrivez-nous sur WhatsApp
+                  </a>
+                  , sans rien remplir.
+                </p>
+
                 {status === "error" && (
                   <p className="script-form__error">
                     Oups, l'envoi par email a échoué.{" "}
@@ -151,25 +158,6 @@ export function FinalCta() {
                 )}
               </form>
             )}
-          </div>
-
-          <div className="script-cta__divider" aria-hidden="true">
-            <span>OU</span>
-          </div>
-
-          <div className="script-cta__whatsapp">
-            <MessageCircle size={32} className="script-cta__whatsapp-icon" />
-            <p className="script-cta__whatsapp-title">Une question avant de vous lancer ?</p>
-            <p className="script-cta__whatsapp-sub">Pas besoin de remplir quoi que ce soit pour ça.</p>
-            <a
-              ref={waBtn}
-              className="btn btn-ghost script-cta__whatsapp-btn"
-              href={WHATSAPP_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Écrivez-nous sur WhatsApp →
-            </a>
           </div>
         </div>
       </div>

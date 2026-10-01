@@ -8,7 +8,7 @@ export function Footer() {
     <footer className="footer">
       <div className="container footer__inner">
         <div className="footer__brand">
-          <Logo height={24} />
+          <Logo height={56} />
           <p className="footer__tagline">{BRAND.tagline}</p>
         </div>
 

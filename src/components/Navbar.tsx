@@ -23,7 +23,7 @@ function scrollTo(href: string) {
   }
 }
 
-export function Navbar({ onBookCall }: { onBookCall: () => void }) {
+export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
 
@@ -36,8 +36,13 @@ export function Navbar({ onBookCall }: { onBookCall: () => void }) {
   useScrollLock(open);
 
   const handleNav = (href: string) => {
+    if (!open) return scrollTo(href);
     setOpen(false);
-    scrollTo(href);
+    // The open menu locks the page (body position:fixed) and restores the
+    // old scroll position when it unlocks — scrolling before that happens
+    // gets undone. Wait for the unlock, then scroll.
+    const go = () => (document.body.style.position === "fixed" ? requestAnimationFrame(go) : scrollTo(href));
+    requestAnimationFrame(go);
   };
 
   return (
@@ -72,42 +77,27 @@ export function Navbar({ onBookCall }: { onBookCall: () => void }) {
               aria-label="Contacter UPFLOW sur WhatsApp"
             >
               <MessageCircle size={18} strokeWidth={2.2} />
+              <span className="navbar__whatsapp-label">WhatsApp</span>
             </a>
-            <button className="btn btn-primary navbar__cta" onClick={onBookCall}>
-              Parler du projet
+
+            <button className="navbar__burger" aria-label="Menu" onClick={() => setOpen((v) => !v)}>
+              {open ? <X size={22} /> : <Menu size={22} />}
             </button>
           </div>
-
-          <button className="navbar__burger" aria-label="Menu" onClick={() => setOpen((v) => !v)}>
-            {open ? <X size={22} /> : <Menu size={22} />}
-          </button>
         </div>
       </header>
 
       <div className={`navbar__mobile ${open ? "navbar__mobile--open" : ""}`}>
-        {LINKS.map((link) => (
-          <button key={link.href} className="navbar__mobile-link" onClick={() => handleNav(link.href)}>
+        {LINKS.map((link, i) => (
+          <button
+            key={link.href}
+            className="navbar__mobile-link"
+            style={{ transitionDelay: open ? `${0.05 + i * 0.05}s` : "0s" }}
+            onClick={() => handleNav(link.href)}
+          >
             {link.label}
           </button>
         ))}
-        <button
-          className="btn btn-primary navbar__mobile-cta"
-          onClick={() => {
-            setOpen(false);
-            onBookCall();
-          }}
-        >
-          Parler du projet
-        </button>
-        <a
-          href={WHATSAPP_URL}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="navbar__mobile-whatsapp"
-          onClick={() => setOpen(false)}
-        >
-          <MessageCircle size={18} strokeWidth={2.2} /> Écrire sur WhatsApp
-        </a>
       </div>
     </>
   );

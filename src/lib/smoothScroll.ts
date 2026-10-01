@@ -102,10 +102,16 @@ export function setupScrollTriggerRefresh() {
   // that collapse animation finishes, while the user is still in the hero —
   // well before they've scrolled far enough to reach a pinned section, so
   // it never fires mid-pin.
+  // It waits for that first scroll to settle: a refresh re-sets scrollTop,
+  // which cancels any smooth scroll in flight (e.g. a menu link tapped as
+  // the visitor's very first interaction would stop halfway down the page).
   let firstScrollTimer: ReturnType<typeof setTimeout>;
   const onFirstScroll = () => {
-    window.removeEventListener("scroll", onFirstScroll);
-    firstScrollTimer = setTimeout(refresh, 350);
+    clearTimeout(firstScrollTimer);
+    firstScrollTimer = setTimeout(() => {
+      window.removeEventListener("scroll", onFirstScroll);
+      refresh();
+    }, 350);
   };
   window.addEventListener("scroll", onFirstScroll, { passive: true });
 

@@ -1,5 +1,6 @@
 import { RevealText } from "../components/RevealText";
-import { useScrollReveal } from "../hooks/useScrollReveal";
+import { useCardsReveal } from "../hooks/useCardsReveal";
+import { useInViewClass } from "../hooks/useInViewClass";
 import { PROCESS_STEPS } from "../lib/config";
 
 const STICKERS: Record<string, string> = {
@@ -48,7 +49,9 @@ function StepVisual({ n }: { n: string }) {
         <div className="step-visual step-visual--motion">
           <div className="step-visual__timeline">
             <span className="step-visual__timeline-fill" />
-            <span className="step-visual__timeline-marker" />
+            <span className="step-visual__timeline-head">
+              <span className="step-visual__timeline-marker" />
+            </span>
           </div>
           <span className="step-visual__pill">Render…</span>
         </div>
@@ -68,16 +71,11 @@ function StepVisual({ n }: { n: string }) {
 }
 
 export function Process() {
-  const listRef = useScrollReveal<HTMLDivElement>({
-    selector: ".process-step",
-    y: 30,
-    blur: 8,
-    stagger: 0.1,
-    start: "top 85%",
-  });
+  const listRef = useCardsReveal<HTMLDivElement>(".process-step", 3);
+  const sectionRef = useInViewClass<HTMLElement>();
 
   return (
-    <section id="process" className="section process">
+    <section id="process" ref={sectionRef} className="section process">
       <div className="container">
         <RevealText as="h2" className="process__heading">
           COMMENT ÇA MARCHE ?
