@@ -1,9 +1,9 @@
 import { useState } from "react";
-import { MessageCircle, Loader2, CheckCircle2 } from "lucide-react";
+import { MessageCircle, Loader2, CheckCircle2, Mail } from "lucide-react";
 import { RevealText } from "../components/RevealText";
 import { useMagnetic } from "../hooks/useMagnetic";
 import { useScrollReveal } from "../hooks/useScrollReveal";
-import { WEB3FORMS_ACCESS_KEY, WHATSAPP_URL } from "../lib/config";
+import { WEB3FORMS_ACCESS_KEY, WHATSAPP_URL, CONTACT } from "../lib/config";
 
 type Status = "idle" | "submitting" | "success" | "error";
 
@@ -14,10 +14,17 @@ export function FinalCta() {
 
   const subRef = useScrollReveal<HTMLParagraphElement>({ y: 16, blur: 6 });
   const gridRef = useScrollReveal<HTMLDivElement>({ y: 30, blur: 8, start: "top 85%" });
-  const submitBtn = useMagnetic<HTMLButtonElement>(0.25);
+  const waSendBtn = useMagnetic<HTMLAnchorElement>(0.2);
   const waBtn = useMagnetic<HTMLAnchorElement>(0.25);
 
   const canSubmit = Boolean(script.trim() && phone.trim());
+
+  // WhatsApp is the priority channel: a "send" link pre-fills the script and
+  // phone as a message to UPFLOW's number — the visitor just has to hit send
+  // in WhatsApp. Email (Web3Forms) stays as the secondary option below it.
+  const scriptWhatsAppUrl = `https://wa.me/${CONTACT.whatsappNumber.replace(/\D/g, "")}?text=${encodeURIComponent(
+    `Bonjour UPFLOW, voici mon script :\n\n${script}\n\nMon numéro : ${phone}`,
+  )}`;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -99,26 +106,45 @@ export function FinalCta() {
                   />
                 </label>
 
-                <button
-                  ref={submitBtn}
-                  type="submit"
-                  className="btn btn-primary script-form__submit"
-                  disabled={!canSubmit || status === "submitting"}
-                >
-                  {status === "submitting" ? (
-                    <>
-                      <Loader2 size={16} className="script-form__spinner" /> Envoi...
-                    </>
-                  ) : (
-                    "Envoyer mon script →"
-                  )}
-                </button>
+                <div className="script-form__actions">
+                  <a
+                    ref={waSendBtn}
+                    className="btn btn-primary script-form__submit"
+                    href={canSubmit ? scriptWhatsAppUrl : undefined}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-disabled={!canSubmit}
+                    onClick={(e) => {
+                      if (!canSubmit) e.preventDefault();
+                    }}
+                  >
+                    <MessageCircle size={16} /> Envoyer sur WhatsApp →
+                  </a>
+
+                  <button
+                    type="submit"
+                    className="btn btn-ghost script-form__submit"
+                    disabled={!canSubmit || status === "submitting"}
+                  >
+                    {status === "submitting" ? (
+                      <>
+                        <Loader2 size={16} className="script-form__spinner" /> Envoi...
+                      </>
+                    ) : (
+                      <>
+                        <Mail size={16} /> Envoyer par email
+                      </>
+                    )}
+                  </button>
+                </div>
+
+                <p className="script-form__promise">On vous répond en moins de 48h, promis.</p>
 
                 {status === "error" && (
                   <p className="script-form__error">
-                    Oups, l'envoi a échoué.{" "}
+                    Oups, l'envoi par email a échoué.{" "}
                     <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer">
-                      Contactez-nous sur WhatsApp
+                      Essayez WhatsApp
                     </a>{" "}
                     à la place.
                   </p>
