@@ -8,7 +8,7 @@ export function Pricing({ onCta }: { onCta: () => void }) {
   return (
     <section id="pricing" className="section pricing">
       <div className="container">
-        <RevealText as="h2" className="pricing__heading">
+        <RevealText as="h2" className="pricing__heading" accent={2}>
           DES PRIX. PAS DE DEVIS À RALLONGE.
         </RevealText>
 

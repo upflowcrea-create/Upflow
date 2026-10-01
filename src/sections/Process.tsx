@@ -1,6 +1,5 @@
 import { RevealText } from "../components/RevealText";
 import { useCardsReveal } from "../hooks/useCardsReveal";
-import { useInViewClass } from "../hooks/useInViewClass";
 import { PROCESS_STEPS } from "../lib/config";
 
 const STICKERS: Record<string, string> = {
@@ -72,12 +71,11 @@ function StepVisual({ n }: { n: string }) {
 
 export function Process() {
   const listRef = useCardsReveal<HTMLDivElement>(".process-step", 3);
-  const sectionRef = useInViewClass<HTMLElement>();
 
   return (
-    <section id="process" ref={sectionRef} className="section process">
+    <section id="process" className="section process">
       <div className="container">
-        <RevealText as="h2" className="process__heading">
+        <RevealText as="h2" className="process__heading" accent={2}>
           COMMENT ÇA MARCHE ?
         </RevealText>
 

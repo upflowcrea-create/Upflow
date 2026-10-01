@@ -31,7 +31,7 @@ export function VideoReveal() {
     // look broken. Only width is animated; height follows automatically via
     // the CSS aspect-ratio below (GSAP can't reliably tween a calc() height).
     const end = isMobile ? { w: "94vw", radius: 16 } : { w: "96vw", h: "92svh", radius: 14 };
-    const start = isMobile ? { w: "82vw", radius: 24 } : { w: "52vw", h: "42svh", radius: 32 };
+    const start = isMobile ? { w: "76vw", radius: 26 } : { w: "52vw", h: "42svh", radius: 32 };
 
     // Blurring a live, playing <video> forces the browser to re-filter every
     // decoded frame — on a phone GPU that's often enough on its own to make
@@ -72,18 +72,18 @@ export function VideoReveal() {
         },
       );
 
+      // Phones don't pin: a 16:9 frame only fills about a quarter of a
+      // portrait screen, so pinning left it floating in a big empty page for
+      // the whole scrub. There, the section scrolls normally and the zoom
+      // plays out as it passes through the viewport.
       const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: section,
-          start: "top top",
-          end: "+=120%",
-          scrub: 0.8,
-          pin: true,
-          anticipatePin: 1,
-        },
+        scrollTrigger: isMobile
+          ? { trigger: frame, start: "top 95%", end: "center 50%", scrub: 0.6 }
+          : { trigger: section, start: "top top", end: "+=120%", scrub: 0.8, pin: true, anticipatePin: 1 },
       });
 
-      tl.to(text, { autoAlpha: 0, yPercent: -30, duration: 0.35, ease: "power1.out" }, 0).to(
+      if (!isMobile) tl.to(text, { autoAlpha: 0, yPercent: -30, duration: 0.35, ease: "power1.out" }, 0);
+      tl.to(
         frame,
         {
           width: end.w,
@@ -155,7 +155,9 @@ export function VideoReveal() {
       <div className="video-section__inner">
         <div ref={textRef} className="video-section__text">
           <p className="eyebrow">C'est moi. C'est UPFLOW.</p>
-          <h2 className="video-section__title">30 secondes pour tout comprendre.</h2>
+          <h2 className="video-section__title">
+            30 secondes pour <span className="text-flow">tout comprendre.</span>
+          </h2>
         </div>
 
         <div ref={frameRef} className="video-frame">

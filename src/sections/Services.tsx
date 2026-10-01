@@ -28,12 +28,17 @@ function ServiceCard({ service, index, onCta }: { service: (typeof SERVICES)[num
       const cta = card.querySelector(".service-card__cta");
 
       const touch = isTouchDevice();
-      const tl = gsap.timeline({ scrollTrigger: { trigger: card, start: "top 82%" } });
+      // On a narrow screen the card fills the width, so it rises in from
+      // below rather than sliding in from off-screen at the side.
+      const narrow = window.matchMedia("(max-width: 720px)").matches;
+      const tl = gsap.timeline({ scrollTrigger: { trigger: card, start: narrow ? "top 88%" : "top 82%" } });
 
       tl.fromTo(
         card,
-        { autoAlpha: 0, x: fromSide * 70, rotate: fromSide * -3, scale: 0.94 },
-        { autoAlpha: 1, x: 0, rotate: 0, scale: 1, duration: 0.9, ease: "power3.out" },
+        narrow
+          ? { autoAlpha: 0, y: 60, rotate: fromSide * -2, scale: 0.96 }
+          : { autoAlpha: 0, x: fromSide * 70, rotate: fromSide * -3, scale: 0.94 },
+        { autoAlpha: 1, x: 0, y: 0, rotate: 0, scale: 1, duration: 0.9, ease: "power3.out" },
       )
         .fromTo(
           number,
@@ -59,20 +64,20 @@ function ServiceCard({ service, index, onCta }: { service: (typeof SERVICES)[num
           usage,
           { autoAlpha: 0, scale: 0.7, y: 8 },
           { autoAlpha: 1, scale: 1, y: 0, duration: 0.5, stagger: 0.05, ease: "back.out(2)" },
-          "-=0.35",
+          "<0.1",
         )
         .fromTo(
           tags,
           { autoAlpha: 0, scale: 0.7, y: 8 },
           { autoAlpha: 1, scale: 1, y: 0, duration: 0.5, stagger: 0.06, ease: "back.out(2)" },
-          "-=0.3",
+          "<0.1",
         );
 
       tl.fromTo(
         cta,
         { autoAlpha: 0, scale: 0.85, y: 10 },
         { autoAlpha: 1, scale: 1, y: 0, duration: 0.6, ease: "back.out(1.6)" },
-        "-=0.2",
+        "<0.15",
       );
     }, card);
 
@@ -182,7 +187,7 @@ export function Services({ onCta }: { onCta: () => void }) {
   return (
     <section id="services" className="section services">
       <div className="container">
-        <RevealText as="h2" className="services__heading">
+        <RevealText as="h2" className="services__heading" accent={2}>
           OK. MAIS TU FAIS QUOI ?
         </RevealText>
 

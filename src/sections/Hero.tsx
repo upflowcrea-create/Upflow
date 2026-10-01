@@ -3,7 +3,6 @@ import clsx from "clsx";
 import { gsap } from "../lib/smoothScroll";
 import { getLenis } from "../lib/smoothScroll";
 import { useMagnetic } from "../hooks/useMagnetic";
-import { useIsMobile, usePrefersReducedMotion } from "../hooks/useMediaQuery";
 import { isTouchDevice } from "../lib/device";
 import { BRAND } from "../lib/config";
 
@@ -19,8 +18,6 @@ export function Hero({ onBookCall, ready }: { onBookCall: () => void; ready: boo
   const rootRef = useRef<HTMLDivElement | null>(null);
   const workBtn = useMagnetic<HTMLButtonElement>(0.25);
   const talkBtn = useMagnetic<HTMLButtonElement>(0.25);
-  const isMobile = useIsMobile();
-  const reducedMotion = usePrefersReducedMotion();
 
   useEffect(() => {
     const el = rootRef.current;
@@ -51,6 +48,18 @@ export function Hero({ onBookCall, ready }: { onBookCall: () => void; ready: boo
           "-=0.3",
         )
         .fromTo(
+          el.querySelectorAll(".hero-word:not(.gradient-text)"),
+          { color: "#ff2e93" },
+          {
+            keyframes: { color: ["#ff2e93", "#b026ff", "#8a2bff", "#120a1e"] },
+            duration: 1.4,
+            stagger: 0.08,
+            ease: "none",
+            clearProps: "color",
+          },
+          "<",
+        )
+        .fromTo(
           ".hero__subtitle",
           { autoAlpha: 0, y: 14 },
           { autoAlpha: 1, y: 0, duration: 0.8, ease: "power3.out" },
@@ -68,33 +77,6 @@ export function Hero({ onBookCall, ready }: { onBookCall: () => void; ready: boo
     return () => ctx.revert();
   }, [ready]);
 
-  // Ambient mouse parallax on the background blobs — desktop only, purely decorative.
-  useEffect(() => {
-    const el = rootRef.current;
-    if (!el || isMobile || reducedMotion) return;
-
-    const blob1 = el.querySelector(".hero__blob--1");
-    const blob2 = el.querySelector(".hero__blob--2");
-    if (!blob1 || !blob2) return;
-
-    const moveBlob1 = gsap.quickTo(blob1, "x", { duration: 1.2, ease: "power3.out" });
-    const moveBlob1Y = gsap.quickTo(blob1, "y", { duration: 1.2, ease: "power3.out" });
-    const moveBlob2 = gsap.quickTo(blob2, "x", { duration: 1.4, ease: "power3.out" });
-    const moveBlob2Y = gsap.quickTo(blob2, "y", { duration: 1.4, ease: "power3.out" });
-
-    const handleMove = (e: MouseEvent) => {
-      const relX = e.clientX / window.innerWidth - 0.5;
-      const relY = e.clientY / window.innerHeight - 0.5;
-      moveBlob1(relX * 50);
-      moveBlob1Y(relY * 50);
-      moveBlob2(relX * -60);
-      moveBlob2Y(relY * -60);
-    };
-
-    window.addEventListener("mousemove", handleMove);
-    return () => window.removeEventListener("mousemove", handleMove);
-  }, [isMobile, reducedMotion]);
-
   const renderLine = (line: string, gradient = false) =>
     line.split(" ").map((word, i) => (
       <span className="hero-word-wrap" key={i}>
@@ -104,12 +86,6 @@ export function Hero({ onBookCall, ready }: { onBookCall: () => void; ready: boo
 
   return (
     <section id="top" ref={rootRef} className="hero">
-      <div className="hero__bg" aria-hidden="true">
-        <div className="hero__blob hero__blob--1" />
-        <div className="hero__blob hero__blob--2" />
-        <div className="hero__ring" />
-      </div>
-
       <div className="hero__content container">
         <p className="hero__kicker eyebrow">
           {BRAND.name} — {BRAND.tagline}

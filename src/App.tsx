@@ -4,6 +4,7 @@ import { Footer } from "./components/Footer";
 import { Preloader } from "./components/Preloader";
 import { ScrollProgress } from "./components/ScrollProgress";
 import { Marquee } from "./components/Marquee";
+import { PageBackdrop } from "./components/PageBackdrop";
 import { Hero } from "./sections/Hero";
 import { VideoReveal } from "./sections/VideoReveal";
 import { Services } from "./sections/Services";
@@ -21,6 +22,17 @@ function App() {
   useEffect(() => {
     initSmoothScroll();
     return setupScrollTriggerRefresh();
+  }, []);
+
+  // Marks each top-level section .is-inview while it's on screen; the CSS
+  // pauses every looping animation inside sections that aren't.
+  useEffect(() => {
+    const io = new IntersectionObserver(
+      (entries) => entries.forEach((e) => e.target.classList.toggle("is-inview", e.isIntersecting)),
+      { rootMargin: "100px" },
+    );
+    document.querySelectorAll("main > *").forEach((el) => io.observe(el));
+    return () => io.disconnect();
   }, []);
 
   // WhatsApp is the priority contact channel site-wide, including for what
@@ -48,6 +60,9 @@ function App() {
       </main>
 
       <Footer />
+      {/* Rendered last so its scroll triggers are created after the video
+          section's pin, and measure the page with the pin spacing in place. */}
+      <PageBackdrop />
     </>
   );
 }

@@ -221,7 +221,7 @@ export function Portfolio() {
   return (
     <section id="portfolio" className="section portfolio">
       <div className="container">
-        <RevealText as="h2" className="portfolio__heading">
+        <RevealText as="h2" className="portfolio__heading" accent={1}>
           DES TRUCS QUE J'AI FAITS.
         </RevealText>
 

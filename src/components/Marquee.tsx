@@ -1,5 +1,3 @@
-import { useInViewClass } from "../hooks/useInViewClass";
-
 const ROW_A = ["MOTION DESIGN", "3D", "SOUND DESIGN", "VIDÉO DE PRÉSENTATION", "STORYTELLING"];
 const ROW_B = ["CAMPAGNES ADS", "VIDÉO EXPLICATIVE", "LIVE EVENT", "MULTI-FORMATS", "RÉPONSE EN 48H"];
 
@@ -24,10 +22,8 @@ function Row({ items, variant }: { items: string[]; variant: "gradient" | "ink" 
 
 /** Two crossed, endlessly scrolling "tape" bands between sections. */
 export function Marquee() {
-  const ref = useInViewClass<HTMLDivElement>();
-
   return (
-    <div ref={ref} className="marquee" aria-hidden="true">
+    <div className="marquee" aria-hidden="true">
       <Row items={ROW_B} variant="ink" />
       <Row items={ROW_A} variant="gradient" />
     </div>

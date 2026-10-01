@@ -60,7 +60,7 @@ export function FinalCta() {
         <RevealText as="h2" className="final-cta__title">
           VOUS AVEZ DÉJÀ VOTRE SCRIPT ?
         </RevealText>
-        <RevealText as="h2" className="final-cta__title final-cta__title--accent">
+        <RevealText as="h2" className="final-cta__title" accent={5}>
           ENVOYEZ-LE. ON S'OCCUPE DU RESTE.
         </RevealText>
 
