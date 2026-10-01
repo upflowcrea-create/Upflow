@@ -819,68 +819,273 @@ ul {
   max-width: 16ch;
 }
 
-.process__list {
-  position: relative;
-  max-width: 780px;
+.process__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.25rem;
+  max-width: 1000px;
   margin-inline: auto;
-  padding-left: 1.4rem;
-  display: flex;
-  flex-direction: column;
-}
-
-.process__line-track {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  width: 2px;
-  background: rgba(244, 238, 252, 0.1);
-}
-
-.process__line-fill {
-  width: 100%;
-  height: 100%;
-  transform: scaleY(0);
-  transform-origin: top center;
-  background: var(--gradient-main);
 }
 
 .process-step {
   position: relative;
-  display: grid;
-  grid-template-columns: 100px 1fr;
-  align-items: center;
-  gap: 1.5rem;
-  padding-block: 1.6rem;
-  border-bottom: 1px solid rgba(244, 238, 252, 0.1);
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  background: var(--bg-panel);
+  border: 1px solid rgba(244, 238, 252, 0.1);
+  border-radius: var(--radius-lg);
+  padding: 2rem 1.75rem;
+  overflow: visible;
+  transition: border-color 0.3s var(--ease-out), transform 0.3s var(--ease-out);
 }
 
-.process-step:first-child {
-  border-top: 1px solid rgba(244, 238, 252, 0.1);
+.process-step:hover {
+  border-color: rgba(255, 46, 147, 0.35);
+  transform: translateY(-4px);
+}
+
+/* Rotated gradient "sticker" badge, poking out of the card's top edge —
+   alternating tilt per card so a repeated grid doesn't look too uniform. */
+.process-step__sticker {
+  position: absolute;
+  top: -14px;
+  right: 1.5rem;
+  z-index: 2;
+  background: var(--gradient-main);
+  color: var(--white);
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.72rem;
+  letter-spacing: 0.02em;
+  padding: 0.45rem 0.9rem;
+  border-radius: 999px;
+  white-space: nowrap;
+  transform: rotate(-4deg);
+  box-shadow: 0 8px 24px rgba(255, 46, 147, 0.45), 0 0 0 1px rgba(255, 255, 255, 0.08) inset;
+}
+
+.process-step:nth-child(even) .process-step__sticker {
+  transform: rotate(4deg);
+}
+
+.process-step__visual {
+  height: 140px;
+  border-radius: var(--radius-md);
+  background: rgba(244, 238, 252, 0.04);
+  border: 1px solid rgba(244, 238, 252, 0.08);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.step-visual {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+
+.step-visual--call {
+  flex-direction: column;
+  gap: 0.9rem;
+}
+
+.step-visual__avatars {
+  display: flex;
+  gap: 0.7rem;
+}
+
+.step-visual__avatar {
+  display: inline-block;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: var(--gradient-main);
+}
+
+.step-visual__avatar--b {
+  background: var(--gradient-main-reverse);
+  opacity: 0.85;
+}
+
+.step-visual__call-bar {
+  display: flex;
+  gap: 0.5rem;
+  padding: 0.5rem 0.9rem;
+  border-radius: 999px;
+  background: rgba(244, 238, 252, 0.06);
+}
+
+.step-visual__call-bar span {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: rgba(244, 238, 252, 0.5);
+}
+
+.step-visual__call-bar span:first-child {
+  background: var(--pink);
+}
+
+.step-visual__bubble {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: var(--gradient-main);
+  color: var(--white);
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 0.85rem;
+  padding: 0.7rem 1.1rem;
+  border-radius: var(--radius-sm) var(--radius-sm) var(--radius-sm) 2px;
+  box-shadow: 0 10px 30px rgba(138, 43, 255, 0.35);
+}
+
+.step-visual__bubble span {
+  color: #baffc9;
+  font-weight: 800;
+}
+
+.step-visual--storyboard {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5rem;
+  width: 100px;
+  height: 100px;
+}
+
+.step-visual__frame {
+  position: relative;
+  height: 44px;
+  border: 1.5px solid rgba(244, 238, 252, 0.4);
+  border-radius: 4px;
+  background: rgba(244, 238, 252, 0.05);
+}
+
+.step-visual__frame::before {
+  content: "";
+  position: absolute;
+  inset: 4px;
+  border-top: 1px solid rgba(244, 238, 252, 0.25);
+  transform: rotate(18deg);
+}
+
+.step-visual--motion {
+  flex-direction: column;
+  gap: 0.8rem;
+  width: 80%;
+}
+
+.step-visual__timeline {
+  position: relative;
+  height: 6px;
+  width: 100%;
+  border-radius: 999px;
+  background: rgba(244, 238, 252, 0.08);
+}
+
+.step-visual__timeline-fill {
+  position: absolute;
+  inset: 0;
+  width: 62%;
+  border-radius: 999px;
+  background: var(--gradient-main);
+}
+
+.step-visual__timeline-marker {
+  position: absolute;
+  left: 62%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--white);
+  box-shadow: 0 0 0 4px rgba(255, 46, 147, 0.3);
+}
+
+.step-visual__pill {
+  align-self: center;
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: rgba(244, 238, 252, 0.65);
+  background: rgba(244, 238, 252, 0.06);
+  padding: 0.3rem 0.8rem;
+  border-radius: 999px;
+}
+
+.step-visual__file {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  background: rgba(244, 238, 252, 0.06);
+  border: 1px solid rgba(244, 238, 252, 0.12);
+  padding: 0.7rem 1.1rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--off-white);
+}
+
+.step-visual__file-icon {
+  width: 20px;
+  height: 24px;
+  border-radius: 3px;
+  background: var(--gradient-main);
+  flex-shrink: 0;
+}
+
+.process-step__body {
+  display: flex;
+  flex-direction: column;
 }
 
 .process-step__n {
   font-family: var(--font-display);
-  font-size: clamp(1.6rem, 3vw, 2.2rem);
+  font-size: clamp(1.4rem, 3vw, 1.8rem);
   font-weight: 800;
   background: var(--gradient-text);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
+  margin-bottom: 0.4rem;
 }
 
 .process-step__title {
-  font-size: clamp(1.15rem, 2vw, 1.5rem);
-  margin-bottom: 0.25rem;
+  font-size: clamp(1.1rem, 2vw, 1.4rem);
+  margin-bottom: 0.4rem;
 }
 
 .process-step__text {
   color: rgba(244, 238, 252, 0.65);
+  font-size: 0.95rem;
+  line-height: 1.55;
 }
 
-@media (max-width: 560px) {
-  .process-step {
-    grid-template-columns: 60px 1fr;
+@media (min-width: 700px) {
+  .process__grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+  }
+
+  .process-step--final {
+    grid-column: span 2;
+    flex-direction: row;
+    align-items: center;
+    gap: 2rem;
+  }
+
+  .process-step--final .process-step__visual {
+    flex: 0 0 240px;
+    height: 140px;
+  }
+
+  .process-step--final .process-step__body {
+    flex: 1;
   }
 }
 
@@ -1806,9 +2011,37 @@ ul {
   opacity: 1;
 }
 
+.navbar__actions {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+}
+
 .navbar__cta {
   padding: 0.7rem 1.4rem;
   font-size: 0.75rem;
+}
+
+/* WhatsApp gets its own distinct chip right next to the CTA — it's the
+   priority contact channel site-wide, so it stays visible, not tucked
+   away as only a floating corner button. */
+.navbar__whatsapp {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: #25d366;
+  color: var(--white);
+  flex-shrink: 0;
+  transition: transform 0.25s var(--ease-out), box-shadow 0.25s var(--ease-out);
+  box-shadow: 0 4px 16px rgba(37, 211, 102, 0.35);
+}
+
+.navbar__whatsapp:hover {
+  transform: scale(1.08);
+  box-shadow: 0 6px 22px rgba(37, 211, 102, 0.5);
 }
 
 .navbar__burger {
@@ -1824,7 +2057,7 @@ ul {
 
 @media (max-width: 900px) {
   .navbar__links,
-  .navbar__cta {
+  .navbar__actions {
     display: none;
   }
   .navbar__burger {
@@ -1861,6 +2094,15 @@ ul {
   .navbar__mobile-cta {
     margin-top: 1rem;
     align-self: flex-start;
+  }
+  .navbar__mobile-whatsapp {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    align-self: flex-start;
+    color: #25d366;
+    font-weight: 600;
+    font-size: 0.95rem;
   }
 }
 

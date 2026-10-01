@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
-import { Menu, X } from "lucide-react";
+import { Menu, X, MessageCircle } from "lucide-react";
 import { Logo } from "./Logo";
 import { getLenis } from "../lib/smoothScroll";
 import { useScrollLock } from "../hooks/useScrollLock";
+import { WHATSAPP_URL } from "../lib/config";
 
 const LINKS = [
   { label: "Travail", href: "#portfolio" },
@@ -62,9 +63,20 @@ export function Navbar({ onBookCall }: { onBookCall: () => void }) {
             ))}
           </nav>
 
-          <button className="btn btn-primary navbar__cta" onClick={onBookCall}>
-            Parler du projet
-          </button>
+          <div className="navbar__actions">
+            <a
+              href={WHATSAPP_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="navbar__whatsapp"
+              aria-label="Contacter UPFLOW sur WhatsApp"
+            >
+              <MessageCircle size={18} strokeWidth={2.2} />
+            </a>
+            <button className="btn btn-primary navbar__cta" onClick={onBookCall}>
+              Parler du projet
+            </button>
+          </div>
 
           <button className="navbar__burger" aria-label="Menu" onClick={() => setOpen((v) => !v)}>
             {open ? <X size={22} /> : <Menu size={22} />}
@@ -87,6 +99,15 @@ export function Navbar({ onBookCall }: { onBookCall: () => void }) {
         >
           Parler du projet
         </button>
+        <a
+          href={WHATSAPP_URL}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="navbar__mobile-whatsapp"
+          onClick={() => setOpen(false)}
+        >
+          <MessageCircle size={18} strokeWidth={2.2} /> Écrire sur WhatsApp
+        </a>
       </div>
     </>
   );

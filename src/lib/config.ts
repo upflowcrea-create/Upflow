@@ -188,11 +188,11 @@ export const PORTFOLIO_ITEMS: PortfolioItem[] = [
 // ---------------------------------------------------------------------------
 
 export const PROCESS_STEPS = [
-  { n: "01", title: "CALL", text: "On parle." },
-  { n: "02", title: "SCRIPT", text: "On met les idées dans le bon ordre." },
-  { n: "03", title: "STORYBOARD", text: "On visualise." },
-  { n: "04", title: "MOTION", text: "On anime." },
-  { n: "05", title: "DELIVERY", text: "Vous récupérez la vidéo." },
+  { n: "01", title: "CALL", text: "On discute de votre projet, vos objectifs, et ce que vous voulez vraiment dire." },
+  { n: "02", title: "SCRIPT", text: "On écrit le script et on le valide ensemble avant de toucher à quoi que ce soit." },
+  { n: "03", title: "STORYBOARD", text: "On pose chaque scène à plat pour visualiser la vidéo avant de l'animer." },
+  { n: "04", title: "MOTION", text: "Motion design, 3D, sound design — on anime le tout." },
+  { n: "05", title: "DELIVERY", text: "Vous récupérez votre vidéo, dans tous les formats dont vous avez besoin." },
 ];
 
 // ---------------------------------------------------------------------------
