@@ -48,7 +48,7 @@ export function Navbar() {
   return (
     <>
       <header className={`navbar ${scrolled ? "navbar--scrolled" : ""}`}>
-        <div className="navbar__inner container">
+        <div className="navbar__pill">
           <a
             href="#top"
             className="navbar__logo"
@@ -69,6 +69,13 @@ export function Navbar() {
           </nav>
 
           <div className="navbar__actions">
+            {/* Goes to the script form rather than WhatsApp, so it never
+                duplicates the WhatsApp button right next to it. */}
+            <button className="navbar__cta" onClick={() => handleNav("#contact")}>
+              Envoyer mon script
+              <span className="navbar__cta-dot" aria-hidden="true" />
+            </button>
+
             <a
               href={WHATSAPP_URL}
               target="_blank"
@@ -76,8 +83,7 @@ export function Navbar() {
               className="navbar__whatsapp"
               aria-label="Contacter UPFLOW sur WhatsApp"
             >
-              <MessageCircle size={18} strokeWidth={2.2} />
-              <span className="navbar__whatsapp-label">WhatsApp</span>
+              <MessageCircle size={24} strokeWidth={2.2} />
             </a>
 
             <button className="navbar__burger" aria-label="Menu" onClick={() => setOpen((v) => !v)}>
@@ -98,6 +104,13 @@ export function Navbar() {
             {link.label}
           </button>
         ))}
+        <button
+          className="navbar__cta navbar__mobile-cta"
+          style={{ transitionDelay: open ? `${0.05 + LINKS.length * 0.05}s` : "0s" }}
+          onClick={() => handleNav("#contact")}
+        >
+          Envoyer mon script
+        </button>
       </div>
     </>
   );

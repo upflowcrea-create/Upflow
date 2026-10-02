@@ -7,6 +7,9 @@
      top, through violet and magenta, to the bright orchid/rose at the
      bottom. No other hues. */
   --pink: #b72ad8;
+  /* Flash: a lighter, more vivid pink-violet pushed from the logo's
+     orchid, for highlights (buttons, gradients, dots, glows). */
+  --flash: #f04dff;
   --pink-pastel: #efc6fb;
   --violet: #7a28bb;
   --violet-electric: #9c29c6;
@@ -24,9 +27,9 @@
   --shadow-card: 0 1px 2px rgba(33, 1, 62, 0.04), 0 12px 32px -12px rgba(33, 1, 62, 0.12);
   --bg-panel: #21013e;
 
-  --gradient-main: linear-gradient(120deg, var(--pink) 0%, var(--violet-electric) 40%, var(--violet) 75%, var(--violet-deep) 100%);
-  --gradient-main-reverse: linear-gradient(300deg, var(--pink) 0%, var(--violet-electric) 40%, var(--violet) 75%, var(--violet-deep) 100%);
-  --gradient-text: linear-gradient(100deg, var(--pink) 0%, var(--violet) 35%, var(--plum) 60%, var(--violet-electric) 82%, var(--pink) 100%);
+  --gradient-main: linear-gradient(120deg, var(--flash) 0%, var(--pink) 30%, var(--violet-electric) 55%, var(--violet) 80%, var(--violet-deep) 100%);
+  --gradient-main-reverse: linear-gradient(300deg, var(--flash) 0%, var(--pink) 30%, var(--violet-electric) 55%, var(--violet) 80%, var(--violet-deep) 100%);
+  --gradient-text: linear-gradient(100deg, var(--flash) 0%, var(--pink) 22%, var(--violet) 45%, var(--plum) 65%, var(--violet-electric) 84%, var(--flash) 100%);
 
   --font-display: "Unbounded", system-ui, sans-serif;
   --font-body: "Inter", system-ui, -apple-system, sans-serif;
@@ -162,7 +165,7 @@ ul {
 
 @keyframes eyebrowHue {
   0%, 100% { color: var(--pink); }
-  33% { color: var(--violet-electric); }
+  33% { color: var(--flash); }
   66% { color: var(--violet); }
 }
 
@@ -1983,51 +1986,55 @@ main > :not(.is-inview) *::after {
 /* Navbar                                                                  */
 /* ---------------------------------------------------------------------- */
 
+/* Floating rounded "pill" navbar, detached from the top edge. */
 .navbar {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   z-index: 100;
-  padding-block: 1.4rem;
-  transition: padding 0.4s var(--ease-out), background 0.4s var(--ease-out), backdrop-filter 0.4s;
+  padding-top: 14px;
+  pointer-events: none;
+  transition: padding 0.4s var(--ease-out);
 }
 
 .navbar--scrolled {
-  padding-block: 0.85rem;
-  background: var(--nav-tint, rgba(251, 243, 255, 0.92));
-  backdrop-filter: blur(16px);
-  border-bottom: 1px solid rgba(33, 1, 62, 0.08);
+  padding-top: 10px;
 }
 
-.navbar__inner {
-  position: relative;
-  z-index: 2;
+.navbar__pill {
+  pointer-events: auto;
+  width: var(--container);
+  margin-inline: auto;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 1.5rem;
+  gap: 2.2rem;
+  padding: 10px 12px 10px 26px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(14px);
+  border: 1px solid rgba(33, 1, 62, 0.06);
+  box-shadow: 0 1px 2px rgba(33, 1, 62, 0.04), 0 14px 34px -14px rgba(33, 1, 62, 0.22);
 }
 
 .navbar__logo {
   display: flex;
   align-items: center;
+  flex-shrink: 0;
 }
 
 .navbar__links {
   display: flex;
-  gap: 2.2rem;
-  margin-inline: auto;
+  gap: 1.9rem;
 }
 
 .navbar__link {
   background: none;
   border: none;
-  color: var(--ink);
-  font-size: 0.9rem;
+  color: rgba(33, 1, 62, 0.7);
+  font-size: 1rem;
   font-weight: 500;
-  opacity: 0.8;
-  transition: opacity 0.2s, color 0.25s;
+  transition: color 0.25s;
   padding: 0;
   position: relative;
 }
@@ -2054,40 +2061,97 @@ main > :not(.is-inview) *::after {
   transform: scaleX(1);
 }
 
-.navbar__link:hover {
-  opacity: 1;
-}
-
 .navbar__actions {
+  margin-left: auto;
   display: flex;
   align-items: center;
-  gap: 0.7rem;
+  gap: 0.9rem;
 }
 
-/* WhatsApp is the single contact button in the navbar (no separate
-   "Parler du projet" CTA next to it — both did the same thing). */
-.navbar__whatsapp {
+.navbar__cta {
+  position: relative;
   display: inline-flex;
   align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-  height: 42px;
-  padding-inline: 1.1rem;
+  height: 50px;
+  padding-inline: 1.7rem;
+  border: none;
   border-radius: 999px;
-  background: #25d366;
+  background: var(--ink);
   color: var(--white);
   font-family: var(--font-display);
   font-weight: 700;
   font-size: 0.78rem;
   letter-spacing: 0.03em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  box-shadow: 0 10px 24px -10px rgba(33, 1, 62, 0.55);
+  transition: translate 0.25s var(--ease-out), background 0.25s var(--ease-out);
+}
+
+.navbar__cta:hover {
+  translate: 0 -2px;
+  background: var(--violet-deep);
+}
+
+/* Notification dot, in the flash pink, with a pulsing ring. */
+.navbar__cta-dot {
+  position: absolute;
+  top: -3px;
+  right: 10px;
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  background: var(--flash);
+  border: 2px solid var(--white);
+}
+
+.navbar__cta-dot::after {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  border-radius: 50%;
+  background: var(--flash);
+  animation: dotPing 1.8s var(--ease-out) infinite;
+}
+
+@keyframes dotPing {
+  0% { transform: scale(1); opacity: 0.7; }
+  80%, 100% { transform: scale(2.6); opacity: 0; }
+}
+
+.navbar__whatsapp {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: #25d366;
+  color: var(--white);
   flex-shrink: 0;
-  box-shadow: 0 6px 18px -4px rgba(37, 211, 102, 0.55);
-  transition: translate 0.25s var(--ease-out), box-shadow 0.25s var(--ease-out);
+  box-shadow: 0 0 0 6px rgba(37, 211, 102, 0.14), 0 10px 22px -8px rgba(37, 211, 102, 0.7);
+  transition: translate 0.25s var(--ease-out);
+}
+
+/* Soft halo that keeps breathing around the WhatsApp button. */
+.navbar__whatsapp::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 2px solid rgba(37, 211, 102, 0.45);
+  animation: waHalo 2.4s var(--ease-out) infinite;
+  pointer-events: none;
+}
+
+@keyframes waHalo {
+  0% { transform: scale(1); opacity: 0.9; }
+  100% { transform: scale(1.45); opacity: 0; }
 }
 
 .navbar__whatsapp:hover {
   translate: 0 -2px;
-  box-shadow: 0 10px 24px -4px rgba(37, 211, 102, 0.65);
 }
 
 .navbar__burger {
@@ -2102,12 +2166,32 @@ main > :not(.is-inview) *::after {
   display: none;
 }
 
-@media (max-width: 900px) {
+@media (max-width: 1100px) {
+  .navbar__pill {
+    gap: 1.6rem;
+  }
   .navbar__links {
+    gap: 1.3rem;
+  }
+}
+
+@media (max-width: 900px) {
+  .navbar__links,
+  .navbar__actions > .navbar__cta {
     display: none;
   }
   .navbar__burger {
     display: block;
+  }
+  .navbar__pill {
+    padding: 7px 8px 7px 16px;
+  }
+  .navbar__actions {
+    gap: 0.5rem;
+  }
+  .navbar__whatsapp {
+    width: 46px;
+    height: 46px;
   }
   .navbar__mobile {
     position: fixed;
@@ -2117,7 +2201,7 @@ main > :not(.is-inview) *::after {
     display: flex;
     flex-direction: column;
     gap: 1.6rem;
-    padding: 6.5rem 1.6rem 2.5rem;
+    padding: 7.5rem 1.6rem 2.5rem;
     opacity: 0;
     pointer-events: none;
     transition: opacity 0.3s var(--ease-out);
@@ -2125,6 +2209,12 @@ main > :not(.is-inview) *::after {
   .navbar__mobile--open {
     opacity: 1;
     pointer-events: auto;
+  }
+  .navbar__mobile-link,
+  .navbar__mobile-cta {
+    opacity: 0;
+    translate: 0 14px;
+    transition: opacity 0.4s var(--ease-out), translate 0.4s var(--ease-out);
   }
   .navbar__mobile-link {
     background: none;
@@ -2134,32 +2224,25 @@ main > :not(.is-inview) *::after {
     font-size: 1.8rem;
     text-align: left;
     padding: 0;
-    opacity: 0;
-    translate: 0 14px;
-    transition: opacity 0.4s var(--ease-out), translate 0.4s var(--ease-out);
   }
-  .navbar__mobile--open .navbar__mobile-link {
+  .navbar__mobile-cta {
+    align-self: flex-start;
+    margin-top: 0.8rem;
+  }
+  .navbar__mobile--open .navbar__mobile-link,
+  .navbar__mobile--open .navbar__mobile-cta {
     opacity: 1;
     translate: 0 0;
   }
 }
 
-@media (max-width: 420px) {
-  .navbar__whatsapp {
-    width: 42px;
-    padding-inline: 0;
-  }
-  .navbar__whatsapp-label {
-    display: none;
-  }
-}
-
 /* backdrop-filter on a fixed bar is re-computed on every scroll frame —
    one of the most expensive things a phone can be asked to do while
-   scrolling. Touch devices get a solid bar instead. */
+   scrolling. Touch devices get a solid pill instead. */
 @media (pointer: coarse) {
-  .navbar--scrolled {
+  .navbar__pill {
     backdrop-filter: none;
+    background: rgba(255, 255, 255, 0.97);
   }
 }
 
@@ -2338,8 +2421,8 @@ main > :not(.is-inview) *::after {
   height: 55vmax;
   top: 30%;
   left: 40%;
-  color: var(--violet-electric);
-  opacity: 0.18;
+  color: var(--flash);
+  opacity: 0.2;
   animation: glowDriftC 12s ease-in-out infinite alternate;
 }
 
@@ -2361,7 +2444,7 @@ main > :not(.is-inview) *::after {
   100% { transform: translate(-12vw, 16vh) scale(1); }
 }
 
-.marquee__band--ink .marquee__item:nth-child(3n + 1) { color: var(--pink); }
+.marquee__band--ink .marquee__item:nth-child(3n + 1) { color: var(--flash); }
 .marquee__band--ink .marquee__item:nth-child(3n + 2) { color: var(--pink-pastel); }
 .marquee__band--ink .marquee__item:nth-child(3n) { color: #e3a6f5; }
 
@@ -2377,6 +2460,11 @@ main > :not(.is-inview) *::after {
 
 .process-step:nth-child(4) .process-step__sticker {
   background: linear-gradient(120deg, var(--violet-electric), var(--pink));
+}
+
+.process-step:nth-child(5) .process-step__sticker {
+  background: linear-gradient(120deg, var(--pink), var(--flash));
+  box-shadow: 0 8px 24px rgba(240, 77, 255, 0.5);
 }
 
 @media (max-width: 720px) {

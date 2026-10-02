@@ -16,11 +16,6 @@ const TINTS: [selector: string, color: string][] = [
   ["#contact", "#fcf2fe"],
 ];
 
-const toRgba = (hex: string, alpha: number) => {
-  const n = parseInt(hex.slice(1), 16);
-  return `rgba(${(n >> 16) & 255}, ${(n >> 8) & 255}, ${n & 255}, ${alpha})`;
-};
-
 export function PageBackdrop() {
   const ref = useRef<HTMLDivElement | null>(null);
 
@@ -28,15 +23,9 @@ export function PageBackdrop() {
     const root = ref.current;
     if (!root) return;
     const layers = root.querySelectorAll<HTMLElement>(".page-backdrop__layer");
-    // The scrolled navbar takes the same tint, so it doesn't sit on the page
-    // as a flat white strip. Set on the navbar itself (not :root) so only
-    // its own styles recalc while the color tweens.
-    const navbar = document.querySelector(".navbar");
 
     const apply = (color: string) => {
-      const opts = { duration: 1.4, ease: "sine.inOut", overwrite: "auto" as const };
-      gsap.to(root, { backgroundColor: color, ...opts });
-      if (navbar) gsap.to(navbar, { "--nav-tint": toRgba(color, 0.92), ...opts });
+      gsap.to(root, { backgroundColor: color, duration: 1.4, ease: "sine.inOut", overwrite: "auto" });
     };
 
     const ctx = gsap.context(() => {
