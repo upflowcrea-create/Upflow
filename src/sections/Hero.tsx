@@ -4,7 +4,6 @@ import { gsap } from "../lib/smoothScroll";
 import { getLenis } from "../lib/smoothScroll";
 import { useMagnetic } from "../hooks/useMagnetic";
 import { isTouchDevice } from "../lib/device";
-import { BRAND } from "../lib/config";
 
 function scrollTo(selector: string) {
   const el = document.querySelector(selector);
@@ -29,29 +28,26 @@ export function Hero({ onBookCall, ready }: { onBookCall: () => void; ready: boo
       const words = el.querySelectorAll(".hero-word");
       const tl = gsap.timeline({ delay: 0.1 });
 
+      const counter = { v: 0 };
+      const countEl = el.querySelector(".hero__count");
+
       tl.fromTo(
-        ".hero__kicker",
-        { autoAlpha: 0, y: 16 },
-        { autoAlpha: 1, y: 0, duration: 0.7, ease: "power3.out" },
+        words,
+        touch ? { autoAlpha: 0, yPercent: 120 } : { autoAlpha: 0, yPercent: 120, filter: "blur(16px)" },
+        {
+          autoAlpha: 1,
+          yPercent: 0,
+          ...(touch ? {} : { filter: "blur(0px)" }),
+          duration: 1.1,
+          stagger: 0.05,
+          ease: "power4.out",
+        },
       )
-        .fromTo(
-          words,
-          touch ? { autoAlpha: 0, yPercent: 120 } : { autoAlpha: 0, yPercent: 120, filter: "blur(16px)" },
-          {
-            autoAlpha: 1,
-            yPercent: 0,
-            ...(touch ? {} : { filter: "blur(0px)" }),
-            duration: 1.1,
-            stagger: 0.05,
-            ease: "power4.out",
-          },
-          "-=0.3",
-        )
         .fromTo(
           el.querySelectorAll(".hero-word:not(.gradient-text)"),
           { color: "#f04dff" },
           {
-            keyframes: { color: ["#f04dff", "#b72ad8", "#7a28bb", "#21013e"] },
+            keyframes: { color: ["#f04dff", "#b72ad8", "#7a28bb", "#3d1366"] },
             duration: 1.4,
             stagger: 0.08,
             ease: "none",
@@ -59,19 +55,32 @@ export function Hero({ onBookCall, ready }: { onBookCall: () => void; ready: boo
           },
           "<",
         )
+        // The "30 secondes" sticker pops in tilted, and its number counts up.
         .fromTo(
           ".hero__subtitle",
-          { autoAlpha: 0, y: 14 },
-          { autoAlpha: 1, y: 0, duration: 0.8, ease: "power3.out" },
-          "-=0.5",
+          { autoAlpha: 0, scale: 0.6, rotate: -14, y: 24 },
+          { autoAlpha: 1, scale: 1, rotate: -2, y: 0, duration: 0.9, ease: "back.out(1.8)" },
+          "-=0.6",
+        )
+        .to(
+          counter,
+          {
+            v: 30,
+            duration: 1.3,
+            ease: "power2.out",
+            snap: { v: 1 },
+            onUpdate: () => {
+              if (countEl) countEl.textContent = String(counter.v);
+            },
+          },
+          "<0.15",
         )
         .fromTo(
           ".hero__ctas > *",
           { autoAlpha: 0, y: 14 },
           { autoAlpha: 1, y: 0, duration: 0.7, stagger: 0.1, ease: "power3.out" },
-          "-=0.4",
-        )
-        .fromTo(".hero__scrollcue", { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.6 }, "-=0.2");
+          "-=1",
+        );
     }, el);
 
     return () => ctx.revert();
@@ -87,16 +96,28 @@ export function Hero({ onBookCall, ready }: { onBookCall: () => void; ready: boo
   return (
     <section id="top" ref={rootRef} className="hero">
       <div className="hero__content container">
-        <p className="hero__kicker eyebrow">
-          {BRAND.name} — {BRAND.tagline}
-        </p>
-
         <h1 className="hero__title hero__title--long">
           <span className="hero__title-line">{renderLine("TU PARLES BEAUCOUP, HEIN ?")}</span>
           <span className="hero__title-line">{renderLine("ÇA VA ALLER, RESPIRE.", true)}</span>
         </h1>
 
-        <p className="hero__subtitle">J'ai que 30 secondes.</p>
+        <p className="hero__subtitle">
+          <span className="hero__timer" aria-hidden="true">
+            <svg viewBox="0 0 36 36">
+              <circle className="hero__timer-track" cx="18" cy="18" r="15" />
+              <circle className="hero__timer-ring" cx="18" cy="18" r="15" pathLength="100" />
+              <line className="hero__timer-hand" x1="18" y1="18" x2="18" y2="9" />
+              <circle className="hero__timer-pin" cx="18" cy="18" r="2.2" />
+            </svg>
+          </span>
+          <span>
+            J'ai que{" "}
+            <span className="hero__seconds">
+              <span className="hero__count">30</span> secondes
+            </span>
+            .
+          </span>
+        </p>
 
         <div className="hero__ctas">
           <button ref={workBtn} className="btn btn-primary" onClick={() => scrollTo("#video")}>
@@ -107,10 +128,6 @@ export function Hero({ onBookCall, ready }: { onBookCall: () => void; ready: boo
           </button>
         </div>
       </div>
-
-      <button className="hero__scrollcue" onClick={() => scrollTo("#video")} aria-label="Défiler">
-        <span className="hero__scrollcue-line" />
-      </button>
     </section>
   );
 }

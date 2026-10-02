@@ -17,7 +17,7 @@ type Props = {
 
 // Each plain word flashes through the brand colors as it lands, then
 // settles back to ink.
-const COLOR_WAVE = ["#f04dff", "#b72ad8", "#7a28bb", "#21013e"];
+const COLOR_WAVE = ["#f04dff", "#b72ad8", "#7a28bb", "#3d1366"];
 
 /**
  * Kinetic-typography heading: splits text into words and reveals them
