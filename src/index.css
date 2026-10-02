@@ -2072,40 +2072,46 @@ main > :not(.is-inview) *::after {
 
 .navbar__links {
   display: flex;
-  gap: 1.9rem;
+  gap: 0.25rem;
 }
 
+/* Links in the display font, each in its own soft pill on hover. */
 .navbar__link {
+  position: relative;
   background: none;
   border: none;
-  color: rgba(61, 19, 102, 0.7);
-  font-size: 1rem;
-  font-weight: 500;
-  transition: color 0.25s;
-  padding: 0;
-  position: relative;
-}
-
-.navbar__link::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: -5px;
-  height: 2px;
-  border-radius: 2px;
-  background: var(--gradient-main);
-  transform: scaleX(0);
-  transform-origin: left center;
-  transition: transform 0.35s var(--ease-out);
+  border-radius: 999px;
+  padding: 0.6rem 0.95rem;
+  color: rgba(61, 19, 102, 0.82);
+  font-family: var(--font-display);
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  transition: color 0.25s var(--ease-out), background 0.25s var(--ease-out);
 }
 
 .navbar__link:hover {
   color: var(--pink);
+  background: rgba(240, 77, 255, 0.1);
+}
+
+/* Small flash dot that pops in under the hovered link. */
+.navbar__link::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 0.18rem;
+  width: 4px;
+  height: 4px;
+  margin-left: -2px;
+  border-radius: 50%;
+  background: var(--flash);
+  transform: scale(0);
+  transition: transform 0.3s var(--ease-out);
 }
 
 .navbar__link:hover::after {
-  transform: scaleX(1);
+  transform: scale(1);
 }
 
 .navbar__actions {
@@ -2215,10 +2221,14 @@ main > :not(.is-inview) *::after {
 
 @media (max-width: 1100px) {
   .navbar__pill {
-    gap: 1.6rem;
+    gap: 1rem;
   }
   .navbar__links {
-    gap: 1.3rem;
+    gap: 0;
+  }
+  .navbar__link {
+    padding-inline: 0.7rem;
+    font-size: 0.76rem;
   }
 }
 
