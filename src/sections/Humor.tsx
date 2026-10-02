@@ -49,7 +49,7 @@ export function Humor({ onCta }: { onCta: () => void }) {
     return () => ctx.revert();
   }, []);
 
-  const line1 = "VOUS POURRIEZ AUSSI EXPLIQUER ÇA AVEC 17 SLIDES.";
+  const line1 = "VOUS POURRIEZ AUSSI EXPLIQUER ÇA AVEC 14 SLIDES.";
 
   return (
     <div ref={rootRef} className="section humor">

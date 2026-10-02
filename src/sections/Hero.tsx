@@ -112,9 +112,8 @@ export function Hero({ onBookCall, ready }: { onBookCall: () => void; ready: boo
           </span>
           <span>
             J'ai que{" "}
-            <span className="hero__seconds">
-              <span className="hero__count">30</span> secondes
-            </span>
+            {/* Siblings, not nested: Safari won't paint a clipped gradient through an inline-block child. */}
+            <span className="hero__count">30</span> <span className="hero__seconds">secondes</span>
             .
           </span>
         </p>
