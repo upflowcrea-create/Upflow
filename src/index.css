@@ -3,11 +3,15 @@
 /* ---------------------------------------------------------------------- */
 
 :root {
-  --pink: #ff2e93;
-  --pink-pastel: #ffc2e8;
-  --violet: #8a2bff;
-  --violet-electric: #b026ff;
-  --blue-accent: #47bfff;
+  /* Palette sampled straight from the logo's gradient: deep plum at the
+     top, through violet and magenta, to the bright orchid/rose at the
+     bottom. No other hues. */
+  --pink: #b72ad8;
+  --pink-pastel: #efc6fb;
+  --violet: #7a28bb;
+  --violet-electric: #9c29c6;
+  --violet-deep: #501182;
+  --plum: #30004b;
   --white: #ffffff;
   --off-white: #f4eefc;
   --black: #06030a;
@@ -15,14 +19,14 @@
      because it only sits behind video (frames, cards, lightbox). */
   --bg: #ffffff;
   --surface: #f7f4fb;
-  --ink: #120a1e;
-  --line: rgba(18, 10, 30, 0.1);
-  --shadow-card: 0 1px 2px rgba(18, 10, 30, 0.04), 0 12px 32px -12px rgba(18, 10, 30, 0.12);
-  --bg-panel: #120a1e;
+  --ink: #21013e;
+  --line: rgba(33, 1, 62, 0.1);
+  --shadow-card: 0 1px 2px rgba(33, 1, 62, 0.04), 0 12px 32px -12px rgba(33, 1, 62, 0.12);
+  --bg-panel: #21013e;
 
-  --gradient-main: linear-gradient(120deg, var(--pink) 0%, var(--violet) 55%, var(--violet-electric) 100%);
-  --gradient-main-reverse: linear-gradient(300deg, var(--pink) 0%, var(--violet) 55%, var(--violet-electric) 100%);
-  --gradient-text: linear-gradient(100deg, var(--pink) 0%, var(--violet-electric) 35%, var(--blue-accent) 62%, var(--violet) 82%, var(--pink) 100%);
+  --gradient-main: linear-gradient(120deg, var(--pink) 0%, var(--violet-electric) 40%, var(--violet) 75%, var(--violet-deep) 100%);
+  --gradient-main-reverse: linear-gradient(300deg, var(--pink) 0%, var(--violet-electric) 40%, var(--violet) 75%, var(--violet-deep) 100%);
+  --gradient-text: linear-gradient(100deg, var(--pink) 0%, var(--violet) 35%, var(--plum) 60%, var(--violet-electric) 82%, var(--pink) 100%);
 
   --font-display: "Unbounded", system-ui, sans-serif;
   --font-body: "Inter", system-ui, -apple-system, sans-serif;
@@ -210,7 +214,7 @@ ul {
   isolation: isolate;
   background: var(--gradient-main);
   color: var(--white);
-  box-shadow: 0 8px 30px -6px rgba(255, 46, 147, 0.55);
+  box-shadow: 0 8px 30px -6px rgba(183, 42, 216, 0.55);
 }
 
 /* Pulsing glow animates the opacity of a pre-rendered shadow layer instead
@@ -221,7 +225,7 @@ ul {
   inset: 0;
   z-index: -1;
   border-radius: inherit;
-  box-shadow: 0 10px 40px -4px rgba(178, 38, 255, 0.75);
+  box-shadow: 0 10px 40px -4px rgba(156, 41, 198, 0.75);
   opacity: 0;
   animation: ctaGlow 2.8s ease-in-out infinite;
   pointer-events: none;
@@ -235,12 +239,12 @@ ul {
 .btn-ghost {
   background: transparent;
   color: var(--ink);
-  border: 1.5px solid rgba(18, 10, 30, 0.35);
+  border: 1.5px solid rgba(33, 1, 62, 0.35);
 }
 
 .btn-ghost:hover {
   border-color: var(--pink);
-  background: rgba(255, 46, 147, 0.06);
+  background: rgba(183, 42, 216, 0.06);
 }
 
 .visually-hidden {
@@ -317,7 +321,7 @@ ul {
 .hero__subtitle {
   opacity: 0;
   font-size: clamp(1rem, 1.6vw, 1.25rem);
-  color: rgba(18, 10, 30, 0.75);
+  color: rgba(33, 1, 62, 0.75);
   max-width: 34ch;
   line-height: 1.45;
   margin-top: 0.4rem;
@@ -343,7 +347,7 @@ ul {
   width: 26px;
   height: 42px;
   border-radius: 999px;
-  border: 1.5px solid rgba(18, 10, 30, 0.35);
+  border: 1.5px solid rgba(33, 1, 62, 0.35);
   background: transparent;
   opacity: 0;
   display: flex;
@@ -403,7 +407,7 @@ ul {
   max-width: 1000px;
   max-height: 1000px;
   transform: translate(-50%, -50%);
-  background: radial-gradient(circle, rgba(178, 38, 255, 0.14) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(156, 41, 198, 0.14) 0%, transparent 70%);
   filter: blur(60px);
   animation: blobFloat 18s ease-in-out infinite;
 }
@@ -423,7 +427,7 @@ ul {
 }
 
 .final-cta__sub {
-  color: rgba(18, 10, 30, 0.75);
+  color: rgba(33, 1, 62, 0.75);
   font-size: clamp(1rem, 1.6vw, 1.2rem);
   max-width: 40ch;
 }
@@ -468,7 +472,7 @@ ul {
   font-size: 0.95rem;
   color: var(--ink);
   background: var(--surface);
-  border: 1px solid rgba(18, 10, 30, 0.14);
+  border: 1px solid rgba(33, 1, 62, 0.14);
   border-radius: var(--radius-sm);
   padding: 0.85rem 1rem;
   outline: none;
@@ -480,7 +484,7 @@ ul {
 .script-form textarea:focus {
   border-color: var(--pink);
   background: var(--bg);
-  box-shadow: 0 0 0 4px rgba(255, 46, 147, 0.12);
+  box-shadow: 0 0 0 4px rgba(183, 42, 216, 0.12);
 }
 
 .script-form textarea {
@@ -491,7 +495,7 @@ ul {
 
 .script-form__hint {
   font-size: 0.8rem;
-  color: rgba(18, 10, 30, 0.55);
+  color: rgba(33, 1, 62, 0.55);
 }
 
 .script-form__actions {
@@ -502,8 +506,14 @@ ul {
 }
 
 .script-form__submit {
-  flex: 1 1 200px;
+  flex: 1 1 100%;
   justify-content: center;
+  /* .btn is nowrap; with the wide display font a long label like
+     "ENVOYER SUR WHATSAPP →" was wider than a phone-width card and spilled
+     out of it. Let it wrap inside the button instead. */
+  min-width: 0;
+  white-space: normal;
+  text-align: center;
 }
 
 .script-form__submit:disabled,
@@ -524,13 +534,13 @@ ul {
 
 .script-form__promise {
   font-size: 0.8rem;
-  color: rgba(18, 10, 30, 0.5);
+  color: rgba(33, 1, 62, 0.5);
   text-align: center;
 }
 
 .script-form__error {
   font-size: 0.85rem;
-  color: rgba(18, 10, 30, 0.7);
+  color: rgba(33, 1, 62, 0.7);
   text-align: center;
 }
 
@@ -558,13 +568,13 @@ ul {
 }
 
 .script-cta__success p {
-  color: rgba(18, 10, 30, 0.75);
+  color: rgba(33, 1, 62, 0.75);
   max-width: 34ch;
 }
 
 .script-form__question {
   font-size: 0.88rem;
-  color: rgba(18, 10, 30, 0.7);
+  color: rgba(33, 1, 62, 0.7);
   text-align: center;
   padding-top: 1rem;
   border-top: 1px solid var(--line);
@@ -582,7 +592,7 @@ ul {
 /* ---------------------------------------------------------------------- */
 
 .footer {
-  border-top: 1px solid rgba(18, 10, 30, 0.1);
+  border-top: 1px solid rgba(33, 1, 62, 0.1);
   padding-block: 3rem 1.5rem;
 }
 
@@ -605,7 +615,7 @@ ul {
 .footer__tagline {
   font-size: 0.78rem;
   letter-spacing: 0.2em;
-  color: rgba(18, 10, 30, 0.5);
+  color: rgba(33, 1, 62, 0.5);
 }
 
 .footer__contact {
@@ -620,7 +630,7 @@ ul {
   align-items: center;
   gap: 0.5rem;
   font-size: 0.95rem;
-  color: rgba(18, 10, 30, 0.85);
+  color: rgba(33, 1, 62, 0.85);
 }
 
 .footer__socials {
@@ -632,11 +642,11 @@ ul {
   width: 38px;
   height: 38px;
   border-radius: 999px;
-  border: 1px solid rgba(18, 10, 30, 0.15);
+  border: 1px solid rgba(33, 1, 62, 0.15);
   display: flex;
   align-items: center;
   justify-content: center;
-  color: rgba(18, 10, 30, 0.8);
+  color: rgba(33, 1, 62, 0.8);
   transition: border-color 0.2s, color 0.2s;
 }
 
@@ -648,8 +658,8 @@ ul {
 .footer__bottom {
   text-align: center;
   font-size: 0.8rem;
-  color: rgba(18, 10, 30, 0.4);
-  border-top: 1px solid rgba(18, 10, 30, 0.08);
+  color: rgba(33, 1, 62, 0.4);
+  border-top: 1px solid rgba(33, 1, 62, 0.08);
   padding-top: 1.5rem;
 }
 
@@ -682,7 +692,7 @@ ul {
   max-width: 700px;
   max-height: 700px;
   transform: translate(-50%, -50%);
-  background: radial-gradient(circle, rgba(178, 38, 255, 0.14) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(156, 41, 198, 0.14) 0%, transparent 70%);
   filter: blur(50px);
   animation: humorGlowPulse 3.5s ease-in-out infinite;
   pointer-events: none;
@@ -763,8 +773,8 @@ ul {
 }
 
 .process-step:hover {
-  border-color: rgba(255, 46, 147, 0.35);
-  box-shadow: 0 1px 2px rgba(18, 10, 30, 0.04), 0 22px 44px -16px rgba(255, 46, 147, 0.28);
+  border-color: rgba(183, 42, 216, 0.35);
+  box-shadow: 0 1px 2px rgba(33, 1, 62, 0.04), 0 22px 44px -16px rgba(183, 42, 216, 0.28);
 }
 
 /* Rotated gradient "sticker" badge, poking out of the card's top edge —
@@ -784,7 +794,7 @@ ul {
   border-radius: 999px;
   white-space: nowrap;
   transform: rotate(-4deg);
-  box-shadow: 0 8px 24px rgba(255, 46, 147, 0.45), 0 0 0 1px rgba(255, 255, 255, 0.08) inset;
+  box-shadow: 0 8px 24px rgba(183, 42, 216, 0.45), 0 0 0 1px rgba(255, 255, 255, 0.08) inset;
 }
 
 .process-step:nth-child(even) .process-step__sticker {
@@ -794,8 +804,8 @@ ul {
 .process-step__visual {
   height: 140px;
   border-radius: var(--radius-md);
-  background: rgba(18, 10, 30, 0.04);
-  border: 1px solid rgba(18, 10, 30, 0.08);
+  background: rgba(33, 1, 62, 0.04);
+  border: 1px solid rgba(33, 1, 62, 0.08);
   position: relative;
   overflow: hidden;
   display: flex;
@@ -839,14 +849,14 @@ ul {
   gap: 0.5rem;
   padding: 0.5rem 0.9rem;
   border-radius: 999px;
-  background: rgba(18, 10, 30, 0.06);
+  background: rgba(33, 1, 62, 0.06);
 }
 
 .step-visual__call-bar span {
   width: 7px;
   height: 7px;
   border-radius: 50%;
-  background: rgba(18, 10, 30, 0.5);
+  background: rgba(33, 1, 62, 0.5);
 }
 
 .step-visual__call-bar span:first-child {
@@ -864,11 +874,11 @@ ul {
   font-size: 0.85rem;
   padding: 0.7rem 1.1rem;
   border-radius: var(--radius-sm) var(--radius-sm) var(--radius-sm) 2px;
-  box-shadow: 0 10px 30px rgba(138, 43, 255, 0.35);
+  box-shadow: 0 10px 30px rgba(122, 40, 187, 0.35);
 }
 
 .step-visual__bubble span {
-  color: #baffc9;
+  color: var(--pink-pastel);
   font-weight: 800;
 }
 
@@ -883,16 +893,16 @@ ul {
 .step-visual__frame {
   position: relative;
   height: 44px;
-  border: 1.5px solid rgba(18, 10, 30, 0.4);
+  border: 1.5px solid rgba(33, 1, 62, 0.4);
   border-radius: 4px;
-  background: rgba(18, 10, 30, 0.05);
+  background: rgba(33, 1, 62, 0.05);
 }
 
 .step-visual__frame::before {
   content: "";
   position: absolute;
   inset: 4px;
-  border-top: 1px solid rgba(18, 10, 30, 0.25);
+  border-top: 1px solid rgba(33, 1, 62, 0.25);
   transform: rotate(18deg);
 }
 
@@ -907,7 +917,7 @@ ul {
   height: 6px;
   width: 100%;
   border-radius: 999px;
-  background: rgba(18, 10, 30, 0.08);
+  background: rgba(33, 1, 62, 0.08);
 }
 
 /* The fill scales and the head slides with transforms only (no width/left
@@ -937,15 +947,15 @@ ul {
   border-radius: 50%;
   background: var(--white);
   border: 2px solid var(--pink);
-  box-shadow: 0 0 0 4px rgba(255, 46, 147, 0.2);
+  box-shadow: 0 0 0 4px rgba(183, 42, 216, 0.2);
 }
 
 .step-visual__pill {
   align-self: center;
   font-size: 0.72rem;
   font-weight: 600;
-  color: rgba(18, 10, 30, 0.65);
-  background: rgba(18, 10, 30, 0.06);
+  color: rgba(33, 1, 62, 0.65);
+  background: rgba(33, 1, 62, 0.06);
   padding: 0.3rem 0.8rem;
   border-radius: 999px;
 }
@@ -954,8 +964,8 @@ ul {
   display: flex;
   align-items: center;
   gap: 0.6rem;
-  background: rgba(18, 10, 30, 0.06);
-  border: 1px solid rgba(18, 10, 30, 0.12);
+  background: rgba(33, 1, 62, 0.06);
+  border: 1px solid rgba(33, 1, 62, 0.12);
   padding: 0.7rem 1.1rem;
   border-radius: var(--radius-sm);
   font-size: 0.85rem;
@@ -989,7 +999,7 @@ ul {
 }
 
 .process-step__text {
-  color: rgba(18, 10, 30, 0.65);
+  color: rgba(33, 1, 62, 0.65);
   font-size: 0.95rem;
   line-height: 1.55;
 }
@@ -1158,7 +1168,7 @@ main > :not(.is-inview) *::after {
   background-size: 220% 220%;
   border-color: transparent;
   translate: 0 -10px;
-  box-shadow: 0 30px 70px -20px rgba(178, 38, 255, 0.5);
+  box-shadow: 0 30px 70px -20px rgba(156, 41, 198, 0.5);
   animation: gradientTextShift 3.5s ease-in-out infinite;
 }
 
@@ -1225,13 +1235,13 @@ main > :not(.is-inview) *::after {
 .pricing-card--highlight .btn-primary {
   background: var(--white);
   color: var(--violet);
-  box-shadow: 0 10px 24px -8px rgba(18, 10, 30, 0.35);
+  box-shadow: 0 10px 24px -8px rgba(33, 1, 62, 0.35);
 }
 
 .pricing__footnote {
   text-align: center;
   margin-top: 2.5rem;
-  color: rgba(18, 10, 30, 0.7);
+  color: rgba(33, 1, 62, 0.7);
 }
 
 .pricing__footnote-link {
@@ -1276,7 +1286,7 @@ main > :not(.is-inview) *::after {
   aspect-ratio: 16 / 9;
   border-radius: var(--radius-md);
   overflow: hidden;
-  border: 1px solid rgba(18, 10, 30, 0.1);
+  border: 1px solid rgba(33, 1, 62, 0.1);
   background: var(--bg-panel);
   box-shadow: var(--shadow-card);
   padding: 0;
@@ -1297,7 +1307,7 @@ main > :not(.is-inview) *::after {
   font-size: 0.72rem;
   letter-spacing: 0.04em;
   text-transform: uppercase;
-  box-shadow: 0 8px 24px -6px rgba(255, 46, 147, 0.6);
+  box-shadow: 0 8px 24px -6px rgba(183, 42, 216, 0.6);
 }
 
 .portfolio-card__media {
@@ -1600,7 +1610,7 @@ main > :not(.is-inview) *::after {
   grid-template-columns: repeat(3, 1fr);
   gap: 2rem;
   padding-bottom: clamp(3rem, 8vh, 6rem);
-  border-bottom: 1px solid rgba(18, 10, 30, 0.1);
+  border-bottom: 1px solid rgba(33, 1, 62, 0.1);
 }
 
 .service-intro-item__n {
@@ -1617,7 +1627,7 @@ main > :not(.is-inview) *::after {
 }
 
 .service-intro-item__short {
-  color: rgba(18, 10, 30, 0.7);
+  color: rgba(33, 1, 62, 0.7);
   font-size: 0.95rem;
   line-height: 1.5;
   max-width: 32ch;
@@ -1650,7 +1660,7 @@ main > :not(.is-inview) *::after {
   inset: -40% -40% auto auto;
   width: 60%;
   height: 60%;
-  background: radial-gradient(closest-side, rgba(255, 46, 147, 0.16) 0%, rgba(138, 43, 255, 0.08) 50%, transparent 100%);
+  background: radial-gradient(closest-side, rgba(183, 42, 216, 0.16) 0%, rgba(122, 40, 187, 0.08) 50%, transparent 100%);
   opacity: 0.6;
   animation: serviceBlobDrift 6s ease-in-out infinite;
   pointer-events: none;
@@ -1683,7 +1693,7 @@ main > :not(.is-inview) *::after {
 }
 
 .service-card__desc {
-  color: rgba(18, 10, 30, 0.78);
+  color: rgba(33, 1, 62, 0.78);
   font-size: 1.02rem;
   max-width: 52ch;
   margin-bottom: 1.3rem;
@@ -1700,8 +1710,8 @@ main > :not(.is-inview) *::after {
   font-size: 0.72rem;
   letter-spacing: 0.08em;
   font-weight: 600;
-  color: rgba(18, 10, 30, 0.55);
-  border: 1px solid rgba(18, 10, 30, 0.18);
+  color: rgba(33, 1, 62, 0.55);
+  border: 1px solid rgba(33, 1, 62, 0.18);
   border-radius: 999px;
   padding: 0.35rem 0.8rem;
 }
@@ -1718,9 +1728,9 @@ main > :not(.is-inview) *::after {
   font-weight: 600;
   padding: 0.4rem 0.9rem;
   border-radius: 999px;
-  background: rgba(255, 46, 147, 0.08);
-  color: #d1166f;
-  border: 1px solid rgba(255, 46, 147, 0.25);
+  background: rgba(183, 42, 216, 0.08);
+  color: #8e1aa8;
+  border: 1px solid rgba(183, 42, 216, 0.25);
 }
 
 @media (max-width: 900px) {
@@ -1777,8 +1787,8 @@ main > :not(.is-inview) *::after {
   position: relative;
   overflow: hidden;
   background: var(--bg-panel);
-  box-shadow: 0 30px 90px -30px rgba(178, 38, 255, 0.45);
-  border: 1px solid rgba(18, 10, 30, 0.08);
+  box-shadow: 0 30px 90px -30px rgba(156, 41, 198, 0.45);
+  border: 1px solid rgba(33, 1, 62, 0.08);
 }
 
 .video-frame__video {
@@ -1869,7 +1879,7 @@ main > :not(.is-inview) *::after {
   left: 0;
   right: 0;
   height: 50%;
-  background: #fff5fa;
+  background: #fbf3ff;
   transition: transform 0.9s var(--ease-in-out);
 }
 
@@ -1957,7 +1967,7 @@ main > :not(.is-inview) *::after {
 .preloader__bar-track {
   width: min(220px, 50vw);
   height: 2px;
-  background: rgba(18, 10, 30, 0.15);
+  background: rgba(33, 1, 62, 0.15);
   overflow: hidden;
 }
 
@@ -1985,9 +1995,9 @@ main > :not(.is-inview) *::after {
 
 .navbar--scrolled {
   padding-block: 0.85rem;
-  background: var(--nav-tint, rgba(255, 245, 250, 0.92));
+  background: var(--nav-tint, rgba(251, 243, 255, 0.92));
   backdrop-filter: blur(16px);
-  border-bottom: 1px solid rgba(18, 10, 30, 0.08);
+  border-bottom: 1px solid rgba(33, 1, 62, 0.08);
 }
 
 .navbar__inner {
@@ -2230,7 +2240,7 @@ main > :not(.is-inview) *::after {
   background: var(--gradient-main);
   color: var(--white);
   rotate: -2.5deg;
-  box-shadow: 0 18px 40px -18px rgba(178, 38, 255, 0.55);
+  box-shadow: 0 18px 40px -18px rgba(156, 41, 198, 0.55);
 }
 
 .marquee__band--ink {
@@ -2289,7 +2299,12 @@ main > :not(.is-inview) *::after {
   z-index: -1;
   overflow: hidden;
   pointer-events: none;
-  background-color: #fff5fa;
+  background-color: #fbf3ff;
+}
+
+.page-backdrop__layer {
+  position: absolute;
+  inset: 0;
 }
 
 .page-backdrop__glow {
@@ -2299,45 +2314,65 @@ main > :not(.is-inview) *::after {
 }
 
 .page-backdrop__glow--a {
-  width: 85vmax;
-  height: 85vmax;
-  top: -35vmax;
-  left: -30vmax;
+  width: 80vmax;
+  height: 80vmax;
+  top: -30vmax;
+  left: -28vmax;
   color: var(--pink);
-  opacity: 0.2;
-  animation: glowDriftA 20s ease-in-out infinite alternate;
+  opacity: 0.28;
+  animation: glowDriftA 14s ease-in-out infinite alternate;
 }
 
 .page-backdrop__glow--b {
-  width: 75vmax;
-  height: 75vmax;
-  bottom: -30vmax;
-  right: -30vmax;
+  width: 72vmax;
+  height: 72vmax;
+  bottom: -26vmax;
+  right: -26vmax;
+  color: var(--violet);
+  opacity: 0.24;
+  animation: glowDriftB 17s ease-in-out infinite alternate;
+}
+
+.page-backdrop__glow--c {
+  width: 55vmax;
+  height: 55vmax;
+  top: 30%;
+  left: 40%;
   color: var(--violet-electric);
-  opacity: 0.16;
-  animation: glowDriftB 24s ease-in-out infinite alternate;
+  opacity: 0.18;
+  animation: glowDriftC 12s ease-in-out infinite alternate;
 }
 
 @keyframes glowDriftA {
-  to { transform: translate(22vw, 30vh) scale(1.1); }
+  0% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(26vw, 18vh) scale(1.15); }
+  100% { transform: translate(12vw, 38vh) scale(0.95); }
 }
 
 @keyframes glowDriftB {
-  to { transform: translate(-20vw, -26vh) scale(1.12); }
+  0% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(-28vw, -14vh) scale(1.18); }
+  100% { transform: translate(-10vw, -34vh) scale(1.02); }
+}
+
+@keyframes glowDriftC {
+  0% { transform: translate(0, 0) scale(0.9); }
+  50% { transform: translate(-34vw, -20vh) scale(1.2); }
+  100% { transform: translate(-12vw, 16vh) scale(1); }
 }
 
 .marquee__band--ink .marquee__item:nth-child(3n + 1) { color: var(--pink); }
-.marquee__band--ink .marquee__item:nth-child(3n + 2) { color: var(--blue-accent); }
-.marquee__band--ink .marquee__item:nth-child(3n) { color: #d58cff; }
+.marquee__band--ink .marquee__item:nth-child(3n + 2) { color: var(--pink-pastel); }
+.marquee__band--ink .marquee__item:nth-child(3n) { color: #e3a6f5; }
 
 .process-step:nth-child(2) .process-step__sticker {
-  background: linear-gradient(120deg, var(--violet), var(--blue-accent));
-  box-shadow: 0 8px 24px rgba(71, 191, 255, 0.45);
+  background: linear-gradient(120deg, var(--plum), var(--violet));
+  box-shadow: 0 8px 24px rgba(156, 41, 198, 0.45);
 }
 
 .process-step:nth-child(3) .process-step__sticker {
-  background: linear-gradient(120deg, var(--blue-accent), var(--pink));
-  box-shadow: 0 8px 24px rgba(71, 191, 255, 0.4);
+  background: linear-gradient(120deg, var(--violet-electric), var(--pink));
+  box-shadow: 0 8px 24px rgba(156, 41, 198, 0.4);
 }
 
 .process-step:nth-child(4) .process-step__sticker {
@@ -2352,6 +2387,14 @@ main > :not(.is-inview) *::after {
   .video-section__inner {
     height: auto;
     gap: 1.8rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .btn {
+    padding: 0.95rem 1.4rem;
+    font-size: 0.78rem;
+    letter-spacing: 0.02em;
   }
 }
 

@@ -49,9 +49,9 @@ export function Hero({ onBookCall, ready }: { onBookCall: () => void; ready: boo
         )
         .fromTo(
           el.querySelectorAll(".hero-word:not(.gradient-text)"),
-          { color: "#ff2e93" },
+          { color: "#b72ad8" },
           {
-            keyframes: { color: ["#ff2e93", "#b026ff", "#8a2bff", "#120a1e"] },
+            keyframes: { color: ["#b72ad8", "#9c29c6", "#7a28bb", "#21013e"] },
             duration: 1.4,
             stagger: 0.08,
             ease: "none",

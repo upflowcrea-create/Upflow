@@ -57,7 +57,7 @@ export function Navbar() {
               handleNav("#top");
             }}
           >
-            <Logo height={38} />
+            <Logo height={40} />
           </a>
 
           <nav className="navbar__links">
