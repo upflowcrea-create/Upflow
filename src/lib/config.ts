@@ -12,9 +12,9 @@ export const CONTACT = {
   whatsappNumber: "+33651478638", // format international, sans espaces, pour le lien wa.me
   whatsappDisplay: "+33 6 51 47 86 38",
   whatsappMessage: "Bonjour UPFLOW, j'aimerais parler de mon projet vidéo.",
-  instagram: "https://instagram.com/upflow",
-  tiktok: "https://tiktok.com/@upflow",
-  linkedin: "https://linkedin.com/company/upflow",
+  instagram: "https://www.instagram.com/upflow.motion",
+  tiktok: "https://www.tiktok.com/@upflow.motion",
+  linkedin: "", // laisse vide tant qu'il n'y a pas de page : l'icône est alors masquée
 };
 
 export const WHATSAPP_URL = `https://wa.me/${CONTACT.whatsappNumber.replace(/\D/g, "")}?text=${encodeURIComponent(

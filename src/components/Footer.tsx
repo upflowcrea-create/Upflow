@@ -25,9 +25,11 @@ export function Footer() {
             <a href={CONTACT.tiktok} target="_blank" rel="noopener noreferrer" aria-label="TikTok">
               <TikTokIcon size={18} />
             </a>
-            <a href={CONTACT.linkedin} target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
-              <LinkedInIcon size={18} />
-            </a>
+            {CONTACT.linkedin && (
+              <a href={CONTACT.linkedin} target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+                <LinkedInIcon size={18} />
+              </a>
+            )}
           </div>
         </div>
       </div>
