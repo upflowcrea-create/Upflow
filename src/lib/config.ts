@@ -111,7 +111,7 @@ export const PORTFOLIO_ITEMS: PortfolioItem[] = [
     description:
       "Lendy, une appli qui se lance avec un principe simple : louer du matériel multimédia entre particuliers pour créer du contenu. J'ai réalisé leur vidéo de présentation, du concept à l'animation.",
     video: "assets/portfolio/lendy/video.mp4",
-    videoWebm: "assets/portfolio/lendy/video.webm",
+    previewVideo: "assets/portfolio/lendy/preview.mp4",
     poster: "assets/portfolio/lendy/poster.jpg",
   },
   {
