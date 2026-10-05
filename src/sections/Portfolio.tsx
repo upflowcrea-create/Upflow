@@ -40,6 +40,12 @@ function PortfolioCard({
     return () => observer.disconnect();
   }, [isTouch]);
 
+  // Markup always says preload="none" so the prerendered HTML is the same on
+  // every device; desktops then switch to fetching metadata for hover previews.
+  useEffect(() => {
+    if (!isTouch && videoRef.current) videoRef.current.preload = "metadata";
+  }, [isTouch]);
+
   return (
     <button
       ref={tiltRef}
@@ -56,7 +62,7 @@ function PortfolioCard({
             muted
             loop
             playsInline
-            preload={isTouch ? "none" : "metadata"}
+            preload="none"
           >
             <source src={item.previewVideo ?? item.video} type="video/mp4" />
           </video>

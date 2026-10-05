@@ -13,6 +13,7 @@ const TINTS: [selector: string, color: string][] = [
   [".humor", "#fcf2fe"],
   ["#process", "#fbf3ff"],
   ["#pricing", "#f7f0ff"],
+  ["#faq", "#faf3ff"],
   ["#contact", "#fcf2fe"],
 ];
 

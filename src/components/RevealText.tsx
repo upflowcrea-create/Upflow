@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { Fragment, useEffect, useRef } from "react";
 import type { ElementType, ReactNode } from "react";
 import { gsap, ScrollTrigger } from "../lib/smoothScroll";
 import { isTouchDevice } from "../lib/device";
@@ -75,9 +75,14 @@ export function RevealText({ children, as: Tag = "div", className, delay = 0, ac
   const content =
     typeof children === "string"
       ? children.split(" ").map((word, i, all) => (
-          <span className="reveal-word-wrap" key={i}>
-            <span className={clsx("reveal-word", i >= all.length - accent && "reveal-word--accent")}>{word}</span>
-          </span>
+          // A real space between words (not just a margin) so the heading
+          // reads as words to search engines, screen readers and copy-paste.
+          <Fragment key={i}>
+            <span className="reveal-word-wrap">
+              <span className={clsx("reveal-word", i >= all.length - accent && "reveal-word--accent")}>{word}</span>
+            </span>
+            {i < all.length - 1 && " "}
+          </Fragment>
         ))
       : children;
 

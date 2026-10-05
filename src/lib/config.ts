@@ -234,3 +234,37 @@ export const SERVICES = [
     cta: "LANCER UNE CAMPAGNE →",
   },
 ];
+
+// ---------------------------------------------------------------------------
+// FAQ — affichée sur le site ET envoyée à Google (données structurées).
+// Les prix sont repris automatiquement de PRICING ci-dessus.
+// ---------------------------------------------------------------------------
+
+const priceOf = (id: string) => PRICING.find((p) => p.id === id)?.price.replace("€", " €") ?? "";
+
+export const FAQ = [
+  {
+    q: "Qu'est-ce qu'une vidéo motion design ?",
+    a: "C'est une vidéo en graphisme animé : textes, formes, icônes, illustrations et éléments 3D qui prennent vie pour expliquer une idée ou présenter une marque, sans tournage. Idéal pour présenter votre entreprise, expliquer un produit ou une application, ou créer des publicités qui se démarquent sur les réseaux sociaux.",
+  },
+  {
+    q: "Combien coûte une vidéo motion design ?",
+    a: `Chez UPFLOW, une vidéo de présentation de 30 secondes démarre à ${priceOf("starter")}, une vidéo explicative de 45 à 90 secondes à ${priceOf("explain")}, et un pack de vidéos courtes pour vos campagnes publicitaires à ${priceOf("ads")}. Le prix final dépend de la durée, de la part de 3D et du niveau de détail : envoyez-nous votre script et on vous donne un tarif clair.`,
+  },
+  {
+    q: "Je n'ai pas encore de script, vous pouvez m'aider ?",
+    a: "Oui. L'écriture du script fait partie du process : on part de votre objectif et de votre message, on écrit le script et on le valide ensemble avant de passer au storyboard puis à l'animation.",
+  },
+  {
+    q: "Comment se passe la création d'une vidéo avec UPFLOW ?",
+    a: "En cinq étapes : un appel pour comprendre votre projet, l'écriture du script, le storyboard pour visualiser chaque scène, l'animation en motion design et 3D avec le sound design, puis la livraison de votre vidéo. Pour démarrer, envoyez votre script ou écrivez-nous sur WhatsApp : on vous répond en moins de 48h.",
+  },
+  {
+    q: "Motion design, 3D, sound design : quelle différence ?",
+    a: "Le motion design anime des éléments graphiques en 2D (textes, formes, interfaces), la 3D ajoute des objets et des décors en volume pour un rendu plus premium, et le sound design crée l'ambiance sonore et les effets qui donnent du rythme à la vidéo. Chez UPFLOW, on combine les trois selon votre projet.",
+  },
+  {
+    q: "Dans quels formats livrez-vous les vidéos ?",
+    a: "Horizontal (16:9) pour votre site ou YouTube, vertical (9:16) pour Instagram, TikTok et les Reels, carré pour les fils d'actualité. La formule Starter comprend un format livré ; les campagnes publicitaires sont pensées multi-formats dès le départ.",
+  },
+];

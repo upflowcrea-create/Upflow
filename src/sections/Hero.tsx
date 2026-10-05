@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { Fragment, useEffect, useRef } from "react";
 import clsx from "clsx";
 import { gsap } from "../lib/smoothScroll";
 import { getLenis } from "../lib/smoothScroll";
@@ -88,16 +88,21 @@ export function Hero({ onBookCall, ready }: { onBookCall: () => void; ready: boo
 
   const renderLine = (line: string, gradient = false) =>
     line.split(" ").map((word, i) => (
-      <span className="hero-word-wrap" key={i}>
-        <span className={clsx("hero-word", gradient && "gradient-text")}>{word}</span>
-      </span>
+      <Fragment key={i}>
+        {i > 0 && " "}
+        <span className="hero-word-wrap">
+          <span className={clsx("hero-word", gradient && "gradient-text")}>{word}</span>
+        </span>
+      </Fragment>
     ));
 
   return (
     <section id="top" ref={rootRef} className="hero">
       <div className="hero__content container">
         <h1 className="hero__title hero__title--long">
-          <span className="hero__title-line">{renderLine("TU PARLES BEAUCOUP, HEIN ?")}</span>
+          {/* What the page is about, for search engines and screen readers; the visible line is the joke. */}
+          <span className="visually-hidden">UPFLOW, studio de vidéo motion design et 3D. </span>
+          <span className="hero__title-line">{renderLine("TU PARLES BEAUCOUP, HEIN ?")}</span>{" "}
           <span className="hero__title-line">{renderLine("ÇA VA ALLER, RESPIRE.", true)}</span>
         </h1>
 

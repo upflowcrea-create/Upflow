@@ -12,6 +12,7 @@ import { Portfolio } from "./sections/Portfolio";
 import { Humor } from "./sections/Humor";
 import { Process } from "./sections/Process";
 import { Pricing } from "./sections/Pricing";
+import { Faq } from "./sections/Faq";
 import { FinalCta } from "./sections/FinalCta";
 import { initSmoothScroll, setupScrollTriggerRefresh } from "./lib/smoothScroll";
 import { WHATSAPP_URL } from "./lib/config";
@@ -56,6 +57,7 @@ function App() {
         <Humor onCta={openWhatsApp} />
         <Process />
         <Pricing onCta={openWhatsApp} />
+        <Faq />
         <FinalCta />
       </main>
 
