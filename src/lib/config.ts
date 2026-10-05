@@ -43,7 +43,7 @@ export const WEB3FORMS_ACCESS_KEY = "eb6f6655-29dc-4636-aa77-414064e847c8";
 
 export const ASSETS = {
   logo: "assets/logo/upflow-logo-color.png",
-  introVideo: "assets/video/upflow-intro.mp4",
+  introVideo: "assets/video/upflow-presentation-2026-10.mp4",
   introPoster: "assets/video/upflow-intro-poster.jpg",
 };
 
