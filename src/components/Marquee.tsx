@@ -1,5 +1,5 @@
 const ROW_A = ["MOTION DESIGN", "3D", "SOUND DESIGN", "VIDÉO DE PRÉSENTATION", "STORYTELLING"];
-const ROW_B = ["CAMPAGNES ADS", "VIDÉO EXPLICATIVE", "LIVE EVENT", "MULTI-FORMATS", "RÉPONSE EN 48H"];
+const ROW_B = ["VIDÉO EXPLICATIVE", "LIVE EVENT", "MULTI-FORMATS", "RÉPONSE EN 48H"];
 
 function Row({ items, variant }: { items: string[]; variant: "gradient" | "ink" }) {
   return (

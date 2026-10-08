@@ -193,8 +193,7 @@ export function Services({ onCta }: { onCta: () => void }) {
 
         <p className="services__intro">
           UPFLOW est un studio de <strong>vidéo motion design</strong>&nbsp;: on crée des vidéos animées en motion design
-          et en 3D, avec sound design, pour présenter votre entreprise, expliquer votre produit ou lancer vos
-          campagnes publicitaires.
+          et en 3D, avec sound design, pour présenter votre entreprise ou expliquer votre produit.
         </p>
 
         <ServicesIntro />

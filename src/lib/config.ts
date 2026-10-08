@@ -71,15 +71,6 @@ export const PRICING = [
     cta: "EXPLIQUER MON PROJET",
     highlight: true,
   },
-  {
-    id: "ads",
-    name: "ADS",
-    subtitle: "Vidéos courtes multi-angles",
-    price: "500€",
-    prefix: "À partir de",
-    features: ["5 vidéos courtes type ads", "Motion Design", "3D", "Multi-formats"],
-    cta: "LANCER UNE CAMPAGNE",
-  },
 ];
 
 // ---------------------------------------------------------------------------
@@ -222,17 +213,6 @@ export const SERVICES = [
     tags: ["Motion Design", "3D", "Storytelling", "Sound Design"],
     cta: "EXPLIQUER MON PROJET →",
   },
-  {
-    id: "ads",
-    n: "03",
-    label: "CAMPAGNE ADS",
-    short: "Des vidéos courtes pour montrer un problème, votre solution et donner envie d'agir.",
-    title: ["3 VIDÉOS.", "PLUS D'ANGLES.", "PLUS DE POSSIBILITÉS."],
-    description: "Des vidéos courtes pensées pour présenter un problème, votre solution et votre valeur.",
-    usage: ["HOOK", "PROBLÈME", "SOLUTION", "CTA"],
-    tags: ["Motion Design", "3D", "Multi-formats"],
-    cta: "LANCER UNE CAMPAGNE →",
-  },
 ];
 
 // ---------------------------------------------------------------------------
@@ -249,7 +229,7 @@ export const FAQ = [
   },
   {
     q: "Combien coûte une vidéo motion design ?",
-    a: `Chez UPFLOW, une vidéo de présentation de 30 secondes démarre à ${priceOf("starter")}, une vidéo explicative de 45 à 90 secondes à ${priceOf("explain")}, et un pack de vidéos courtes pour vos campagnes publicitaires à ${priceOf("ads")}. Le prix final dépend de la durée, de la part de 3D et du niveau de détail : envoyez-nous votre script et on vous donne un tarif clair.`,
+    a: `Chez UPFLOW, une vidéo de présentation de 30 secondes démarre à ${priceOf("starter")} et une vidéo explicative de 45 à 90 secondes à ${priceOf("explain")}. Le prix final dépend de la durée, de la part de 3D et du niveau de détail : envoyez-nous votre script et on vous donne un tarif clair.`,
   },
   {
     q: "Je n'ai pas encore de script, vous pouvez m'aider ?",
@@ -265,6 +245,6 @@ export const FAQ = [
   },
   {
     q: "Dans quels formats livrez-vous les vidéos ?",
-    a: "Horizontal (16:9) pour votre site ou YouTube, vertical (9:16) pour Instagram, TikTok et les Reels, carré pour les fils d'actualité. La formule Starter comprend un format livré ; les campagnes publicitaires sont pensées multi-formats dès le départ.",
+    a: "Horizontal (16:9) pour votre site ou YouTube, vertical (9:16) pour Instagram, TikTok et les Reels, carré pour les fils d'actualité. La formule Starter comprend un format livré ; besoin de plusieurs formats ? On l'ajoute à votre projet.",
   },
 ];

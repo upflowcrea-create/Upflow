@@ -16,7 +16,7 @@ export function jsonLd() {
     name: BRAND.name,
     alternateName: "UPFLOW Motion",
     description:
-      "Studio de vidéo motion design, 3D et sound design : vidéos de présentation, vidéos explicatives et campagnes publicitaires pour les entreprises.",
+      "Studio de vidéo motion design, 3D et sound design : vidéos de présentation et vidéos explicatives pour les entreprises.",
     url: SITE,
     logo: abs(ASSETS.logo),
     image: abs("assets/og-image.jpg"),
@@ -24,7 +24,7 @@ export function jsonLd() {
     telephone: CONTACT.whatsappNumber,
     areaServed: { "@type": "Country", name: "France" },
     priceRange: "€€",
-    knowsAbout: ["Vidéo motion design", "Motion design", "Animation 3D", "Sound design", "Vidéo explicative", "Vidéo de présentation", "Publicité vidéo"],
+    knowsAbout: ["Vidéo motion design", "Motion design", "Animation 3D", "Sound design", "Vidéo explicative", "Vidéo de présentation"],
     sameAs: [CONTACT.instagram, CONTACT.tiktok, CONTACT.linkedin].filter(Boolean),
     hasOfferCatalog: {
       "@type": "OfferCatalog",
