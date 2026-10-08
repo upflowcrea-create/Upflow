@@ -59,7 +59,7 @@ export function jsonLd() {
   const video = {
     "@type": "VideoObject",
     name: "UPFLOW — vidéo de présentation du studio",
-    description: "30 secondes pour comprendre ce que fait UPFLOW, studio de vidéo motion design, 3D et sound design.",
+    description: "Une minute pour comprendre ce que fait UPFLOW, studio de vidéo motion design, 3D et sound design.",
     thumbnailUrl: abs(ASSETS.introPoster),
     contentUrl: abs(ASSETS.introVideo),
     uploadDate: "2026-10-09T00:00:00+02:00",
