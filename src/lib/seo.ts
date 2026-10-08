@@ -62,8 +62,8 @@ export function jsonLd() {
     description: "30 secondes pour comprendre ce que fait UPFLOW, studio de vidéo motion design, 3D et sound design.",
     thumbnailUrl: abs(ASSETS.introPoster),
     contentUrl: abs(ASSETS.introVideo),
-    uploadDate: "2026-10-05T00:00:00+02:00",
-    duration: "PT44S",
+    uploadDate: "2026-10-09T00:00:00+02:00",
+    duration: "PT55S",
     inLanguage: "fr-FR",
     publisher: { "@id": `${SITE}#organization` },
   };

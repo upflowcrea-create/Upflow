@@ -8,12 +8,13 @@ de préférence) au même endroit, rien d'autre à toucher.
 
 ## 2. Vidéo de présentation ✅ déjà en place
 
-Emplacements : `public/assets/video/upflow-intro.mp4` (H.264, compatible partout),
-`upflow-intro.webm` (VP9, plus léger) et `upflow-intro-poster.jpg`.
+Emplacements : `public/assets/video/upflow-presentation-2026-10b.mp4` (H.264 720p, compatible partout)
+et `upflow-presentation-2026-10b-poster.jpg`, référencés dans `src/lib/config.ts` (`ASSETS`).
 Elle se lance automatiquement (en muet) dès qu'on arrive sur sa section.
-Pour la remplacer, dépose un nouveau fichier et retranscode-le en H.264 :
+Pour la remplacer, retranscode-la en H.264 sous un **nouveau nom de fichier** (sinon les
+navigateurs gardent l'ancienne en cache), puis mets à jour `ASSETS` et la durée dans `src/lib/seo.ts` :
 ```
-ffmpeg -i ta-video.mov -vf "scale=1920:-2" -c:v libx264 -crf 22 -c:a aac -movflags +faststart public/assets/video/upflow-intro.mp4
+ffmpeg -i ta-video.mov -vf "scale=1280:-2" -c:v libx264 -preset slow -crf 27 -c:a aac -b:a 160k -movflags +faststart public/assets/video/nouveau-nom.mp4
 ```
 
 ## 3. Formulaire de réservation ⚠️ à configurer
