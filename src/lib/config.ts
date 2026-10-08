@@ -67,7 +67,7 @@ export const PRICING = [
     subtitle: "Vidéo explicative — 45 à 90s",
     price: "500€",
     prefix: "À partir de",
-    features: ["Motion Design", "3D", "Storytelling", "Sound Design"],
+    features: ["Motion Design", "3D", "Storytelling", "Sound Design", "2 formats livrés : portrait + paysage"],
     cta: "EXPLIQUER MON PROJET",
     highlight: true,
   },
@@ -245,6 +245,6 @@ export const FAQ = [
   },
   {
     q: "Dans quels formats livrez-vous les vidéos ?",
-    a: "Horizontal (16:9) pour votre site ou YouTube, vertical (9:16) pour Instagram, TikTok et les Reels, carré pour les fils d'actualité. La formule Starter comprend un format livré ; besoin de plusieurs formats ? On l'ajoute à votre projet.",
+    a: "Horizontal (16:9) pour votre site ou YouTube, vertical (9:16) pour Instagram, TikTok et les Reels, carré pour les fils d'actualité. La formule Starter comprend un format livré ; la formule Explain inclut les deux formats, portrait et paysage.",
   },
 ];
