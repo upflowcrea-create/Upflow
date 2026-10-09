@@ -56,7 +56,7 @@ export const PRICING = [
     id: "starter",
     name: "STARTER",
     subtitle: "Vidéo présentation — 30s",
-    price: "350€",
+    price: "250€",
     prefix: "À partir de",
     features: ["Motion Design", "3D", "Sound Design", "1 format livré"],
     cta: "CRÉER LA MIENNE",
@@ -64,7 +64,7 @@ export const PRICING = [
   {
     id: "explain",
     name: "EXPLAIN",
-    subtitle: "Vidéo explicative — 45 à 90s",
+    subtitle: "Vidéo explicative — 60s",
     price: "500€",
     prefix: "À partir de",
     features: ["Motion Design", "3D", "Storytelling", "Sound Design", "2 formats livrés : portrait + paysage"],
@@ -229,7 +229,7 @@ export const FAQ = [
   },
   {
     q: "Combien coûte une vidéo motion design ?",
-    a: `Chez UPFLOW, une vidéo de présentation de 30 secondes démarre à ${priceOf("starter")} et une vidéo explicative de 45 à 90 secondes à ${priceOf("explain")}. Le prix final dépend de la durée, de la part de 3D et du niveau de détail : envoyez-nous votre script et on vous donne un tarif clair.`,
+    a: `Chez UPFLOW, une vidéo de présentation de 30 secondes démarre à ${priceOf("starter")} et une vidéo explicative de 60 secondes à ${priceOf("explain")}. Le prix final dépend de la durée, de la part de 3D et du niveau de détail : envoyez-nous votre script et on vous donne un tarif clair.`,
   },
   {
     q: "Je n'ai pas encore de script, vous pouvez m'aider ?",
