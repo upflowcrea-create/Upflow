@@ -96,81 +96,14 @@ export type PortfolioItem = {
 
 export const PORTFOLIO_ITEMS: PortfolioItem[] = [
   {
-    id: "lendy",
-    title: "Lendy — Vidéo de lancement",
-    category: "MOTION / APP",
+    id: "au-propre",
+    title: "Au Propre — Vidéo de présentation",
+    category: "MOTION / AGENCE WEB",
     description:
-      "Lendy, une appli qui se lance avec un principe simple : louer du matériel multimédia entre particuliers pour créer du contenu. J'ai réalisé leur vidéo de présentation, du concept à l'animation.",
-    video: "assets/portfolio/lendy/video.mp4",
-    previewVideo: "assets/portfolio/lendy/preview.mp4",
-    poster: "assets/portfolio/lendy/poster.jpg",
-  },
-  {
-    id: "rendup",
-    title: "RendUp — Vidéo de marque",
-    category: "3D / MOCKUP",
-    description:
-      "RendUp, un prestataire qui propose des mockups 3D pour donner aux marques des visuels produits plus professionnels. J'ai réalisé leur vidéo de présentation, du concept à l'animation.",
-    video: "assets/portfolio/rendup/video.mp4",
-    videoWebm: "assets/portfolio/rendup/video.webm",
-    poster: "assets/portfolio/rendup/poster.jpg",
-  },
-  {
-    id: "adidas-bucket",
-    title: "Adidas × Bucket — Live Event",
-    category: "ÉVÉNEMENTIEL / LIVE",
-    badge: "On fait ça aussi",
-    description:
-      "Un tournoi de streetball en plein Paris, écran géant, et mes animations diffusées en direct pendant l'event : scores, noms des équipes, règles du jeu, moments forts. Le motion design, en temps réel.",
-    video: "assets/portfolio/event-adidas-bucket/video.mp4",
-    videoWebm: "assets/portfolio/event-adidas-bucket/video.webm",
-    previewVideo: "assets/portfolio/event-adidas-bucket/preview.mp4",
-    poster: "assets/portfolio/event-adidas-bucket/poster.jpg",
-    photos: [
-      "assets/portfolio/event-adidas-bucket/photo-1.jpg",
-      "assets/portfolio/event-adidas-bucket/photo-2.jpg",
-      "assets/portfolio/event-adidas-bucket/photo-3.jpg",
-      "assets/portfolio/event-adidas-bucket/photo-4.jpg",
-    ],
-    extraVideos: [
-      {
-        label: "Diffusée en direct sur l'écran géant",
-        video: "assets/portfolio/event-adidas-bucket/screen-clip.mp4",
-        videoWebm: "assets/portfolio/event-adidas-bucket/screen-clip.webm",
-        poster: "assets/portfolio/event-adidas-bucket/screen-clip-poster.jpg",
-      },
-    ],
-  },
-  {
-    id: "winter-classique",
-    title: "Adidas × UNLOCKED — Winter Classique",
-    category: "ÉVÉNEMENTIEL / LIVE",
-    description:
-      "Un événement basket organisé par Adidas et UNLOCKED, en collaboration avec Wingstop, réunissant les meilleurs joueurs U21 de France. J'ai réalisé la vidéo teaser de promotion de l'event et géré la diffusion des animations sur l'écran géant en direct.",
-    video: "assets/portfolio/winter-classique/screen-clip.mp4",
-    videoWebm: "assets/portfolio/winter-classique/screen-clip.webm",
-    previewVideo: "assets/portfolio/winter-classique/preview.mp4",
-    poster: "assets/portfolio/winter-classique/screen-clip-poster.jpg",
-    photos: [
-      "assets/portfolio/winter-classique/photo-1.jpg",
-      "assets/portfolio/winter-classique/photo-2.jpg",
-      "assets/portfolio/winter-classique/photo-3.jpg",
-      "assets/portfolio/winter-classique/photo-4.jpg",
-    ],
-    extraVideos: [
-      {
-        label: "La vidéo teaser de promotion de l'event",
-        video: "assets/portfolio/winter-classique/video.mp4",
-        videoWebm: "assets/portfolio/winter-classique/video.webm",
-        poster: "assets/portfolio/winter-classique/poster.jpg",
-      },
-      {
-        label: "Les animations diffusées en direct sur les écrans",
-        video: "assets/portfolio/winter-classique/animations-live.mp4",
-        videoWebm: "assets/portfolio/winter-classique/animations-live.webm",
-        poster: "assets/portfolio/winter-classique/animations-live-poster.jpg",
-      },
-    ],
+      "Au Propre, une agence web qui crée des sites clairs et soignés. J'ai réalisé leur vidéo de présentation, du concept à l'animation.",
+    video: "assets/portfolio/au-propre/video.mp4",
+    previewVideo: "assets/portfolio/au-propre/preview.mp4",
+    poster: "assets/portfolio/au-propre/poster.jpg",
   },
 ];
 

@@ -223,6 +223,8 @@ export function Portfolio() {
   }, [activeIndex]);
 
   const active = activeIndex !== null ? PORTFOLIO_ITEMS[activeIndex] : null;
+  // Prev/next arrows only make sense once there is more than one project.
+  const hasSiblings = PORTFOLIO_ITEMS.length > 1;
 
   return (
     <section id="portfolio" className="section portfolio">
@@ -246,6 +248,7 @@ export function Portfolio() {
           <button className="lightbox__close" onClick={close} aria-label="Fermer">
             <X size={22} />
           </button>
+          {hasSiblings && (
           <button
             className="lightbox__nav lightbox__nav--prev"
             onClick={(e) => {
@@ -256,6 +259,7 @@ export function Portfolio() {
           >
             <ChevronLeft size={26} />
           </button>
+          )}
 
           <div
             ref={contentRef}
@@ -308,6 +312,7 @@ export function Portfolio() {
             </div>
           </div>
 
+          {hasSiblings && (
           <button
             className="lightbox__nav lightbox__nav--next"
             onClick={(e) => {
@@ -318,6 +323,7 @@ export function Portfolio() {
           >
             <ChevronRight size={26} />
           </button>
+          )}
         </div>
       )}
     </section>

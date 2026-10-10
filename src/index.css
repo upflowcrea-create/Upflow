@@ -1519,6 +1519,13 @@ main > :not(.is-inview) *::after {
   gap: 1.4rem;
 }
 
+/* A lone project gets one wide, centered card instead of half a grid. */
+.portfolio__grid:has(> .portfolio-card:only-child) {
+  grid-template-columns: 1fr;
+  max-width: 960px;
+  margin-inline: auto;
+}
+
 .portfolio-card {
   position: relative;
   aspect-ratio: 16 / 9;
