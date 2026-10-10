@@ -56,7 +56,7 @@ export const PRICING = [
     id: "starter",
     name: "STARTER",
     subtitle: "Vidéo présentation — 30s",
-    price: "250€",
+    price: "350€",
     prefix: "À partir de",
     features: ["Motion Design", "3D", "Sound Design", "1 format livré"],
     cta: "CRÉER LA MIENNE",
