@@ -1,0 +1,183 @@
+// ---------------------------------------------------------------------------
+// Config centrale UPFLOW — modifie les valeurs ici, rien d'autre à toucher.
+// ---------------------------------------------------------------------------
+
+export const BRAND = {
+  name: "UPFLOW",
+  tagline: "MOTION DESIGN / 3D / VIDÉO",
+};
+
+export const CONTACT = {
+  email: "upflow.crea@gmail.com",
+  whatsappNumber: "+33651478638", // format international, sans espaces, pour le lien wa.me
+  whatsappDisplay: "+33 6 51 47 86 38",
+  whatsappMessage: "Bonjour UPFLOW, j'aimerais parler de mon projet vidéo.",
+  instagram: "https://www.instagram.com/upflow.motion",
+  tiktok: "https://www.tiktok.com/@upflow.motion",
+  linkedin: "", // laisse vide tant qu'il n'y a pas de page : l'icône est alors masquée
+};
+
+export const WHATSAPP_URL = `https://wa.me/${CONTACT.whatsappNumber.replace(/\D/g, "")}?text=${encodeURIComponent(
+  CONTACT.whatsappMessage,
+)}`;
+
+// ---------------------------------------------------------------------------
+// Formulaire de réservation (bouton "Book a call" / "Parler du projet").
+//
+// Le site a un vrai formulaire intégré (date, heure, coordonnées, message) —
+// pas d'iframe Google qui peut être bloquée. À la validation, le formulaire
+// envoie un email avec toutes les infos directement à upflow.crea@gmail.com,
+// via Web3Forms (gratuit, sans backend à héberger).
+//
+// Pour l'activer :
+//   1. Va sur https://web3forms.com
+//   2. Entre ton adresse email (upflow.crea@gmail.com) — pas besoin de créer de compte.
+//   3. Tu reçois une "Access Key" par email : copie-la.
+//   4. Colle-la ci-dessous, à la place de la valeur d'exemple.
+// ---------------------------------------------------------------------------
+export const WEB3FORMS_ACCESS_KEY = "eb6f6655-29dc-4636-aa77-414064e847c8";
+
+// ---------------------------------------------------------------------------
+// Assets — voir ASSETS.md à la racine du projet pour les instructions.
+// ---------------------------------------------------------------------------
+
+export const ASSETS = {
+  logo: "assets/logo/upflow-logo-color.png",
+  introVideo: "assets/video/upflow-presentation-2026-10b.mp4",
+  introPoster: "assets/video/upflow-presentation-2026-10b-poster.jpg",
+};
+
+// ---------------------------------------------------------------------------
+// Pricing — modifiable facilement.
+// ---------------------------------------------------------------------------
+
+export const PRICING = [
+  {
+    id: "starter",
+    name: "STARTER",
+    subtitle: "Vidéo présentation — 30s",
+    price: "350€",
+    prefix: "À partir de",
+    features: ["Motion Design", "3D", "Sound Design", "1 format livré"],
+    cta: "CRÉER LA MIENNE",
+  },
+  {
+    id: "explain",
+    name: "EXPLAIN",
+    subtitle: "Vidéo explicative — 60s",
+    price: "500€",
+    prefix: "À partir de",
+    features: ["Motion Design", "3D", "Storytelling", "Sound Design", "2 formats livrés : portrait + paysage"],
+    cta: "EXPLIQUER MON PROJET",
+    highlight: true,
+  },
+];
+
+// ---------------------------------------------------------------------------
+// Portfolio — remplace src / poster par tes propres fichiers.
+// ---------------------------------------------------------------------------
+
+export type PortfolioItem = {
+  id: string;
+  title: string;
+  category: string;
+  video?: string;
+  videoWebm?: string;
+  /** Lightweight, muted, no-audio variant for the small grid-card preview
+   * (the full `video` is used in the lightbox where it's shown full-screen).
+   * Falls back to `video` when a project's source footage is already small. */
+  previewVideo?: string;
+  poster?: string;
+  photos?: string[];
+  extraVideos?: { video: string; videoWebm?: string; poster?: string; label?: string }[];
+  description?: string;
+  badge?: string;
+};
+
+export const PORTFOLIO_ITEMS: PortfolioItem[] = [
+  {
+    id: "au-propre",
+    title: "Au Propre — Vidéo de présentation",
+    category: "MOTION / AGENCE WEB",
+    description:
+      "Au Propre, une agence web qui crée des sites clairs et soignés. J'ai réalisé leur vidéo de présentation, du concept à l'animation.",
+    video: "assets/portfolio/au-propre/video.mp4",
+    previewVideo: "assets/portfolio/au-propre/preview.mp4",
+    poster: "assets/portfolio/au-propre/poster.jpg",
+  },
+];
+
+// ---------------------------------------------------------------------------
+// Process steps
+// ---------------------------------------------------------------------------
+
+export const PROCESS_STEPS = [
+  { n: "01", title: "CALL", text: "On discute de votre projet, vos objectifs, et ce que vous voulez vraiment dire." },
+  { n: "02", title: "SCRIPT", text: "On écrit le script et on le valide ensemble avant de toucher à quoi que ce soit." },
+  { n: "03", title: "STORYBOARD", text: "On pose chaque scène à plat pour visualiser la vidéo avant de l'animer." },
+  { n: "04", title: "MOTION", text: "Motion design, 3D, sound design — on anime le tout." },
+  { n: "05", title: "DELIVERY", text: "Vous récupérez votre vidéo, dans tous les formats dont vous avez besoin." },
+];
+
+// ---------------------------------------------------------------------------
+// Services (section "OK. MAIS TU FAIS QUOI ?")
+// ---------------------------------------------------------------------------
+
+export const SERVICES = [
+  {
+    id: "presentation",
+    n: "01",
+    label: "VIDÉO DE PRÉSENTATION",
+    short: "30 secondes pour comprendre qui vous êtes et ce que vous faites.",
+    title: ["30 SECONDES.", "PAS UN TED TALK."],
+    description: "Une vidéo courte pour présenter votre entreprise, votre produit ou votre service.",
+    usage: ["SITE", "RÉSEAUX", "PROSPECTION", "SALES"],
+    tags: ["Motion Design", "3D", "Sound Design"],
+    cta: "CRÉER LA MIENNE →",
+  },
+  {
+    id: "explicative",
+    n: "02",
+    label: "VIDÉO EXPLICATIVE",
+    short: "Quand votre produit est compliqué, on le rend simple à comprendre.",
+    title: ["EXPLIQUEZ.", "SANS ÉCRIRE UN ROMAN."],
+    description: "Une vidéo plus longue pour expliquer clairement votre fonctionnement et votre valeur.",
+    usage: ["ONBOARDING", "SITE", "RÉSEAUX", "CLIENTS"],
+    tags: ["Motion Design", "3D", "Storytelling", "Sound Design"],
+    cta: "EXPLIQUER MON PROJET →",
+  },
+];
+
+// ---------------------------------------------------------------------------
+// FAQ — affichée sur le site ET envoyée à Google (données structurées).
+// Les prix sont repris automatiquement de PRICING ci-dessus.
+// ---------------------------------------------------------------------------
+
+const priceOf = (id: string) => PRICING.find((p) => p.id === id)?.price.replace("€", " €") ?? "";
+
+export const FAQ = [
+  {
+    q: "Qu'est-ce qu'une vidéo motion design ?",
+    a: "C'est une vidéo en graphisme animé : textes, formes, icônes, illustrations et éléments 3D qui prennent vie pour expliquer une idée ou présenter une marque, sans tournage. Idéal pour présenter votre entreprise, expliquer un produit ou une application, ou créer des publicités qui se démarquent sur les réseaux sociaux.",
+  },
+  {
+    q: "Combien coûte une vidéo motion design ?",
+    a: `Chez UPFLOW, une vidéo de présentation de 30 secondes démarre à ${priceOf("starter")} et une vidéo explicative de 60 secondes à ${priceOf("explain")}. Le prix final dépend de la durée, de la part de 3D et du niveau de détail : envoyez-nous votre script et on vous donne un tarif clair.`,
+  },
+  {
+    q: "Je n'ai pas encore de script, vous pouvez m'aider ?",
+    a: "Oui. L'écriture du script fait partie du process : on part de votre objectif et de votre message, on écrit le script et on le valide ensemble avant de passer au storyboard puis à l'animation.",
+  },
+  {
+    q: "Comment se passe la création d'une vidéo avec UPFLOW ?",
+    a: "En cinq étapes : un appel pour comprendre votre projet, l'écriture du script, le storyboard pour visualiser chaque scène, l'animation en motion design et 3D avec le sound design, puis la livraison de votre vidéo. Pour démarrer, envoyez votre script ou écrivez-nous sur WhatsApp : on vous répond en moins de 48h.",
+  },
+  {
+    q: "Motion design, 3D, sound design : quelle différence ?",
+    a: "Le motion design anime des éléments graphiques en 2D (textes, formes, interfaces), la 3D ajoute des objets et des décors en volume pour un rendu plus premium, et le sound design crée l'ambiance sonore et les effets qui donnent du rythme à la vidéo. Chez UPFLOW, on combine les trois selon votre projet.",
+  },
+  {
+    q: "Dans quels formats livrez-vous les vidéos ?",
+    a: "Horizontal (16:9) pour votre site ou YouTube, vertical (9:16) pour Instagram, TikTok et les Reels, carré pour les fils d'actualité. La formule Starter comprend un format livré ; la formule Explain inclut les deux formats, portrait et paysage.",
+  },
+];
