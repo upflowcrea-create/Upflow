@@ -1146,6 +1146,14 @@ main > :not(.is-inview) *::after {
   animation-play-state: paused !important;
 }
 
+/* The project lightbox lives inside the portfolio section but covers the
+   whole screen, so it must keep animating (its fade-in) even when that
+   section isn't flagged in view, or it stays stuck invisible. */
+main > section .lightbox,
+main > section .lightbox * {
+  animation-play-state: running !important;
+}
+
 .process-step__sticker {
   animation: stickerFloat 3.2s ease-in-out infinite;
 }
@@ -1707,6 +1715,55 @@ main > :not(.is-inview) *::after {
   margin-top: 0.4rem;
   font-size: 0.78rem;
   color: rgba(244, 238, 252, 0.6);
+}
+
+.lightbox__storyboard-title {
+  margin-bottom: 0.9rem;
+}
+
+.lightbox__storyboard-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.6rem;
+}
+
+.lightbox__board {
+  position: relative;
+  display: block;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  border: 1px solid rgba(244, 238, 252, 0.08);
+}
+
+.lightbox__board img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  transition: transform 0.5s var(--ease-out);
+}
+
+.lightbox__board:hover img {
+  transform: scale(1.04);
+}
+
+.lightbox__board-n {
+  position: absolute;
+  left: 0.5rem;
+  bottom: 0.5rem;
+  padding: 0.2rem 0.5rem;
+  border-radius: 999px;
+  background: rgba(5, 2, 8, 0.6);
+  color: var(--white);
+  font-family: var(--font-display);
+  font-size: 0.68rem;
+  font-weight: 700;
+}
+
+@media (max-width: 640px) {
+  .lightbox__storyboard-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 
 .lightbox__photos {

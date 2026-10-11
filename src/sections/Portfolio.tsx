@@ -302,6 +302,20 @@ export function Portfolio() {
                 </div>
               )}
 
+              {active.storyboard && (
+                <div className="lightbox__storyboard">
+                  <p className="lightbox__storyboard-title eyebrow">Le storyboard</p>
+                  <div className="lightbox__storyboard-grid">
+                    {active.storyboard.map((src, i) => (
+                      <a key={src} href={src} target="_blank" rel="noreferrer" className="lightbox__board">
+                        <img src={src} alt={`${active.title} — storyboard, planche ${i + 1}`} loading="lazy" />
+                        <span className="lightbox__board-n">{String(i + 1).padStart(2, "0")}</span>
+                      </a>
+                    ))}
+                  </div>
+                </div>
+              )}
+
               {active.photos && (
                 <div className="lightbox__photos">
                   {active.photos.map((src, i) => (

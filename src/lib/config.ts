@@ -89,10 +89,15 @@ export type PortfolioItem = {
   previewVideo?: string;
   poster?: string;
   photos?: string[];
+  /** Storyboard boards (16:9 key frames), shown in order under the video. */
+  storyboard?: string[];
   extraVideos?: { video: string; videoWebm?: string; poster?: string; label?: string }[];
   description?: string;
   badge?: string;
 };
+
+const boards = (dir: string, count: number) =>
+  Array.from({ length: count }, (_, i) => `assets/portfolio/${dir}/storyboard/board-${String(i + 1).padStart(2, "0")}.jpg`);
 
 export const PORTFOLIO_ITEMS: PortfolioItem[] = [
   {
@@ -104,6 +109,7 @@ export const PORTFOLIO_ITEMS: PortfolioItem[] = [
     video: "assets/portfolio/au-propre/video.mp4",
     previewVideo: "assets/portfolio/au-propre/preview.mp4",
     poster: "assets/portfolio/au-propre/poster.jpg",
+    storyboard: boards("au-propre", 19),
   },
   {
     id: "aura-vitres",
@@ -114,6 +120,7 @@ export const PORTFOLIO_ITEMS: PortfolioItem[] = [
     video: "assets/portfolio/aura-vitre/video.mp4",
     previewVideo: "assets/portfolio/aura-vitre/preview.mp4",
     poster: "assets/portfolio/aura-vitre/poster.jpg",
+    storyboard: boards("aura-vitre", 12),
   },
 ];
 
