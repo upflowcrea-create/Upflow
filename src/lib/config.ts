@@ -105,6 +105,16 @@ export const PORTFOLIO_ITEMS: PortfolioItem[] = [
     previewVideo: "assets/portfolio/au-propre/preview.mp4",
     poster: "assets/portfolio/au-propre/poster.jpg",
   },
+  {
+    id: "aura-vitres",
+    title: "Aura Vitres — Vidéo de présentation",
+    category: "MOTION / NETTOYAGE",
+    description:
+      "Aura Vitres, une société de nettoyage de vitres et de vitrines. J'ai réalisé leur vidéo de présentation, du concept à l'animation.",
+    video: "assets/portfolio/aura-vitre/video.mp4",
+    previewVideo: "assets/portfolio/aura-vitre/preview.mp4",
+    poster: "assets/portfolio/aura-vitre/poster.jpg",
+  },
 ];
 
 // ---------------------------------------------------------------------------
