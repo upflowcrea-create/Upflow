@@ -101,7 +101,7 @@ export function Hero({ onBookCall, ready }: { onBookCall: () => void; ready: boo
       <div className="hero__content container">
         <h1 className="hero__title hero__title--long">
           {/* What the page is about, for search engines and screen readers; the visible line is the joke. */}
-          <span className="visually-hidden">UPFLOW, studio de vidéo motion design et 3D. </span>
+          <span className="visually-hidden">UPFLOW, studio de vidéo motion design et 3D à Paris. </span>
           <span className="hero__title-line">{renderLine("TU PARLES BEAUCOUP, HEIN ?")}</span>{" "}
           <span className="hero__title-line">{renderLine("ÇA VA ALLER, RESPIRE.", true)}</span>
         </h1>

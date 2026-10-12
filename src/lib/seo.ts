@@ -1,4 +1,4 @@
-import { ASSETS, BRAND, CONTACT, FAQ, PRICING } from "./config";
+import { ASSETS, BRAND, CONTACT, FAQ, LOCATION, PRICING } from "./config";
 
 // Structured data (schema.org JSON-LD) built from the same config the page
 // renders, so prices and FAQ answers given to search engines can never drift
@@ -16,16 +16,29 @@ export function jsonLd() {
     name: BRAND.name,
     alternateName: "UPFLOW Motion",
     description:
-      "Studio de vidéo motion design, 3D et sound design : vidéos de présentation et vidéos explicatives pour les entreprises.",
+      "Studio de vidéo motion design, 3D et sound design à Paris : vidéos de présentation et vidéos explicatives pour les entreprises de Paris et d'Île-de-France.",
     url: SITE,
     logo: abs(ASSETS.logo),
     image: abs("assets/og-image.jpg"),
     email: CONTACT.email,
     telephone: CONTACT.whatsappNumber,
-    areaServed: { "@type": "Country", name: "France" },
+    address: {
+      "@type": "PostalAddress",
+      streetAddress: LOCATION.street,
+      postalCode: LOCATION.postalCode,
+      addressLocality: LOCATION.city,
+      addressRegion: LOCATION.region,
+      addressCountry: "FR",
+    },
+    areaServed: [
+      { "@type": "City", name: "Paris" },
+      { "@type": "AdministrativeArea", name: "Île-de-France" },
+      { "@type": "Country", name: "France" },
+    ],
+    hasMap: LOCATION.googleBusinessUrl,
     priceRange: "€€",
-    knowsAbout: ["Vidéo motion design", "Motion design", "Animation 3D", "Sound design", "Vidéo explicative", "Vidéo de présentation"],
-    sameAs: [CONTACT.instagram, CONTACT.tiktok, CONTACT.linkedin].filter(Boolean),
+    knowsAbout: ["Vidéo motion design", "Motion design Paris", "Motion design", "Animation 3D", "Sound design", "Vidéo explicative", "Vidéo de présentation"],
+    sameAs: [LOCATION.googleBusinessUrl, CONTACT.instagram, CONTACT.tiktok, CONTACT.linkedin].filter(Boolean),
     hasOfferCatalog: {
       "@type": "OfferCatalog",
       name: "Vidéos motion design",

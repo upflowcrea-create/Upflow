@@ -1,7 +1,7 @@
-import { Mail } from "lucide-react";
+import { Mail, MapPin, Phone } from "lucide-react";
 import { Logo } from "./Logo";
 import { InstagramIcon, TikTokIcon, LinkedInIcon } from "./SocialIcons";
-import { CONTACT, BRAND } from "../lib/config";
+import { CONTACT, BRAND, LOCATION } from "../lib/config";
 
 export function Footer() {
   return (
@@ -16,6 +16,14 @@ export function Footer() {
           <a href={`mailto:${CONTACT.email}`} className="footer__email">
             <Mail size={16} />
             {CONTACT.email}
+          </a>
+          <a href={`tel:${CONTACT.whatsappNumber}`} className="footer__email">
+            <Phone size={16} />
+            {CONTACT.whatsappDisplay}
+          </a>
+          <a href={LOCATION.googleBusinessUrl} target="_blank" rel="noopener noreferrer" className="footer__email">
+            <MapPin size={16} />
+            Studio à {LOCATION.district} · Paris &amp; Île-de-France
           </a>
 
           <div className="footer__socials">

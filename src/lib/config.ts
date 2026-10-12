@@ -17,6 +17,17 @@ export const CONTACT = {
   linkedin: "", // laisse vide tant qu'il n'y a pas de page : l'icône est alors masquée
 };
 
+// Fiche Google Business : doit rester identique (nom, adresse, téléphone) à ce que
+// le site affiche et envoie à Google, c'est ce qui fait remonter la fiche sur Maps.
+export const LOCATION = {
+  street: "18 Rue Hélène Brion",
+  postalCode: "75013",
+  city: "Paris",
+  district: "Paris 13e",
+  region: "Île-de-France",
+  googleBusinessUrl: "https://www.google.com/search?kgmid=/g/11zzfxj32y",
+};
+
 export const WHATSAPP_URL = `https://wa.me/${CONTACT.whatsappNumber.replace(/\D/g, "")}?text=${encodeURIComponent(
   CONTACT.whatsappMessage,
 )}`;
@@ -180,6 +191,10 @@ export const FAQ = [
   {
     q: "Combien coûte une vidéo motion design ?",
     a: `Chez UPFLOW, une vidéo de présentation de 30 secondes démarre à ${priceOf("starter")} et une vidéo explicative de 60 secondes à ${priceOf("explain")}. Le prix final dépend de la durée, de la part de 3D et du niveau de détail : envoyez-nous votre script et on vous donne un tarif clair.`,
+  },
+  {
+    q: "Vous travaillez avec des entreprises à Paris ?",
+    a: "Oui. UPFLOW est un studio de motion design basé à Paris (13e) : on travaille en priorité avec les entreprises, startups et agences de Paris et d'Île-de-France, et on peut se rencontrer pour lancer votre projet. On réalise aussi des vidéos à distance partout en France.",
   },
   {
     q: "Je n'ai pas encore de script, vous pouvez m'aider ?",
