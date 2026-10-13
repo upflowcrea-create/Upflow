@@ -142,6 +142,17 @@ export const PORTFOLIO_ITEMS: PortfolioItem[] = [
     poster: "assets/portfolio/aura-vitre/poster.jpg",
     storyboard: boards("aura-vitre", 12),
   },
+  {
+    id: "maxance-pics",
+    title: "Maxance Pics — Vidéo de présentation",
+    category: "MOTION / PHOTO & VIDÉO",
+    description:
+      "Maxance Pics, photographe et vidéaste dans le sport : projets, événements et équipes, de la prise de vue au montage. J'ai réalisé sa vidéo de présentation, du concept à l'animation.",
+    video: "assets/portfolio/maxance-pics/video.mp4",
+    previewVideo: "assets/portfolio/maxance-pics/preview.mp4",
+    poster: "assets/portfolio/maxance-pics/poster.jpg",
+    storyboard: boards("maxance-pics", 12),
+  },
 ];
 
 // ---------------------------------------------------------------------------
