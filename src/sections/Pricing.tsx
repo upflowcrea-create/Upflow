@@ -1,6 +1,7 @@
+import { ArrowUpRight } from "lucide-react";
 import { RevealText } from "../components/RevealText";
 import { useCardsReveal } from "../hooks/useCardsReveal";
-import { PRICING } from "../lib/config";
+import { PARTNER, PRICING } from "../lib/config";
 
 export function Pricing({ onCta }: { onCta: () => void }) {
   const gridRef = useCardsReveal<HTMLDivElement>(".pricing-card", 5);
@@ -42,6 +43,27 @@ export function Pricing({ onCta }: { onCta: () => void }) {
             </div>
           ))}
         </div>
+
+        <a
+          id="site-video"
+          className="partner-offer"
+          href={PARTNER.offerUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <span className="partner-offer__tag">{PARTNER.name.toLowerCase()} × UPFLOW</span>
+          <span className="partner-offer__title">Besoin d'un site aussi ? Offre site + vidéo.</span>
+          <span className="partner-offer__text">
+            Avec {PARTNER.name}, notre agence web partenaire : votre site sur mesure, avec votre vidéo UPFLOW de 30
+            secondes intégrée en haut de page, dès l'ouverture. 100 € de moins que séparément.
+          </span>
+          <span className="partner-offer__price">
+            dès <strong>{PARTNER.offerPrice}</strong> le site + la vidéo
+          </span>
+          <span className="partner-offer__cta">
+            Voir l'offre sur aupropreagency.fr <ArrowUpRight size={18} />
+          </span>
+        </a>
 
         <p className="pricing__footnote">
           Besoin d'un format différent ?{" "}

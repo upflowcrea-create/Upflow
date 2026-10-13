@@ -1,7 +1,7 @@
 import { Mail, MapPin, Phone } from "lucide-react";
 import { Logo } from "./Logo";
 import { InstagramIcon, TikTokIcon, LinkedInIcon } from "./SocialIcons";
-import { CONTACT, BRAND, LOCATION } from "../lib/config";
+import { CONTACT, BRAND, LOCATION, PARTNER } from "../lib/config";
 
 export function Footer() {
   return (
@@ -42,7 +42,12 @@ export function Footer() {
         </div>
       </div>
 
-      <p className="footer__bottom">© {new Date().getFullYear()} {BRAND.name}. Tous droits réservés.</p>
+      <p className="footer__bottom">
+        © {new Date().getFullYear()} {BRAND.name}. Tous droits réservés. · Agence web partenaire :{" "}
+        <a href={PARTNER.url} target="_blank" rel="noopener noreferrer" className="footer__partner">
+          {PARTNER.name}
+        </a>
+      </p>
     </footer>
   );
 }

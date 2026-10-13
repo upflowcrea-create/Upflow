@@ -28,6 +28,15 @@ export const LOCATION = {
   googleBusinessUrl: "https://www.google.com/search?kgmid=/g/11zzfxj32y",
 };
 
+// Offre commune avec AuPropre (agence web partenaire) : relayée en haut de page
+// et sous les tarifs, comme AuPropre le fait pour UPFLOW sur son site.
+export const PARTNER = {
+  name: "AuPropre",
+  url: "https://aupropreagency.fr/",
+  offerUrl: "https://aupropreagency.fr/#offres",
+  offerPrice: "540€",
+};
+
 export const WHATSAPP_URL = `https://wa.me/${CONTACT.whatsappNumber.replace(/\D/g, "")}?text=${encodeURIComponent(
   CONTACT.whatsappMessage,
 )}`;
@@ -113,13 +122,13 @@ const boards = (dir: string, count: number) =>
 export const PORTFOLIO_ITEMS: PortfolioItem[] = [
   {
     id: "au-propre",
-    title: "Au Propre — Vidéo de présentation",
+    title: "AuPropre — Vidéo de présentation",
     category: "MOTION / AGENCE WEB",
     description:
-      "Au Propre, une agence web qui crée des sites clairs et soignés. J'ai réalisé leur vidéo de présentation, du concept à l'animation.",
-    video: "assets/portfolio/au-propre/video.mp4",
-    previewVideo: "assets/portfolio/au-propre/preview.mp4",
-    poster: "assets/portfolio/au-propre/poster.jpg",
+      "AuPropre, l'agence web partenaire d'UPFLOW, qui crée des sites pour les créatifs et les indépendants. J'ai réalisé leur vidéo de présentation, du concept à l'animation.",
+    video: "assets/portfolio/au-propre/video-v2.mp4",
+    previewVideo: "assets/portfolio/au-propre/preview-v2.mp4",
+    poster: "assets/portfolio/au-propre/poster-v2.jpg",
     storyboard: boards("au-propre", 19),
   },
   {
