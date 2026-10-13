@@ -71,7 +71,18 @@ export const ASSETS = {
 // Pricing — modifiable facilement.
 // ---------------------------------------------------------------------------
 
-export const PRICING = [
+export const PRICING: {
+  id: string;
+  name: string;
+  subtitle: string;
+  price: string;
+  prefix?: string;
+  features: string[];
+  cta: string;
+  highlight?: boolean;
+  /** External offer page: the CTA opens it instead of WhatsApp. */
+  href?: string;
+}[] = [
   {
     id: "starter",
     name: "STARTER",
@@ -90,6 +101,22 @@ export const PRICING = [
     features: ["Motion Design", "3D", "Storytelling", "Sound Design", "2 formats livrés : portrait + paysage"],
     cta: "EXPLIQUER MON PROJET",
     highlight: true,
+  },
+  {
+    // Offre commune : la carte renvoie vers l'offre sur le site d'AuPropre.
+    id: "site-video",
+    name: "UPFLOW × AUPROPRE",
+    subtitle: "Site web + vidéo — 30s",
+    price: PARTNER.offerPrice,
+    prefix: "À partir de",
+    features: [
+      `Site sur mesure par ${PARTNER.name}, agence web partenaire`,
+      "Vidéo de présentation 30s UPFLOW",
+      "Vidéo intégrée en haut du site",
+      "100 € de moins que séparément",
+    ],
+    cta: "VOIR L'OFFRE",
+    href: PARTNER.offerUrl,
   },
 ];
 
