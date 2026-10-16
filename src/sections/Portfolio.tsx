@@ -267,7 +267,7 @@ export function Portfolio() {
             data-lenis-prevent
             onClick={(e) => e.stopPropagation()}
           >
-            <div ref={mediaRef} className="lightbox__media">
+            <div ref={mediaRef} className={`lightbox__media${active.portrait ? " lightbox__media--portrait" : ""}`}>
               {active.video ? (
                 <video poster={active.poster} controls autoPlay playsInline>
                   {active.videoWebm && <source src={active.videoWebm} type="video/webm" />}
@@ -291,7 +291,7 @@ export function Portfolio() {
               {active.extraVideos && (
                 <div className="lightbox__extra-videos">
                   {active.extraVideos.map((clip, i) => (
-                    <div className="lightbox__extra-video" key={i}>
+                    <div className={`lightbox__extra-video${clip.portrait ? " lightbox__extra-video--portrait" : ""}`} key={i}>
                       <video poster={clip.poster} controls playsInline preload="metadata">
                         {clip.videoWebm && <source src={clip.videoWebm} type="video/webm" />}
                         <source src={clip.video} type="video/mp4" />
