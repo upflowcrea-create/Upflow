@@ -1752,6 +1752,17 @@ main > section .lightbox * {
   background: var(--bg-panel);
 }
 
+.lightbox__extra-video--vertical {
+  width: 100%;
+  max-width: 340px;
+}
+
+.lightbox__extra-video--vertical video {
+  aspect-ratio: 9 / 16;
+  object-fit: contain;
+  background: #000;
+}
+
 .lightbox__extra-video-label {
   margin-top: 0.4rem;
   font-size: 0.78rem;

@@ -291,7 +291,7 @@ export function Portfolio() {
               {active.extraVideos && (
                 <div className="lightbox__extra-videos">
                   {active.extraVideos.map((clip, i) => (
-                    <div className="lightbox__extra-video" key={i}>
+                    <div className={`lightbox__extra-video${clip.vertical ? " lightbox__extra-video--vertical" : ""}`} key={i}>
                       <video poster={clip.poster} controls playsInline preload="metadata">
                         {clip.videoWebm && <source src={clip.videoWebm} type="video/webm" />}
                         <source src={clip.video} type="video/mp4" />

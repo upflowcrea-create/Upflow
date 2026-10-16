@@ -138,7 +138,7 @@ export type PortfolioItem = {
   photos?: string[];
   /** Storyboard boards (16:9 key frames), shown in order under the video. */
   storyboard?: string[];
-  extraVideos?: { video: string; videoWebm?: string; poster?: string; label?: string }[];
+  extraVideos?: { video: string; videoWebm?: string; poster?: string; label?: string; vertical?: boolean }[];
   description?: string;
   badge?: string;
 };
@@ -179,6 +179,25 @@ export const PORTFOLIO_ITEMS: PortfolioItem[] = [
     previewVideo: "assets/portfolio/maxance-pics/preview-v2.mp4",
     poster: "assets/portfolio/maxance-pics/poster-v2.jpg",
     storyboard: boards("maxance-pics", 12),
+  },
+  {
+    id: "maison-vivaldi",
+    title: "Maison Vivaldi — Présentation + annonce",
+    category: "MOTION / 3D / TEXTILE",
+    description:
+      "Maison Vivaldi, un atelier de personnalisation textile et une agence de communication : de l'idée au vêtement, puis la communication autour du produit. J'ai réalisé leur vidéo de présentation et la vidéo verticale qui annonce la mise en ligne de leur site.",
+    video: "assets/portfolio/maison-vivaldi/video.mp4",
+    previewVideo: "assets/portfolio/maison-vivaldi/preview.mp4",
+    poster: "assets/portfolio/maison-vivaldi/poster.jpg",
+    extraVideos: [
+      {
+        label: "La vidéo d'annonce, en vertical pour les réseaux",
+        video: "assets/portfolio/maison-vivaldi/annonce.mp4",
+        poster: "assets/portfolio/maison-vivaldi/annonce-poster.jpg",
+        vertical: true,
+      },
+    ],
+    storyboard: boards("maison-vivaldi", 12),
   },
 ];
 
