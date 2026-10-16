@@ -171,13 +171,21 @@ export const PORTFOLIO_ITEMS: PortfolioItem[] = [
   },
   {
     id: "maxance-pics",
-    title: "Maxance Pics — Vidéo de présentation",
+    title: "Maxance Pics — Présentation + annonce",
     category: "MOTION / PHOTO & VIDÉO",
     description:
-      "Maxance Pics, photographe et vidéaste dans le sport : projets, événements et équipes, de la prise de vue au montage. J'ai réalisé sa vidéo de présentation, du concept à l'animation.",
+      "Maxance Pics, photographe et vidéaste dans le sport : projets, événements et équipes, de la prise de vue au montage. J'ai réalisé sa vidéo de présentation et sa vidéo d'annonce en vertical pour les réseaux.",
     video: "assets/portfolio/maxance-pics/video-v2.mp4",
     previewVideo: "assets/portfolio/maxance-pics/preview-v2.mp4",
     poster: "assets/portfolio/maxance-pics/poster-v2.jpg",
+    extraVideos: [
+      {
+        label: "La vidéo d'annonce, en vertical pour les réseaux",
+        video: "assets/portfolio/maxance-pics/annonce.mp4",
+        poster: "assets/portfolio/maxance-pics/annonce-poster.jpg",
+        vertical: true,
+      },
+    ],
     storyboard: boards("maxance-pics", 12),
   },
   {

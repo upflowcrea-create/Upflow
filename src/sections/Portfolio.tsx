@@ -296,7 +296,14 @@ export function Portfolio() {
                         {clip.videoWebm && <source src={clip.videoWebm} type="video/webm" />}
                         <source src={clip.video} type="video/mp4" />
                       </video>
-                      {clip.label && <p className="lightbox__extra-video-label">{clip.label}</p>}
+                      {clip.vertical ? (
+                        <div className="lightbox__extra-video-info">
+                          <p className="eyebrow">Format vertical · 9:16</p>
+                          {clip.label && <p className="lightbox__extra-video-title">{clip.label}</p>}
+                        </div>
+                      ) : (
+                        clip.label && <p className="lightbox__extra-video-label">{clip.label}</p>
+                      )}
                     </div>
                   ))}
                 </div>
