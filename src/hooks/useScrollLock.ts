@@ -36,9 +36,15 @@ export function useScrollLock(active: boolean) {
       // which then corrupts ScrollTrigger's pin math for any pinned section
       // (it starts rendering translated to a stale offset). Going through
       // Lenis keeps it consistent even for an instant, non-animated jump.
+      // Lenis clamps scrollTo to the scroll limit it last measured, which was
+      // taken while the body was position:fixed (page height collapsed to
+      // one screen), so the restore was clamped to 0 and closing a project
+      // jumped back to the top of the page. Re-measure first.
       const lenis = getLenis();
-      if (lenis) lenis.scrollTo(scrollY, { immediate: true });
-      else window.scrollTo(0, scrollY);
+      if (lenis) {
+        lenis.resize();
+        lenis.scrollTo(scrollY, { immediate: true, force: true });
+      } else window.scrollTo(0, scrollY);
     };
   }, [active]);
 }

@@ -135,6 +135,19 @@ export function Portfolio() {
 
   useScrollLock(activeIndex !== null);
 
+  // While a project is open, pause the page's own videos (e.g. the UPFLOW
+  // presentation, which a visitor may have unmuted) so two soundtracks never
+  // play at once, then resume the ones that were playing when it closes.
+  const isOpen = activeIndex !== null;
+  useEffect(() => {
+    if (!isOpen) return;
+    const paused = [...document.querySelectorAll<HTMLVideoElement>("main video")].filter(
+      (v) => !v.paused && !v.closest(".lightbox"),
+    );
+    paused.forEach((v) => v.pause());
+    return () => paused.forEach((v) => v.play().catch(() => {}));
+  }, [isOpen]);
+
   // Shared-element "grow from the card" transition: the clicked thumbnail's
   // video visually expands into the fullscreen lightbox video. The rest of
   // the content (title, description, extra videos, photos) sits below that
@@ -267,7 +280,12 @@ export function Portfolio() {
           </button>
           )}
 
+          {/* Keyed by project: switching with the arrows mounts fresh <video>
+              elements. Reusing them only swapped their <source>, which
+              browsers ignore, so the previous project's video kept playing
+              under the new title. */}
           <div
+            key={active.id}
             ref={contentRef}
             className="lightbox__content"
             data-lenis-prevent
