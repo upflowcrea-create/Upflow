@@ -8,6 +8,12 @@ import { useMediaQuery } from "../hooks/useMediaQuery";
 import { gsap, getLenis } from "../lib/smoothScroll";
 import { PORTFOLIO_ITEMS } from "../lib/config";
 
+// "de Maxance Pics" but "d'AuPropre" / "d'Aura Vitres": French elision before a vowel.
+const clientOf = (title: string) => {
+  const name = title.split(" — ")[0];
+  return /^[aeiouyàâäéèêëîïôöùûüh]/i.test(name) ? `d'${name}` : `de ${name}`;
+};
+
 function PortfolioCard({
   item,
   onOpen,
@@ -287,6 +293,13 @@ export function Portfolio() {
               <p className="lightbox__category eyebrow">{active.category}</p>
               <h3 className="lightbox__title">{active.title}</h3>
               {active.description && <p className="lightbox__description">{active.description}</p>}
+              {active.website && (
+                <a className="lightbox__website" href={active.website} target="_blank" rel="noopener">
+                  Voir le site {clientOf(active.title)}
+                  <span className="lightbox__website-domain">{new URL(active.website).hostname.replace(/^www\./, "")}</span>
+                  <ArrowUpRight size={18} />
+                </a>
+              )}
 
               {active.extraVideos && (
                 <div className="lightbox__extra-videos">

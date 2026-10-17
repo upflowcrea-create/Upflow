@@ -136,6 +136,8 @@ export type PortfolioItem = {
   previewVideo?: string;
   poster?: string;
   photos?: string[];
+  /** The client's own website, linked from the project's lightbox. */
+  website?: string;
   /** Storyboard boards (16:9 key frames), shown in order under the video. */
   storyboard?: string[];
   extraVideos?: { video: string; videoWebm?: string; poster?: string; label?: string; vertical?: boolean }[];
@@ -149,6 +151,7 @@ const boards = (dir: string, count: number) =>
 export const PORTFOLIO_ITEMS: PortfolioItem[] = [
   {
     id: "au-propre",
+    website: "https://aupropreagency.fr/",
     title: "AuPropre — Vidéo de présentation",
     category: "MOTION / AGENCE WEB",
     description:
@@ -160,6 +163,7 @@ export const PORTFOLIO_ITEMS: PortfolioItem[] = [
   },
   {
     id: "aura-vitres",
+    website: "https://auravitres.com/",
     title: "Aura Vitres — Vidéo de présentation",
     category: "MOTION / NETTOYAGE",
     description:
@@ -171,6 +175,7 @@ export const PORTFOLIO_ITEMS: PortfolioItem[] = [
   },
   {
     id: "maxance-pics",
+    website: "https://maxancepics.com/",
     title: "Maxance Pics — Présentation + annonce",
     category: "MOTION / PHOTO & VIDÉO",
     description:
@@ -190,6 +195,7 @@ export const PORTFOLIO_ITEMS: PortfolioItem[] = [
   },
   {
     id: "maison-vivaldi",
+    website: "https://www.maisonvivaldi.com/",
     title: "Maison Vivaldi — Présentation + annonce",
     category: "MOTION / 3D / TEXTILE",
     description:
