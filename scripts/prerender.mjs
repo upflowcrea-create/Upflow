@@ -2,7 +2,10 @@
 // page's text is in the HTML itself — readable by crawlers that don't run
 // JavaScript (and by Google before its delayed rendering pass).
 import fs from "node:fs";
-import { jsonLd, render } from "../dist-ssr/entry-server.js";
+import * as data from "../dist-ssr/entry-server.js";
+import { writeProjectPages } from "./project-pages.mjs";
+
+const { jsonLd, render } = data;
 
 const file = new URL("../dist/index.html", import.meta.url);
 const html = fs.readFileSync(file, "utf8");
@@ -17,3 +20,6 @@ fs.writeFileSync(
   html.replace(placeholder, `<div id="root">${render()}</div>`).replace("</head>", `    ${structuredData}\n  </head>`),
 );
 console.log("prerender: dist/index.html filled with the rendered page");
+
+const pages = writeProjectPages(new URL("../dist/", import.meta.url), data);
+console.log(`prerender: ${pages} project pages + sitemap.xml written`);

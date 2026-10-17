@@ -136,11 +136,15 @@ export type PortfolioItem = {
   previewVideo?: string;
   poster?: string;
   photos?: string[];
+  /** Main video length in seconds and the date it went online (ISO), for the
+   * project's own page and the VideoObject data Google reads. */
+  duration?: number;
+  date?: string;
   /** The client's own website, linked from the project's lightbox. */
   website?: string;
   /** Storyboard boards (16:9 key frames), shown in order under the video. */
   storyboard?: string[];
-  extraVideos?: { video: string; videoWebm?: string; poster?: string; label?: string; vertical?: boolean }[];
+  extraVideos?: { video: string; videoWebm?: string; poster?: string; label?: string; vertical?: boolean; duration?: number }[];
   description?: string;
   badge?: string;
 };
@@ -151,6 +155,8 @@ const boards = (dir: string, count: number) =>
 export const PORTFOLIO_ITEMS: PortfolioItem[] = [
   {
     id: "au-propre",
+    duration: 40,
+    date: "2026-10-13",
     website: "https://aupropreagency.fr/",
     title: "AuPropre — Vidéo de présentation",
     category: "MOTION / AGENCE WEB",
@@ -163,6 +169,8 @@ export const PORTFOLIO_ITEMS: PortfolioItem[] = [
   },
   {
     id: "aura-vitres",
+    duration: 26,
+    date: "2026-10-12",
     website: "https://auravitres.com/",
     title: "Aura Vitres — Vidéo de présentation",
     category: "MOTION / NETTOYAGE",
@@ -175,6 +183,8 @@ export const PORTFOLIO_ITEMS: PortfolioItem[] = [
   },
   {
     id: "maxance-pics",
+    duration: 33,
+    date: "2026-10-14",
     website: "https://maxancepics.com/",
     title: "Maxance Pics — Présentation + annonce",
     category: "MOTION / PHOTO & VIDÉO",
@@ -187,6 +197,7 @@ export const PORTFOLIO_ITEMS: PortfolioItem[] = [
       {
         label: "La vidéo d'annonce, en vertical pour les réseaux",
         video: "assets/portfolio/maxance-pics/annonce.mp4",
+        duration: 24,
         poster: "assets/portfolio/maxance-pics/annonce-poster.jpg",
         vertical: true,
       },
@@ -195,6 +206,8 @@ export const PORTFOLIO_ITEMS: PortfolioItem[] = [
   },
   {
     id: "maison-vivaldi",
+    duration: 40,
+    date: "2026-10-17",
     website: "https://www.maisonvivaldi.com/",
     title: "Maison Vivaldi — Présentation + annonce",
     category: "MOTION / 3D / TEXTILE",
@@ -207,6 +220,7 @@ export const PORTFOLIO_ITEMS: PortfolioItem[] = [
       {
         label: "La vidéo d'annonce, en vertical pour les réseaux",
         video: "assets/portfolio/maison-vivaldi/annonce.mp4",
+        duration: 28,
         poster: "assets/portfolio/maison-vivaldi/annonce-poster.jpg",
         vertical: true,
       },

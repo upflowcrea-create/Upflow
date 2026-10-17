@@ -1,7 +1,7 @@
 import { Mail, MapPin, Phone } from "lucide-react";
 import { Logo } from "./Logo";
 import { InstagramIcon, TikTokIcon, LinkedInIcon } from "./SocialIcons";
-import { CONTACT, BRAND, LOCATION, PARTNER } from "../lib/config";
+import { CONTACT, BRAND, LOCATION, PARTNER, PORTFOLIO_ITEMS } from "../lib/config";
 
 export function Footer() {
   return (
@@ -41,6 +41,15 @@ export function Footer() {
           </div>
         </div>
       </div>
+
+      <nav className="container footer__projects" aria-label="Projets">
+        <span>Projets :</span>
+        {PORTFOLIO_ITEMS.filter((item) => item.date).map((item) => (
+          <a key={item.id} href={`/projets/${item.id}/`}>
+            {item.title.split(" — ")[0]}
+          </a>
+        ))}
+      </nav>
 
       <p className="footer__bottom">
         © {new Date().getFullYear()} {BRAND.name}. Tous droits réservés. · Agence web partenaire :{" "}

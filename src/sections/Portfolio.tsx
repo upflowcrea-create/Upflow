@@ -318,6 +318,11 @@ export function Portfolio() {
                   <ArrowUpRight size={18} />
                 </a>
               )}
+              {active.date && (
+                <a className="lightbox__page-link" href={`/projets/${active.id}/`}>
+                  Page du projet →
+                </a>
+              )}
 
               {active.extraVideos && (
                 <div className="lightbox__extra-videos">
