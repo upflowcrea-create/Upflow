@@ -1,4 +1,4 @@
-import { ArrowUpRight } from "lucide-react";
+import { ArrowUpRight, Clock } from "lucide-react";
 import { RevealText } from "../components/RevealText";
 import { useCardsReveal } from "../hooks/useCardsReveal";
 import { PRICING } from "../lib/config";
@@ -12,6 +12,12 @@ export function Pricing({ onCta }: { onCta: () => void }) {
         <RevealText as="h2" className="pricing__heading" accent={2}>
           DES PRIX. PAS DE DEVIS À RALLONGE.
         </RevealText>
+        <p className="pricing__promise">
+          <Clock size={18} />
+          <span>
+            Votre vidéo livrée en <strong>7 jours max</strong>.
+          </span>
+        </p>
 
         <div ref={gridRef} className="pricing__grid">
           {PRICING.map((plan) => (
@@ -20,6 +26,11 @@ export function Pricing({ onCta }: { onCta: () => void }) {
               id={plan.id}
               className={`pricing-card ${plan.highlight ? "pricing-card--highlight" : ""}`}
             >
+              {plan.delivery && (
+                <p className="pricing-card__delivery">
+                  <Clock size={14} /> {plan.delivery}
+                </p>
+              )}
               <p className="pricing-card__name">{plan.name}</p>
               <p className="pricing-card__subtitle">{plan.subtitle}</p>
 

@@ -80,26 +80,28 @@ export const PRICING: {
   features: string[];
   cta: string;
   highlight?: boolean;
+  /** Delivery promise, shown as a badge on the card. */
+  delivery?: string;
   /** External offer page: the CTA opens it instead of WhatsApp. */
   href?: string;
 }[] = [
   {
-    id: "starter",
-    name: "STARTER",
-    subtitle: "Vidéo présentation — 30s",
-    price: "350€",
-    prefix: "À partir de",
-    features: ["Motion Design", "3D", "Sound Design", "1 format livré"],
-    cta: "CRÉER LA MIENNE",
+    id: "essentiel",
+    name: "LANCEMENT ESSENTIEL",
+    subtitle: "Vidéo de 30 s",
+    price: "590€",
+    delivery: "Livrée en 7 jours",
+    features: ["Script inclus", "Musique", "1 révision", "1 format au choix"],
+    cta: "LANCER MA VIDÉO",
   },
   {
-    id: "explain",
-    name: "EXPLAIN",
-    subtitle: "Vidéo explicative — 60s",
-    price: "500€",
-    prefix: "À partir de",
-    features: ["Motion Design", "3D", "Storytelling", "Sound Design", "2 formats livrés : portrait + paysage"],
-    cta: "EXPLIQUER MON PROJET",
+    id: "complet",
+    name: "LANCEMENT COMPLET",
+    subtitle: "Vidéo de 45 à 60 s",
+    price: "990€",
+    delivery: "Livrée en 7 jours",
+    features: ["Script et storyboard", "Voix off", "2 révisions", "Formats LinkedIn et Instagram"],
+    cta: "LANCER MA VIDÉO",
     highlight: true,
   },
   {
@@ -284,11 +286,15 @@ export const FAQ = [
   },
   {
     q: "Combien coûte une vidéo motion design ?",
-    a: `Chez UPFLOW, une vidéo de présentation de 30 secondes démarre à ${priceOf("starter")} et une vidéo explicative de 60 secondes à ${priceOf("explain")}. Le prix final dépend de la durée, de la part de 3D et du niveau de détail : envoyez-nous votre script et on vous donne un tarif clair.`,
+    a: `Chez UPFLOW, deux formules à prix fixe, livrées en 7 jours maximum : le Lancement Essentiel à ${priceOf("essentiel")} (vidéo de 30 s, script inclus, musique, 1 révision, 1 format au choix) et le Lancement Complet à ${priceOf("complet")} (vidéo de 45 à 60 s, script et storyboard, voix off, 2 révisions, formats LinkedIn et Instagram). Besoin d'autre chose ? Envoyez-nous votre projet et on vous donne un tarif clair.`
   },
   {
     q: "Vous travaillez avec des entreprises à Paris ?",
     a: "Oui. UPFLOW est un studio de motion design basé à Paris (13e) : on travaille en priorité avec les entreprises, startups et agences de Paris et d'Île-de-France, et on peut se rencontrer pour lancer votre projet. On réalise aussi des vidéos à distance partout en France.",
+  },
+  {
+    q: "En combien de temps ma vidéo est-elle prête ?",
+    a: "En 7 jours maximum. Les deux formules, Lancement Essentiel et Lancement Complet, sont livrées en 7 jours : script, animation, musique ou voix off et révisions prévues dans la formule.",
   },
   {
     q: "Je n'ai pas encore de script, vous pouvez m'aider ?",
@@ -304,6 +310,6 @@ export const FAQ = [
   },
   {
     q: "Dans quels formats livrez-vous les vidéos ?",
-    a: "Horizontal (16:9) pour votre site ou YouTube, vertical (9:16) pour Instagram, TikTok et les Reels, carré pour les fils d'actualité. La formule Starter comprend un format livré ; la formule Explain inclut les deux formats, portrait et paysage.",
+    a: "Horizontal (16:9) pour votre site ou YouTube, vertical (9:16) pour Instagram, TikTok et les Reels, carré pour les fils d'actualité. Le Lancement Essentiel comprend un format au choix ; le Lancement Complet est décliné en formats LinkedIn et Instagram.",
   },
 ];

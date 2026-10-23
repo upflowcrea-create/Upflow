@@ -169,7 +169,7 @@ function pageHtml(item, { BRAND, CONTACT, LOCATION, WHATSAPP_URL }) {
 
       <section class="cta">
         <h2>Une vidéo comme celle-ci pour votre entreprise ?</h2>
-        <p>${esc(BRAND.name)} est un studio de vidéo motion design et 3D basé à ${esc(LOCATION.district)}. Vidéo de présentation dès 350 €, vidéo explicative dès 500 €.</p>
+        <p>${esc(BRAND.name)} est un studio de vidéo motion design et 3D basé à ${esc(LOCATION.district)}. Vidéo livrée en 7 jours : Lancement Essentiel (30 s) 590 €, Lancement Complet (45 à 60 s) 990 €.</p>
         <div class="actions">
           <a class="btn btn--grad" href="${esc(WHATSAPP_URL)}" target="_blank" rel="noopener">Parler de mon projet</a>
           <a class="btn" href="/#pricing">Voir les tarifs</a>
