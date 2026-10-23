@@ -1,4 +1,5 @@
 import { Fragment, useEffect, useRef } from "react";
+import type { CSSProperties } from "react";
 import clsx from "clsx";
 import { gsap } from "../lib/smoothScroll";
 import { getLenis } from "../lib/smoothScroll";
@@ -77,6 +78,7 @@ export function Hero({ onBookCall, ready }: { onBookCall: () => void; ready: boo
           "<0.15",
         )
         .fromTo(".hero__partner", { autoAlpha: 0, y: -10 }, { autoAlpha: 1, y: 0, duration: 0.7, ease: "power3.out" }, "-=1.2")
+        .fromTo(".hero__delivery", { autoAlpha: 0, y: 12 }, { autoAlpha: 1, y: 0, duration: 0.7, ease: "power3.out" }, "-=0.9")
         .fromTo(
           ".hero__ctas > *",
           { autoAlpha: 0, y: 14 },
@@ -134,6 +136,18 @@ export function Hero({ onBookCall, ready }: { onBookCall: () => void; ready: boo
             {/* Siblings, not nested: Safari won't paint a clipped gradient through an inline-block child. */}
             <span className="hero__count">30</span> <span className="hero__seconds">secondes</span>
             .
+          </span>
+        </p>
+
+        <p className="hero__delivery">
+          Votre vidéo <strong>livrée en 7 jours</strong>
+          <span className="hero__days" aria-hidden="true">
+            {Array.from({ length: 7 }, (_, i) => (
+              <span key={i} className="hero__day" style={{ "--d": i } as CSSProperties}>
+                J{i + 1}
+              </span>
+            ))}
+            <span className="hero__day-done">Livrée ✓</span>
           </span>
         </p>
 

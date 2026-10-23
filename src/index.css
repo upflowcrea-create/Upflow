@@ -506,6 +506,89 @@ ul {
   letter-spacing: 0.03em;
 }
 
+/* "Livrée en 7 jours": seven day cells fill one after the other, then the
+   "Livrée ✓" stamp lands, on a loop. */
+.hero__delivery {
+  opacity: 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.6rem 0.9rem;
+  margin-top: 0.4rem;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(1.05rem, 1.9vw, 1.35rem);
+  color: var(--ink);
+}
+
+.hero__delivery strong {
+  color: var(--pink);
+}
+
+.hero__days {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.hero__day {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 30px;
+  border-radius: 8px;
+  border: 1px solid rgba(183, 42, 216, 0.25);
+  background: rgba(255, 255, 255, 0.7);
+  color: rgba(61, 19, 102, 0.45);
+  font-family: var(--font-body);
+  font-size: 0.7rem;
+  font-weight: 700;
+  animation: dayFill 4.2s ease-in-out infinite;
+  animation-delay: calc(var(--d) * 0.28s);
+}
+
+.hero__day-done {
+  margin-left: 4px;
+  padding: 0.25rem 0.6rem;
+  border-radius: 999px;
+  background: var(--gradient-main);
+  color: var(--white);
+  font-size: 0.72rem;
+  font-weight: 700;
+  animation: dayDone 4.2s ease-in-out infinite;
+}
+
+@keyframes dayFill {
+  0%, 4% { background: rgba(255, 255, 255, 0.7); color: rgba(61, 19, 102, 0.45); border-color: rgba(183, 42, 216, 0.25); }
+  10%, 80% { background: var(--pink); color: var(--white); border-color: var(--pink); }
+  92%, 100% { background: rgba(255, 255, 255, 0.7); color: rgba(61, 19, 102, 0.45); border-color: rgba(183, 42, 216, 0.25); }
+}
+
+@keyframes dayDone {
+  0%, 50% { opacity: 0; transform: scale(0.6) rotate(-8deg); }
+  56%, 84% { opacity: 1; transform: scale(1) rotate(-3deg); }
+  94%, 100% { opacity: 0; transform: scale(0.8) rotate(-3deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero__day {
+    animation: none;
+    background: var(--pink);
+    color: var(--white);
+  }
+  .hero__day-done {
+    animation: none;
+  }
+}
+
+@media (max-width: 420px) {
+  .hero__day {
+    width: 30px;
+    height: 26px;
+    font-size: 0.6rem;
+  }
+}
+
 .hero__ctas {
   margin-top: 0.9rem;
   display: flex;
@@ -1155,10 +1238,40 @@ ul {
 }
 
 .process-step__n {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
   font-family: var(--font-display);
   font-size: clamp(1.4rem, 3vw, 1.8rem);
   font-weight: 800;
   margin-bottom: 0.4rem;
+}
+
+.process-step__day {
+  padding: 0.25rem 0.6rem;
+  border-radius: 999px;
+  background: rgba(183, 42, 216, 0.12);
+  color: var(--pink);
+  font-family: var(--font-body);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+}
+
+.process__promise {
+  width: fit-content;
+  margin: calc(-1 * clamp(1.5rem, 4vh, 2.5rem)) auto clamp(2.5rem, 6vh, 4rem);
+  padding: 0.6rem 1.2rem;
+  border-radius: 999px;
+  border: 1px solid rgba(183, 42, 216, 0.25);
+  background: rgba(255, 255, 255, 0.75);
+  box-shadow: 0 10px 30px -14px rgba(156, 41, 198, 0.45);
+  font-weight: 600;
+  text-align: center;
+}
+
+.process__promise strong {
+  color: var(--pink);
 }
 
 .process-step__title {
@@ -1603,6 +1716,127 @@ main > section .lightbox * {
   }
   .pricing-card--highlight {
     translate: none;
+  }
+}
+
+/* ---------------------------------------------------------------------- */
+/* Benefits                                                                */
+/* ---------------------------------------------------------------------- */
+
+.benefits__heading {
+  font-size: clamp(2.2rem, 6vw, 4.2rem);
+  text-align: center;
+  margin-inline: auto;
+  margin-bottom: clamp(2.5rem, 7vh, 4.5rem);
+  max-width: 16ch;
+}
+
+.benefits__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.4rem;
+  max-width: 1040px;
+  margin-inline: auto;
+}
+
+.benefits__col {
+  padding: clamp(1.5rem, 3vw, 2.2rem);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.7);
+  box-shadow: var(--shadow-card);
+}
+
+.benefits__col--with {
+  color: var(--white);
+  background: var(--gradient-main);
+  background-size: 220% 220%;
+  border-color: transparent;
+  box-shadow: 0 30px 70px -20px rgba(156, 41, 198, 0.5);
+  animation: gradientTextShift 3.5s ease-in-out infinite;
+}
+
+.benefits__label {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(1.1rem, 2vw, 1.4rem);
+  margin-bottom: 1.2rem;
+}
+
+.benefits__col ul {
+  display: grid;
+  gap: 0.9rem;
+}
+
+.benefits__col li {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  line-height: 1.45;
+}
+
+.benefits__icon {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  margin-top: 0.05rem;
+  border-radius: 999px;
+}
+
+.benefits__col--without .benefits__icon {
+  background: rgba(61, 19, 102, 0.08);
+  color: rgba(61, 19, 102, 0.55);
+}
+
+/* The strike lives on an inline span with box-decoration-break: clone, so a
+   line that wraps gets struck through on every row, not underlined once. */
+.benefits__col--without .benefits__text > span {
+  color: rgba(61, 19, 102, 0.7);
+  background: linear-gradient(currentColor, currentColor) no-repeat 0 55% / 0 1.5px;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+
+.benefits__col--with .benefits__icon {
+  background: var(--white);
+  color: var(--pink);
+  transform: scale(0);
+}
+
+.benefits__col--with li:last-child {
+  font-weight: 700;
+}
+
+/* Strike the "sans vidéo" lines and pop the checks once the section is on screen. */
+.benefits.is-inview .benefits__col--without .benefits__text > span {
+  animation: benefitStrike 0.6s var(--ease-out) forwards;
+  animation-delay: calc(0.6s + var(--i) * 0.35s);
+}
+
+.benefits.is-inview .benefits__col--with .benefits__icon {
+  animation: benefitPop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  animation-delay: calc(1.2s + var(--i) * 0.3s);
+}
+
+@keyframes benefitStrike {
+  to { background-size: 100% 1.5px; }
+}
+
+@keyframes benefitPop {
+  to { transform: scale(1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .benefits__col--with .benefits__icon {
+    transform: none;
+  }
+}
+
+@media (max-width: 760px) {
+  .benefits__grid {
+    grid-template-columns: 1fr;
   }
 }
 

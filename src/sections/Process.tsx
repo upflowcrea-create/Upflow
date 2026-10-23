@@ -78,6 +78,9 @@ export function Process() {
         <RevealText as="h2" className="process__heading" accent={2}>
           COMMENT ÇA MARCHE ?
         </RevealText>
+        <p className="process__promise">
+          De l'appel à la livraison : <strong>7 jours max</strong>.
+        </p>
 
         <div ref={listRef} className="process__grid">
           {PROCESS_STEPS.map((step) => (
@@ -90,7 +93,9 @@ export function Process() {
                 <StepVisual n={step.n} />
               </div>
               <div className="process-step__body">
-                <span className="process-step__n">{step.n}</span>
+                <span className="process-step__n">
+                  {step.n} <span className="process-step__day">{step.day}</span>
+                </span>
                 <h3 className="process-step__title">{step.title}</h3>
                 <p className="process-step__text">{step.text}</p>
               </div>

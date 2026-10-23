@@ -236,11 +236,11 @@ export const PORTFOLIO_ITEMS: PortfolioItem[] = [
 // ---------------------------------------------------------------------------
 
 export const PROCESS_STEPS = [
-  { n: "01", title: "CALL", text: "On discute de votre projet, vos objectifs, et ce que vous voulez vraiment dire." },
-  { n: "02", title: "SCRIPT", text: "On écrit le script et on le valide ensemble avant de toucher à quoi que ce soit." },
-  { n: "03", title: "STORYBOARD", text: "On pose chaque scène à plat pour visualiser la vidéo avant de l'animer." },
-  { n: "04", title: "MOTION", text: "Motion design, 3D, sound design — on anime le tout." },
-  { n: "05", title: "DELIVERY", text: "Vous récupérez votre vidéo, dans tous les formats dont vous avez besoin." },
+  { n: "01", day: "JOUR 1", title: "CALL", text: "On discute de votre projet, vos objectifs, et ce que vous voulez vraiment dire." },
+  { n: "02", day: "JOUR 2", title: "SCRIPT", text: "On écrit le script et on le valide ensemble avant de toucher à quoi que ce soit." },
+  { n: "03", day: "JOUR 3", title: "STORYBOARD", text: "On pose chaque scène à plat pour visualiser la vidéo avant de l'animer." },
+  { n: "04", day: "JOURS 4 À 6", title: "MOTION", text: "Motion design, 3D, sound design — on anime le tout." },
+  { n: "05", day: "JOUR 7", title: "DELIVERY", text: "Vous récupérez votre vidéo, dans tous les formats dont vous avez besoin." },
 ];
 
 // ---------------------------------------------------------------------------
