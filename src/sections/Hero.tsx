@@ -5,7 +5,6 @@ import { gsap } from "../lib/smoothScroll";
 import { getLenis } from "../lib/smoothScroll";
 import { useMagnetic } from "../hooks/useMagnetic";
 import { isTouchDevice } from "../lib/device";
-import { PARTNER } from "../lib/config";
 
 function scrollTo(selector: string) {
   const el = document.querySelector(selector);
@@ -77,7 +76,6 @@ export function Hero({ onBookCall, ready }: { onBookCall: () => void; ready: boo
           },
           "<0.15",
         )
-        .fromTo(".hero__partner", { autoAlpha: 0, y: -10 }, { autoAlpha: 1, y: 0, duration: 0.7, ease: "power3.out" }, "-=1.2")
         .fromTo(".hero__delivery", { autoAlpha: 0, y: 12 }, { autoAlpha: 1, y: 0, duration: 0.7, ease: "power3.out" }, "-=0.9")
         .fromTo(
           ".hero__ctas > *",
@@ -103,18 +101,6 @@ export function Hero({ onBookCall, ready }: { onBookCall: () => void; ready: boo
   return (
     <section id="top" ref={rootRef} className="hero">
       <div className="hero__content container">
-        <a
-          href="#site-video"
-          className="hero__partner"
-          onClick={(e) => {
-            e.preventDefault();
-            scrollTo("#site-video");
-          }}
-        >
-          <span className="hero__partner-tag">Nouveau ✦</span>
-          Site + vidéo avec {PARTNER.name}
-          <span aria-hidden="true">→</span>
-        </a>
         <h1 className="hero__title hero__title--long">
           {/* What the page is about, for search engines and screen readers; the visible line is the joke. */}
           <span className="visually-hidden">UPFLOW, studio de vidéo motion design et 3D à Paris. </span>

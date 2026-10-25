@@ -28,13 +28,10 @@ export const LOCATION = {
   googleBusinessUrl: "https://www.google.com/search?kgmid=/g/11zzfxj32y",
 };
 
-// Offre commune avec AuPropre (agence web partenaire) : relayée en haut de page
-// et sous les tarifs, comme AuPropre le fait pour UPFLOW sur son site.
+// Agence web partenaire, créditée dans le pied de page.
 export const PARTNER = {
   name: "AuPropre",
   url: "https://aupropreagency.fr/",
-  offerUrl: "https://aupropreagency.fr/#offres",
-  offerPrice: "540€",
 };
 
 export const WHATSAPP_URL = `https://wa.me/${CONTACT.whatsappNumber.replace(/\D/g, "")}?text=${encodeURIComponent(
@@ -103,22 +100,6 @@ export const PRICING: {
     features: ["Script et storyboard", "Voix off", "2 révisions", "Formats LinkedIn et Instagram"],
     cta: "LANCER MA VIDÉO",
     highlight: true,
-  },
-  {
-    // Offre commune : la carte renvoie vers l'offre sur le site d'AuPropre.
-    id: "site-video",
-    name: "UPFLOW × AUPROPRE",
-    subtitle: "Site web + vidéo — 30s",
-    price: PARTNER.offerPrice,
-    prefix: "À partir de",
-    features: [
-      `Site sur mesure par ${PARTNER.name}, agence web partenaire`,
-      "Vidéo de présentation 30s UPFLOW",
-      "Vidéo intégrée en haut du site",
-      "100 € de moins que séparément",
-    ],
-    cta: "VOIR L'OFFRE",
-    href: PARTNER.offerUrl,
   },
 ];
 

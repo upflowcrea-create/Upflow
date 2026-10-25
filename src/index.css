@@ -473,39 +473,6 @@ ul {
   font-variant-numeric: tabular-nums;
 }
 
-.hero__partner {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.6rem;
-  padding: 0.35rem 0.9rem 0.35rem 0.35rem;
-  border-radius: 999px;
-  border: 1px solid rgba(183, 42, 216, 0.25);
-  background: rgba(255, 255, 255, 0.7);
-  backdrop-filter: blur(8px);
-  color: var(--ink);
-  font-size: 0.85rem;
-  font-weight: 600;
-  box-shadow: 0 8px 24px -12px rgba(156, 41, 198, 0.35);
-  opacity: 0;
-  transition: border-color 0.2s, transform 0.2s;
-}
-
-.hero__partner:hover {
-  border-color: var(--pink);
-  transform: translateY(-1px);
-}
-
-.hero__partner-tag {
-  padding: 0.25rem 0.65rem;
-  border-radius: 999px;
-  background: var(--gradient-main);
-  color: var(--white);
-  font-family: var(--font-display);
-  font-size: 0.68rem;
-  font-weight: 700;
-  letter-spacing: 0.03em;
-}
-
 /* "Livrée en 7 jours": seven day cells fill one after the other, then the
    "Livrée ✓" stamp lands, on a loop. */
 .hero__delivery {
@@ -1563,7 +1530,9 @@ main > section .lightbox * {
 
 .pricing__grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(2, 1fr);
+  max-width: 860px;
+  margin-inline: auto;
   gap: 1.6rem;
   align-items: stretch;
 }
