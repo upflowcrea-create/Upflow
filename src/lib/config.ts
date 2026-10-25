@@ -88,7 +88,7 @@ export const PRICING: {
     subtitle: "Vidéo de 30 s",
     price: "500€",
     delivery: "Livrée en 7 jours",
-    features: ["Script inclus", "Musique", "1 révision", "1 format au choix"],
+    features: ["Script inclus", "Voix off", "Musique", "1 révision", "1 format au choix"],
     cta: "LANCER MA VIDÉO",
   },
   {
@@ -267,7 +267,7 @@ export const FAQ = [
   },
   {
     q: "Combien coûte une vidéo motion design ?",
-    a: `Chez UPFLOW, deux formules à prix fixe, livrées en 7 jours maximum : le Lancement Essentiel à ${priceOf("essentiel")} (vidéo de 30 s, script inclus, musique, 1 révision, 1 format au choix) et le Lancement Complet à ${priceOf("complet")} (vidéo de 1 min, script et storyboard, voix off, 2 révisions, formats LinkedIn et Instagram). Besoin d'autre chose ? Envoyez-nous votre projet et on vous donne un tarif clair.`
+    a: `Chez UPFLOW, deux formules à prix fixe, livrées en 7 jours maximum : le Lancement Essentiel à ${priceOf("essentiel")} (vidéo de 30 s, script inclus, voix off, musique, 1 révision, 1 format au choix) et le Lancement Complet à ${priceOf("complet")} (vidéo de 1 min, script et storyboard, voix off, 2 révisions, formats LinkedIn et Instagram). Besoin d'autre chose ? Envoyez-nous votre projet et on vous donne un tarif clair.`
   },
   {
     q: "Vous travaillez avec des entreprises à Paris ?",
