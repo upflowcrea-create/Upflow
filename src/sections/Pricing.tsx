@@ -1,7 +1,11 @@
 import { ArrowUpRight, Clock } from "lucide-react";
 import { RevealText } from "../components/RevealText";
 import { useCardsReveal } from "../hooks/useCardsReveal";
-import { PRICING } from "../lib/config";
+import { FIRST_ORDER_PROMO, PRICING } from "../lib/config";
+
+const discountOf = (plan: (typeof PRICING)[number]) =>
+  plan.regularPrice ? Math.round((1 - parseInt(plan.price) / parseInt(plan.regularPrice)) * 100) : 0;
+const maxDiscount = Math.max(...PRICING.map(discountOf));
 
 export function Pricing({ onCta }: { onCta: () => void }) {
   const gridRef = useCardsReveal<HTMLDivElement>(".pricing-card", 5);
@@ -18,6 +22,16 @@ export function Pricing({ onCta }: { onCta: () => void }) {
             Votre vidéo livrée en <strong>7 jours max</strong>.
           </span>
         </p>
+
+        {maxDiscount > 0 && (
+          <div className="promo">
+            <span className="promo__tag">{FIRST_ORDER_PROMO.tag}</span>
+            <p className="promo__title">
+              {FIRST_ORDER_PROMO.title} <span>Jusqu'à −{maxDiscount} % sur votre vidéo.</span>
+            </p>
+            <p className="promo__note">{FIRST_ORDER_PROMO.note}</p>
+          </div>
+        )}
 
         <div ref={gridRef} className="pricing__grid">
           {PRICING.map((plan) => (
@@ -45,6 +59,7 @@ export function Pricing({ onCta }: { onCta: () => void }) {
                       </s>
                     )}
                     <span className="pricing-card__amount">{plan.price}</span>
+                    {plan.regularPrice && <span className="pricing-card__discount">−{discountOf(plan)} %</span>}
                   </span>
                 </p>
               ) : (

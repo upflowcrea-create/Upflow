@@ -28,7 +28,7 @@ export const LOCATION = {
   googleBusinessUrl: "https://www.google.com/search?kgmid=/g/11zzfxj32y",
 };
 
-// Agence web partenaire, créditée dans le pied de page.
+// Agence web partenaire : lien en haut de page et crédit dans le pied de page.
 export const PARTNER = {
   name: "AuPropre",
   url: "https://aupropreagency.fr/",
@@ -68,6 +68,14 @@ export const ASSETS = {
 // Pricing — modifiable facilement.
 // ---------------------------------------------------------------------------
 
+// Promo "Première commande" (affichée au-dessus des tarifs, façon vyzuall) :
+// chaque formule qui a un regularPrice montre son prix barré et sa remise.
+export const FIRST_ORDER_PROMO = {
+  tag: "PREMIÈRE COMMANDE",
+  title: "Première commande ?",
+  note: "Valable uniquement pour votre toute première commande.",
+};
+
 export const PRICING: {
   id: string;
   name: string;
@@ -90,7 +98,7 @@ export const PRICING: {
     subtitle: "Vidéo de 30 s",
     price: "350€",
     regularPrice: "500€",
-    prefix: "Prix de lancement",
+    prefix: "Première commande",
     delivery: "Livrée en 7 jours",
     features: ["Script inclus", "Voix off", "Musique", "1 révision", "1 format au choix"],
     cta: "LANCER MA VIDÉO",
@@ -101,7 +109,7 @@ export const PRICING: {
     subtitle: "Vidéo de 1 min",
     price: "500€",
     regularPrice: "750€",
-    prefix: "Prix de lancement",
+    prefix: "Première commande",
     delivery: "Livrée en 7 jours",
     features: ["Script et storyboard", "Voix off", "2 révisions", "Formats LinkedIn et Instagram"],
     cta: "LANCER MA VIDÉO",
@@ -269,7 +277,7 @@ const priceOf = (id: string) => {
   const plan = PRICING.find((p) => p.id === id);
   if (!plan) return "";
   return plan.regularPrice
-    ? `${euros(plan.price)} au lieu de ${euros(plan.regularPrice)} (prix de lancement)`
+    ? `${euros(plan.price)} au lieu de ${euros(plan.regularPrice)} (offre première commande)`
     : euros(plan.price);
 };
 
