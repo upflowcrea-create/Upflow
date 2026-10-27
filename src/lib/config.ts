@@ -73,6 +73,8 @@ export const PRICING: {
   name: string;
   subtitle: string;
   price: string;
+  /** Usual price, shown struck through next to `price` (launch offer). */
+  regularPrice?: string;
   prefix?: string;
   features: string[];
   cta: string;
@@ -86,7 +88,9 @@ export const PRICING: {
     id: "essentiel",
     name: "LANCEMENT ESSENTIEL",
     subtitle: "Vidéo de 30 s",
-    price: "500€",
+    price: "350€",
+    regularPrice: "500€",
+    prefix: "Prix de lancement",
     delivery: "Livrée en 7 jours",
     features: ["Script inclus", "Voix off", "Musique", "1 révision", "1 format au choix"],
     cta: "LANCER MA VIDÉO",
@@ -95,7 +99,9 @@ export const PRICING: {
     id: "complet",
     name: "LANCEMENT COMPLET",
     subtitle: "Vidéo de 1 min",
-    price: "750€",
+    price: "500€",
+    regularPrice: "750€",
+    prefix: "Prix de lancement",
     delivery: "Livrée en 7 jours",
     features: ["Script et storyboard", "Voix off", "2 révisions", "Formats LinkedIn et Instagram"],
     cta: "LANCER MA VIDÉO",
@@ -258,7 +264,14 @@ export const SERVICES = [
 // Les prix sont repris automatiquement de PRICING ci-dessus.
 // ---------------------------------------------------------------------------
 
-const priceOf = (id: string) => PRICING.find((p) => p.id === id)?.price.replace("€", " €") ?? "";
+const euros = (price?: string) => price?.replace("€", " €") ?? "";
+const priceOf = (id: string) => {
+  const plan = PRICING.find((p) => p.id === id);
+  if (!plan) return "";
+  return plan.regularPrice
+    ? `${euros(plan.price)} au lieu de ${euros(plan.regularPrice)} (prix de lancement)`
+    : euros(plan.price);
+};
 
 export const FAQ = [
   {

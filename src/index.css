@@ -1624,6 +1624,20 @@ main > section .lightbox * {
   opacity: 0.7;
 }
 
+.pricing-card__amounts {
+  display: flex;
+  align-items: baseline;
+  gap: 0.6rem;
+}
+
+.pricing-card__regular {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 700;
+  opacity: 0.5;
+  text-decoration-thickness: 2px;
+}
+
 .pricing-card__amount {
   font-family: var(--font-display);
   font-size: 2.1rem;
@@ -3274,4 +3288,14 @@ main > section .lightbox * {
     transition-duration: 0.001ms !important;
     scroll-behavior: auto !important;
   }
+}
+
+/* Read by screen readers, invisible on screen. */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
 }

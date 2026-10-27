@@ -37,7 +37,15 @@ export function Pricing({ onCta }: { onCta: () => void }) {
               {plan.price ? (
                 <p className="pricing-card__price">
                   {plan.prefix && <span className="pricing-card__prefix">{plan.prefix}</span>}
-                  <span className="pricing-card__amount">{plan.price}</span>
+                  <span className="pricing-card__amounts">
+                    {plan.regularPrice && (
+                      <s className="pricing-card__regular">
+                        <span className="sr-only">Au lieu de </span>
+                        {plan.regularPrice}
+                      </s>
+                    )}
+                    <span className="pricing-card__amount">{plan.price}</span>
+                  </span>
                 </p>
               ) : (
                 <p className="pricing-card__price pricing-card__price--multi" />
