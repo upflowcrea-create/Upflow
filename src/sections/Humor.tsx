@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { Fragment, useEffect, useRef } from "react";
 import { gsap } from "../lib/smoothScroll";
 import { useMagnetic } from "../hooks/useMagnetic";
 import { isTouchDevice } from "../lib/device";
@@ -55,10 +55,15 @@ export function Humor({ onCta }: { onCta: () => void }) {
     <div ref={rootRef} className="section humor">
       <div className="container humor__inner">
         <p className="humor__line1">
+          {/* Real spaces between the inline-block word wraps: without them the
+              words rendered glued together ("VOUSPOURRIEZAUSSI…"). */}
           {line1.split(" ").map((w, i) => (
-            <span className="reveal-word-wrap" key={i}>
-              <span className="reveal-word">{w}</span>
-            </span>
+            <Fragment key={i}>
+              {i > 0 && " "}
+              <span className="reveal-word-wrap">
+                <span className="reveal-word">{w}</span>
+              </span>
+            </Fragment>
           ))}
         </p>
 
