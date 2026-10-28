@@ -7,11 +7,18 @@ export const BRAND = {
   tagline: "MOTION DESIGN / 3D / VIDÉO",
 };
 
+// La personne derrière UPFLOW, montrée au moment de la prise de contact.
+export const FOUNDER = {
+  name: "Eliot",
+  role: "Fondateur d'UPFLOW et motion designer",
+  photo: "assets/team/eliot.jpg",
+};
+
 export const CONTACT = {
   email: "upflow.crea@gmail.com",
   whatsappNumber: "+33651478638", // format international, sans espaces, pour le lien wa.me
   whatsappDisplay: "+33 6 51 47 86 38",
-  whatsappMessage: "Bonjour UPFLOW, j'aimerais parler de mon projet vidéo.",
+  whatsappMessage: "Bonjour Eliot, j'aimerais parler de mon projet vidéo.",
   instagram: "https://www.instagram.com/upflow.motion",
   tiktok: "https://www.tiktok.com/@upflow.motion",
   linkedin: "", // laisse vide tant qu'il n'y a pas de page : l'icône est alors masquée

@@ -1,4 +1,4 @@
-import { ASSETS, BRAND, CONTACT, FAQ, LOCATION, PRICING } from "./config";
+import { ASSETS, BRAND, CONTACT, FAQ, FOUNDER, LOCATION, PRICING } from "./config";
 
 // Structured data (schema.org JSON-LD) built from the same config the page
 // renders, so prices and FAQ answers given to search engines can never drift
@@ -36,6 +36,7 @@ export function jsonLd() {
       { "@type": "Country", name: "France" },
     ],
     hasMap: LOCATION.googleBusinessUrl,
+    founder: { "@type": "Person", name: FOUNDER.name, jobTitle: FOUNDER.role, image: abs(FOUNDER.photo) },
     priceRange: "€€",
     knowsAbout: ["Vidéo motion design", "Motion design Paris", "Motion design", "Animation 3D", "Sound design", "Vidéo explicative", "Vidéo de présentation"],
     sameAs: [LOCATION.googleBusinessUrl, CONTACT.instagram, CONTACT.tiktok, CONTACT.linkedin].filter(Boolean),

@@ -3,7 +3,7 @@ import { MessageCircle, Loader2, CheckCircle2, Mail } from "lucide-react";
 import { RevealText } from "../components/RevealText";
 import { useMagnetic } from "../hooks/useMagnetic";
 import { useScrollReveal } from "../hooks/useScrollReveal";
-import { WEB3FORMS_ACCESS_KEY, WHATSAPP_URL, CONTACT } from "../lib/config";
+import { WEB3FORMS_ACCESS_KEY, WHATSAPP_URL, CONTACT, FOUNDER } from "../lib/config";
 
 type Status = "idle" | "submitting" | "success" | "error";
 
@@ -22,7 +22,7 @@ export function FinalCta() {
   // phone as a message to UPFLOW's number — the visitor just has to hit send
   // in WhatsApp. Email (Web3Forms) stays as the secondary option below it.
   const scriptWhatsAppUrl = `https://wa.me/${CONTACT.whatsappNumber.replace(/\D/g, "")}?text=${encodeURIComponent(
-    `Bonjour UPFLOW, voici mon script :\n\n${script}\n\nMon numéro : ${phone}`,
+    `Bonjour ${FOUNDER.name}, voici mon script :\n\n${script}\n\nMon numéro : ${phone}`,
   )}`;
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -71,6 +71,27 @@ export function FinalCta() {
         </p>
 
         <div ref={gridRef} className="script-cta__grid">
+          <div className="founder-card">
+            <img
+              className="founder-card__photo"
+              src={FOUNDER.photo}
+              alt={`${FOUNDER.name}, ${FOUNDER.role}`}
+              width={72}
+              height={72}
+              loading="lazy"
+            />
+            <div className="founder-card__text">
+              <p className="founder-card__name">
+                Vous parlez directement à {FOUNDER.name}
+                <span className="founder-card__online" aria-hidden="true" />
+              </p>
+              <p className="founder-card__role">{FOUNDER.role}</p>
+              <p className="founder-card__quote">
+                « Je lis chaque script moi-même et je vous réponds en moins de 48h. »
+              </p>
+            </div>
+          </div>
+
           <div className="script-cta__panel">
             {status === "success" ? (
               <div className="script-cta__success">
@@ -117,7 +138,7 @@ export function FinalCta() {
                       if (!canSubmit) e.preventDefault();
                     }}
                   >
-                    <MessageCircle size={16} /> Envoyer sur WhatsApp →
+                    <MessageCircle size={16} /> Envoyer à {FOUNDER.name} sur WhatsApp →
                   </a>
 
                   <button
@@ -137,12 +158,12 @@ export function FinalCta() {
                   </button>
                 </div>
 
-                <p className="script-form__promise">On vous répond en moins de 48h, promis.</p>
+                <p className="script-form__promise">Je vous réponds en moins de 48h, promis.</p>
 
                 <p className="script-form__question">
                   Juste une question avant de vous lancer ?{" "}
                   <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer">
-                    Écrivez-nous sur WhatsApp
+                    Écrivez à {FOUNDER.name} sur WhatsApp
                   </a>
                   , sans rien remplir.
                 </p>

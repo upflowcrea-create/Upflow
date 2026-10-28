@@ -664,6 +664,59 @@ ul {
   text-align: left;
 }
 
+/* "Vous parlez directement à Eliot": the founder's face above the form. */
+.founder-card {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  padding: 1rem 1.2rem;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.8);
+  box-shadow: var(--shadow-card);
+}
+
+.founder-card__photo {
+  flex: none;
+  width: 72px;
+  height: 72px;
+  border-radius: 22px;
+  object-fit: cover;
+  object-position: 50% 40%;
+  box-shadow: 0 0 0 3px var(--white), 0 0 0 5px rgba(183, 42, 216, 0.5);
+}
+
+.founder-card__name {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(1rem, 2vw, 1.15rem);
+  color: var(--ink);
+}
+
+.founder-card__online {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: #25d366;
+  box-shadow: 0 0 0 3px rgba(37, 211, 102, 0.2);
+}
+
+.founder-card__role {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--pink);
+}
+
+.founder-card__quote {
+  margin-top: 0.3rem;
+  font-size: 0.85rem;
+  color: rgba(61, 19, 102, 0.7);
+}
+
 .script-cta__panel {
   background: var(--bg);
   border: 1px solid var(--line);
