@@ -1,7 +1,7 @@
 import { ArrowUpRight, Clock } from "lucide-react";
 import { RevealText } from "../components/RevealText";
 import { useCardsReveal } from "../hooks/useCardsReveal";
-import { FIRST_ORDER_PROMO, PRICING } from "../lib/config";
+import { FIRST_ORDER_PROMO, PARTNER, PRICING } from "../lib/config";
 
 const discountOf = (plan: (typeof PRICING)[number]) =>
   plan.regularPrice ? Math.round((1 - parseInt(plan.price) / parseInt(plan.regularPrice)) * 100) : 0;
@@ -99,6 +99,12 @@ export function Pricing({ onCta }: { onCta: () => void }) {
           <button className="pricing__footnote-link" onClick={onCta}>
             Parlons-en.
           </button>
+        </p>
+        <p className="pricing__footnote">
+          Besoin d'un site web aussi ? Notre partenaire{" "}
+          <a className="pricing__footnote-link" href={PARTNER.url} target="_blank" rel="noopener">
+            {PARTNER.name} ↗
+          </a>
         </p>
       </div>
     </section>

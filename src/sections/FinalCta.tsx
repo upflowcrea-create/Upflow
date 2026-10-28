@@ -65,9 +65,7 @@ export function FinalCta() {
         </RevealText>
 
         <p ref={subRef} className="final-cta__sub">
-          Pas besoin d'un brief de 48 pages.
-          <br />
-          Script, téléphone, envoyé — c'est tout ce qu'il nous faut pour démarrer.
+          Pas besoin d'un brief de 48 pages : votre script et votre numéro, c'est tout.
         </p>
 
         <div ref={gridRef} className="script-cta__grid">
@@ -110,9 +108,6 @@ export function FinalCta() {
                     rows={9}
                     required
                   />
-                  <span className="script-form__hint">
-                    Vous avez déjà votre script ? Envoyez-le directement ici.
-                  </span>
                 </label>
 
                 <label className="script-form__field">

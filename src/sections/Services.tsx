@@ -24,7 +24,6 @@ function ServiceCard({ service, index, onCta }: { service: (typeof SERVICES)[num
       const titleLines = card.querySelectorAll(".service-card__title-line");
       const desc = card.querySelector(".service-card__desc");
       const usage = card.querySelectorAll(".service-card__usage li");
-      const tags = card.querySelectorAll(".tag-pill");
       const cta = card.querySelector(".service-card__cta");
 
       const touch = isTouchDevice();
@@ -65,12 +64,6 @@ function ServiceCard({ service, index, onCta }: { service: (typeof SERVICES)[num
           { autoAlpha: 0, scale: 0.7, y: 8 },
           { autoAlpha: 1, scale: 1, y: 0, duration: 0.5, stagger: 0.05, ease: "back.out(2)" },
           "<0.1",
-        )
-        .fromTo(
-          tags,
-          { autoAlpha: 0, scale: 0.7, y: 8 },
-          { autoAlpha: 1, scale: 1, y: 0, duration: 0.5, stagger: 0.06, ease: "back.out(2)" },
-          "<0.1",
         );
 
       tl.fromTo(
@@ -105,80 +98,10 @@ function ServiceCard({ service, index, onCta }: { service: (typeof SERVICES)[num
           ))}
         </ul>
 
-        <div className="service-card__tags">
-          {service.tags.map((t) => (
-            <span key={t} className="tag-pill">
-              {t}
-            </span>
-          ))}
-        </div>
-
         <button className="btn btn-primary service-card__cta" onClick={onCta}>
           {service.cta}
         </button>
       </div>
-    </div>
-  );
-}
-
-function ServicesIntro() {
-  const introRef = useRef<HTMLDivElement | null>(null);
-  const reducedMotion = usePrefersReducedMotion();
-
-  useEffect(() => {
-    const el = introRef.current;
-    if (!el) return;
-
-    const ctx = gsap.context(() => {
-      if (reducedMotion) {
-        gsap.set(".service-intro-item", { autoAlpha: 1 });
-        return;
-      }
-
-      const items = el.querySelectorAll(".service-intro-item");
-
-      gsap.fromTo(
-        items,
-        { autoAlpha: 0, y: 50, scale: 0.85, rotate: -4 },
-        {
-          autoAlpha: 1,
-          y: 0,
-          scale: 1,
-          rotate: 0,
-          duration: 0.8,
-          stagger: 0.15,
-          ease: "back.out(1.6)",
-          scrollTrigger: { trigger: el, start: "top 85%" },
-        },
-      );
-
-      gsap.fromTo(
-        el.querySelectorAll(".service-intro-item__n"),
-        { autoAlpha: 0, x: -12 },
-        {
-          autoAlpha: 1,
-          x: 0,
-          duration: 0.5,
-          stagger: 0.15,
-          delay: 0.3,
-          ease: "power2.out",
-          scrollTrigger: { trigger: el, start: "top 85%" },
-        },
-      );
-    }, el);
-
-    return () => ctx.revert();
-  }, [reducedMotion]);
-
-  return (
-    <div ref={introRef} className="services__intro-grid">
-      {SERVICES.map((s) => (
-        <div className="service-intro-item" key={s.id}>
-          <span className="service-intro-item__n">{s.n}</span>
-          <p className="service-intro-item__label">{s.label}</p>
-          <p className="service-intro-item__short">{s.short}</p>
-        </div>
-      ))}
     </div>
   );
 }
@@ -192,11 +115,9 @@ export function Services({ onCta }: { onCta: () => void }) {
         </RevealText>
 
         <p className="services__intro">
-          UPFLOW est un studio de <strong>vidéo motion design</strong> basé à Paris&nbsp;: on crée des vidéos animées en motion design
-          et en 3D, avec sound design, pour présenter votre entreprise ou expliquer votre produit.
+          Des vidéos en <strong>motion design</strong> et 3D pour présenter votre entreprise ou expliquer votre produit.
+          Studio basé à Paris.
         </p>
-
-        <ServicesIntro />
 
         <div className="services__cards">
           {SERVICES.map((s, i) => (

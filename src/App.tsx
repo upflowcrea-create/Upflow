@@ -59,8 +59,8 @@ function App() {
         <Humor onCta={openWhatsApp} />
         <Process />
         <Pricing onCta={openWhatsApp} />
-        <Faq />
         <FinalCta />
+        <Faq />
       </main>
 
       <Footer />
