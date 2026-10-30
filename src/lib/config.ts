@@ -231,6 +231,20 @@ export const PORTFOLIO_ITEMS: PortfolioItem[] = [
     ],
     storyboard: boards("maison-vivaldi", 12),
   },
+  {
+    id: "shotby12",
+    duration: 34,
+    date: "2026-10-30",
+    website: "https://shotby12.fr/",
+    title: "Shot by 12 — Vidéo de présentation",
+    category: "MOTION / ÉVÉNEMENTIEL SPORT",
+    description:
+      "Shot by 12 raconte les événements sportifs en stories : tournois, matchs, soirées, couverts en direct. J'ai réalisé sa vidéo de présentation, du concept à l'animation.",
+    video: "assets/portfolio/shotby12/video.mp4",
+    previewVideo: "assets/portfolio/shotby12/preview.mp4",
+    poster: "assets/portfolio/shotby12/poster.jpg",
+    storyboard: boards("shotby12", 12),
+  },
 ];
 
 // ---------------------------------------------------------------------------
