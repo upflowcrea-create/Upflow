@@ -8,8 +8,8 @@ de préférence) au même endroit, rien d'autre à toucher.
 
 ## 2. Vidéo de présentation ✅ déjà en place
 
-Emplacements : `public/assets/video/upflow-presentation-2026-10b.mp4` (H.264 720p, compatible partout)
-et `upflow-presentation-2026-10b-poster.jpg`, référencés dans `src/lib/config.ts` (`ASSETS`).
+Emplacements : `public/assets/video/upflow-presentation-2026-11.mp4` (H.264 720p, compatible partout)
+et `upflow-presentation-2026-11-poster.jpg`, référencés dans `src/lib/config.ts` (`ASSETS`).
 Elle se lance automatiquement (en muet) dès qu'on arrive sur sa section.
 Pour la remplacer, retranscode-la en H.264 sous un **nouveau nom de fichier** (sinon les
 navigateurs gardent l'ancienne en cache), puis mets à jour `ASSETS` et la durée dans `src/lib/seo.ts` :

@@ -156,7 +156,7 @@ export function VideoReveal() {
         <div ref={textRef} className="video-section__text">
           <p className="eyebrow">C'est moi. C'est UPFLOW.</p>
           <h2 className="video-section__title">
-            Une minute pour <span className="text-flow">tout comprendre.</span>
+            40 secondes pour savoir <span className="text-flow">pourquoi il vous en faut une.</span>
           </h2>
         </div>
 

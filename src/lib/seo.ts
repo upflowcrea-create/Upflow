@@ -73,11 +73,11 @@ export function jsonLd() {
   const video = {
     "@type": "VideoObject",
     name: "UPFLOW — vidéo de présentation du studio",
-    description: "Une minute pour comprendre ce que fait UPFLOW, studio de vidéo motion design, 3D et sound design.",
+    description: "40 secondes pour savoir pourquoi votre entreprise a besoin d'une vidéo motion design, par UPFLOW, studio de motion design à Paris.",
     thumbnailUrl: abs(ASSETS.introPoster),
     contentUrl: abs(ASSETS.introVideo),
-    uploadDate: "2026-10-09T00:00:00+02:00",
-    duration: "PT55S",
+    uploadDate: "2026-11-03T00:00:00+01:00",
+    duration: "PT40S",
     inLanguage: "fr-FR",
     publisher: { "@id": `${SITE}#organization` },
   };
