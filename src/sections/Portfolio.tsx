@@ -1,3 +1,4 @@
+import type { CSSProperties } from "react";
 import { useLayoutEffect, useEffect, useRef, useState } from "react";
 import { ArrowUpRight, ChevronDown, Home, X, ChevronLeft, ChevronRight } from "lucide-react";
 import { RevealText } from "../components/RevealText";
@@ -55,7 +56,8 @@ function PortfolioCard({
   return (
     <button
       ref={tiltRef}
-      className="portfolio-card"
+      className={`portfolio-card${item.vertical ? " portfolio-card--vertical" : ""}`}
+      style={item.vertical && item.poster ? ({ "--poster": `url(${item.poster})` } as CSSProperties) : undefined}
       onClick={() => onOpen(mediaRef.current!.getBoundingClientRect())}
       onMouseEnter={() => videoRef.current?.play().catch(() => {})}
       onMouseLeave={() => videoRef.current?.pause()}
@@ -291,7 +293,11 @@ export function Portfolio() {
             data-lenis-prevent
             onClick={(e) => e.stopPropagation()}
           >
-            <div ref={mediaRef} className="lightbox__media">
+            <div
+              ref={mediaRef}
+              className={`lightbox__media${active.vertical ? " lightbox__media--vertical" : ""}`}
+              style={active.vertical && active.poster ? ({ "--poster": `url(${active.poster})` } as CSSProperties) : undefined}
+            >
               {active.video ? (
                 <video poster={active.poster} controls autoPlay playsInline>
                   {active.videoWebm && <source src={active.videoWebm} type="video/webm" />}
@@ -348,7 +354,9 @@ export function Portfolio() {
               {active.storyboard && (
                 <div className="lightbox__storyboard">
                   <p className="lightbox__storyboard-title eyebrow">Le storyboard</p>
-                  <div className="lightbox__storyboard-grid">
+                  <div
+                    className={`lightbox__storyboard-grid${active.vertical ? " lightbox__storyboard-grid--vertical" : ""}`}
+                  >
                     {active.storyboard.map((src, i) => (
                       <a key={src} href={src} target="_blank" rel="noreferrer" className="lightbox__board">
                         <img src={src} alt={`${active.title} — storyboard, planche ${i + 1}`} loading="lazy" />

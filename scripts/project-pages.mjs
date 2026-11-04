@@ -74,7 +74,7 @@ function pageHtml(item, { BRAND, CONTACT, LOCATION, WHATSAPP_URL }) {
       (src, i) =>
         `<a href="/${esc(src)}" target="_blank" rel="noreferrer"><img src="/${esc(src)}" alt="${esc(
           `${client} — storyboard, planche ${i + 1}`,
-        )}" loading="lazy" width="1280" height="720" /><span>${String(i + 1).padStart(2, "0")}</span></a>`,
+        )}" loading="lazy" /><span>${String(i + 1).padStart(2, "0")}</span></a>`,
     )
     .join("");
 
@@ -132,6 +132,9 @@ function pageHtml(item, { BRAND, CONTACT, LOCATION, WHATSAPP_URL }) {
     .clip--vertical { display: grid; grid-template-columns: auto 1fr; gap: 2rem; align-items: center; }
     .clip--vertical video { width: auto; height: min(72vh, 620px); aspect-ratio: 9 / 16; }
     figcaption { font-family: "Unbounded", sans-serif; font-weight: 800; font-size: clamp(1.1rem, 2.4vw, 1.6rem); max-width: 18ch; }
+    .main-video--vertical { width: auto; height: min(80vh, 760px); aspect-ratio: 9 / 16; margin-inline: auto; background: #000; }
+    .boards--vertical { grid-template-columns: repeat(6, 1fr) !important; }
+    .boards--vertical img { aspect-ratio: 9 / 16; }
     .boards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.6rem; }
     .boards a { position: relative; display: block; border-radius: 12px; overflow: hidden; }
     .boards img { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: cover; }
@@ -141,6 +144,8 @@ function pageHtml(item, { BRAND, CONTACT, LOCATION, WHATSAPP_URL }) {
     footer { padding: 2rem 0 3rem; font-size: 0.85rem; opacity: 0.7; }
     @media (max-width: 640px) {
       .boards { grid-template-columns: repeat(2, 1fr); }
+      .boards--vertical { grid-template-columns: repeat(3, 1fr) !important; }
+      .main-video--vertical { width: min(100%, 360px); height: auto; }
       .clip--vertical { grid-template-columns: 1fr; justify-items: center; text-align: center; }
       .clip--vertical video { width: min(100%, 320px); height: auto; }
     }
@@ -157,7 +162,7 @@ function pageHtml(item, { BRAND, CONTACT, LOCATION, WHATSAPP_URL }) {
       <p class="eyebrow">${esc(item.category)}</p>
       <h1>${esc(item.title)}</h1>
       <p class="lead">${esc(item.description)}</p>
-      <video class="main-video" controls playsinline preload="metadata"${item.poster ? ` poster="/${esc(item.poster)}"` : ""}>
+      <video class="main-video${item.vertical ? " main-video--vertical" : ""}" controls playsinline preload="metadata"${item.poster ? ` poster="/${esc(item.poster)}"` : ""}>
         <source src="/${esc(item.video)}" type="video/mp4" />
       </video>
       <div class="actions">
@@ -165,7 +170,7 @@ function pageHtml(item, { BRAND, CONTACT, LOCATION, WHATSAPP_URL }) {
         <a class="btn" href="/#portfolio">← Tous les projets</a>
       </div>
       ${extra ? `<h2>${(item.extraVideos ?? []).length > 1 ? "Les autres vidéos" : "L'autre vidéo"}</h2>${extra}` : ""}
-      ${boards ? `<h2>Le storyboard</h2><div class="boards">${boards}</div>` : ""}
+      ${boards ? `<h2>Le storyboard</h2><div class="boards${item.vertical ? " boards--vertical" : ""}">${boards}</div>` : ""}
 
       <section class="cta">
         <h2>Une vidéo comme celle-ci pour votre entreprise ?</h2>

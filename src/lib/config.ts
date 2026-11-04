@@ -144,6 +144,9 @@ export type PortfolioItem = {
    * project's own page and the VideoObject data Google reads. */
   duration?: number;
   date?: string;
+  /** Main video shot in 9:16: shown whole (phone-shaped, over its own blurred
+   * poster) instead of being cropped to 16:9, storyboard boards too. */
+  vertical?: boolean;
   /** The client's own website, linked from the project's lightbox. */
   website?: string;
   /** Storyboard boards (16:9 key frames), shown in order under the video. */
@@ -244,6 +247,20 @@ export const PORTFOLIO_ITEMS: PortfolioItem[] = [
     previewVideo: "assets/portfolio/shotby12/preview.mp4",
     poster: "assets/portfolio/shotby12/poster.jpg",
     storyboard: boards("shotby12", 12),
+  },
+  {
+    id: "unlocked-reebok",
+    duration: 50,
+    date: "2026-11-04",
+    vertical: true,
+    title: "UNLOCKED × Reebok × Live Nation — Le tournoi expliqué",
+    category: "MOTION / ÉVÉNEMENTIEL SPORT",
+    description:
+      "La vidéo verticale qui explique aux joueurs sélectionnés les détections UNLOCKED Saison 3, avec Reebok et Live Nation : la date, le lieu, le programme et les infos pratiques, jusqu'à la place à décrocher pour le Winter Classic.",
+    video: "assets/portfolio/unlocked-reebok/video.mp4",
+    previewVideo: "assets/portfolio/unlocked-reebok/preview.mp4",
+    poster: "assets/portfolio/unlocked-reebok/poster.jpg",
+    storyboard: boards("unlocked-reebok", 12),
   },
 ];
 
