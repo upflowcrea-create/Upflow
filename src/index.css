@@ -2321,10 +2321,9 @@ main > section .lightbox * {
   object-fit: cover;
 }
 
-/* Vertical (9:16) projects: the whole video, phone-shaped, centred over a
-   blurred, dimmed copy of its own poster — on the grid card and in the
-   lightbox — rather than cropped to a 16:9 strip. */
-.portfolio-card--vertical .portfolio-card__media::before,
+/* Vertical (9:16) projects: on the grid card the preview fills the whole
+   tile (cropped, like the other cards); in the lightbox the whole video is
+   shown, phone-shaped, over a blurred, dimmed copy of its own poster. */
 .lightbox__media--vertical::before {
   content: "";
   position: absolute;
@@ -2333,7 +2332,6 @@ main > section .lightbox * {
   filter: blur(28px) brightness(0.55) saturate(1.2);
 }
 
-.portfolio-card--vertical .portfolio-card__media video,
 .lightbox__media--vertical video {
   position: relative;
   object-fit: contain;
