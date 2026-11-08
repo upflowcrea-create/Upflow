@@ -13,17 +13,21 @@ type Props = {
   delay?: number;
   /** How many trailing words get the animated brand-gradient treatment. */
   accent?: number;
+  /** On a dark background the color wave settles on white instead of ink. */
+  dark?: boolean;
 };
 
 // Each plain word flashes through the brand colors as it lands, then
 // settles back to ink.
 const COLOR_WAVE = ["#f04dff", "#b72ad8", "#7a28bb", "#3d1366"];
+const COLOR_WAVE_DARK = ["#f04dff", "#d989f0", "#efc6fb", "#ffffff"];
 
 /**
  * Kinetic-typography heading: splits text into words and reveals them
  * blur -> sharp, sliding up, staggered, as the block scrolls into view.
  */
-export function RevealText({ children, as: Tag = "div", className, delay = 0, accent = 0 }: Props) {
+export function RevealText({ children, as: Tag = "div", className, delay = 0, accent = 0, dark = false }: Props) {
+  const wave = dark ? COLOR_WAVE_DARK : COLOR_WAVE;
   const ref = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
@@ -55,9 +59,9 @@ export function RevealText({ children, as: Tag = "div", className, delay = 0, ac
       if (plainWords.length) {
         tl.fromTo(
           plainWords,
-          { color: COLOR_WAVE[0] },
+          { color: wave[0] },
           {
-            keyframes: { color: COLOR_WAVE },
+            keyframes: { color: wave },
             duration: 1.3,
             stagger: 0.07,
             ease: "none",
@@ -70,7 +74,7 @@ export function RevealText({ children, as: Tag = "div", className, delay = 0, ac
 
     return () => ctx.revert();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [delay, accent]);
+  }, [delay, accent, dark]);
 
   const content =
     typeof children === "string"

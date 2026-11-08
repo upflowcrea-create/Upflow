@@ -1,6 +1,6 @@
 import type { CSSProperties } from "react";
 import { useLayoutEffect, useEffect, useRef, useState } from "react";
-import { ArrowUpRight, ChevronDown, Home, X, ChevronLeft, ChevronRight } from "lucide-react";
+import { ArrowUpRight, ChevronDown, Home, X, ChevronLeft, ChevronRight, Play } from "lucide-react";
 import { RevealText } from "../components/RevealText";
 import { useScrollReveal } from "../hooks/useScrollReveal";
 import { useScrollLock } from "../hooks/useScrollLock";
@@ -8,6 +8,33 @@ import { useTilt } from "../hooks/useTilt";
 import { useMediaQuery } from "../hooks/useMediaQuery";
 import { gsap, getLenis } from "../lib/smoothScroll";
 import { PORTFOLIO_ITEMS } from "../lib/config";
+
+type Item = (typeof PORTFOLIO_ITEMS)[number];
+
+// Newest projects first (undated ones keep their place at the end).
+const ITEMS: Item[] = [...PORTFOLIO_ITEMS].sort((a, b) => (b.date ?? "").localeCompare(a.date ?? ""));
+
+// Bento layout: two projects per row, one big (2/3) and one small (1/3),
+// alternating sides row after row. A vertical video always takes the small,
+// tall slot, where it's shown whole over its blurred poster.
+const ROWS: { item: Item; index: number; size: "big" | "small" }[][] = [];
+for (let i = 0; i < ITEMS.length; i += 2) {
+  const pair = ITEMS.slice(i, i + 2).map((item, k) => ({ item, index: i + k }));
+  if (pair.length === 1) {
+    ROWS.push([{ ...pair[0], size: "big" }]);
+    continue;
+  }
+  const smallFirst = (i / 2) % 2 === 1;
+  let [a, b] = pair;
+  // put the vertical one (if any) in the small slot
+  if (smallFirst ? b.item.vertical && !a.item.vertical : a.item.vertical && !b.item.vertical) [a, b] = [b, a];
+  ROWS.push(
+    smallFirst
+      ? [{ ...a, size: "small" }, { ...b, size: "big" }]
+      : [{ ...a, size: "big" }, { ...b, size: "small" }],
+  );
+}
+
 
 // "de Maxance Pics" but "d'AuPropre" / "d'Aura Vitres": French elision before a vowel.
 const clientOf = (title: string) => {
@@ -17,9 +44,11 @@ const clientOf = (title: string) => {
 
 function PortfolioCard({
   item,
+  size,
   onOpen,
 }: {
-  item: (typeof PORTFOLIO_ITEMS)[number];
+  item: Item;
+  size: "big" | "small";
   onOpen: (rect: DOMRect) => void;
 }) {
   const videoRef = useRef<HTMLVideoElement | null>(null);
@@ -53,10 +82,13 @@ function PortfolioCard({
     if (!isTouch && videoRef.current) videoRef.current.preload = "metadata";
   }, [isTouch]);
 
+  const [client, kind] = item.title.split(" — ");
+  const mmss = item.duration ? `00:${String(item.duration).padStart(2, "0")}` : null;
+
   return (
     <button
       ref={tiltRef}
-      className={`portfolio-card${item.vertical ? " portfolio-card--vertical" : ""}`}
+      className={`portfolio-card portfolio-card--${size}${item.vertical ? " portfolio-card--vertical" : ""}`}
       style={item.vertical && item.poster ? ({ "--poster": `url(${item.poster})` } as CSSProperties) : undefined}
       onClick={() => onOpen(mediaRef.current!.getBoundingClientRect())}
       onMouseEnter={() => videoRef.current?.play().catch(() => {})}
@@ -64,14 +96,7 @@ function PortfolioCard({
     >
       <div ref={mediaRef} className="portfolio-card__media">
         {item.video ? (
-          <video
-            ref={videoRef}
-            poster={item.poster}
-            muted
-            loop
-            playsInline
-            preload="none"
-          >
+          <video ref={videoRef} poster={item.poster} muted loop playsInline preload="none">
             <source src={item.previewVideo ?? item.video} type="video/mp4" />
           </video>
         ) : (
@@ -79,15 +104,29 @@ function PortfolioCard({
         )}
       </div>
 
+      <span className="portfolio-card__chip">
+        <Play size={11} fill="currentColor" strokeWidth={0} />
+        {mmss}
+        {item.vertical && <span className="portfolio-card__chip-sep">9:16</span>}
+      </span>
       {item.badge && <span className="portfolio-card__badge">{item.badge}</span>}
 
-      <div className="portfolio-card__overlay">
-        <span className="portfolio-card__category">{item.category}</span>
-        <span className="portfolio-card__title">
-          {item.title}
-          <ArrowUpRight size={20} />
-        </span>
+      <div className="portfolio-card__info">
+        <span className="portfolio-card__kind">{kind}</span>
+        <span className="portfolio-card__client">{client}</span>
+        {item.stat && (
+          <span className="portfolio-card__stat">
+            <strong>{item.stat.value}</strong> {item.stat.label}
+          </span>
+        )}
+        {item.tagline && <span className="portfolio-card__tagline">{item.tagline}</span>}
       </div>
+      <span className="portfolio-card__play" aria-hidden="true">
+        <Play size={16} fill="currentColor" strokeWidth={0} />
+      </span>
+      <span className="portfolio-card__go" aria-hidden="true">
+        <ArrowUpRight size={18} />
+      </span>
     </button>
   );
 }
@@ -127,12 +166,12 @@ export function Portfolio() {
   const next = () => {
     setOriginRect(null);
     contentRef.current?.scrollTo({ top: 0 });
-    setActiveIndex((i) => (i === null ? null : (i + 1) % PORTFOLIO_ITEMS.length));
+    setActiveIndex((i) => (i === null ? null : (i + 1) % ITEMS.length));
   };
   const prev = () => {
     setOriginRect(null);
     contentRef.current?.scrollTo({ top: 0 });
-    setActiveIndex((i) => (i === null ? null : (i - 1 + PORTFOLIO_ITEMS.length) % PORTFOLIO_ITEMS.length));
+    setActiveIndex((i) => (i === null ? null : (i - 1 + ITEMS.length) % ITEMS.length));
   };
 
   useScrollLock(activeIndex !== null);
@@ -243,20 +282,32 @@ export function Portfolio() {
     return () => window.removeEventListener("keydown", onKey);
   }, [activeIndex]);
 
-  const active = activeIndex !== null ? PORTFOLIO_ITEMS[activeIndex] : null;
+  const active = activeIndex !== null ? ITEMS[activeIndex] : null;
   // Prev/next arrows only make sense once there is more than one project.
-  const hasSiblings = PORTFOLIO_ITEMS.length > 1;
+  const hasSiblings = ITEMS.length > 1;
 
   return (
     <section id="portfolio" className="section portfolio">
-      <div className="container">
-        <RevealText as="h2" className="portfolio__heading" accent={1}>
-          DES TRUCS QUE J'AI FAITS.
-        </RevealText>
+      <div className="container portfolio__panel">
+        <div className="portfolio__head">
+          <div className="portfolio__collage" aria-hidden="true">
+            {ITEMS.map((item) => item.poster && <img key={item.id} src={item.poster} alt="" loading="lazy" />)}
+          </div>
+          <RevealText as="h2" className="portfolio__heading" accent={1} dark>
+            DES TRUCS QUE J'AI FAITS.
+          </RevealText>
+          <p className="portfolio__sub">
+            Du script à l'animation. Cliquez sur un projet pour voir la vidéo, le storyboard et le site du client.
+          </p>
+        </div>
 
         <div ref={gridRef} className="portfolio__grid">
-          {PORTFOLIO_ITEMS.map((item, i) => (
-            <PortfolioCard key={item.id} item={item} onOpen={(rect) => open(i, rect)} />
+          {ROWS.map((row) => (
+            <div className="portfolio__row" key={row[0].item.id}>
+              {row.map(({ item, index, size }) => (
+                <PortfolioCard key={item.id} item={item} size={size} onOpen={(rect) => open(index, rect)} />
+              ))}
+            </div>
           ))}
         </div>
       </div>
@@ -321,7 +372,7 @@ export function Portfolio() {
                 <a className="lightbox__website" href={active.website} target="_blank" rel="noopener">
                   Voir le site {clientOf(active.title)}
                   <span className="lightbox__website-domain">{new URL(active.website).hostname.replace(/^www\./, "")}</span>
-                  <ArrowUpRight size={18} />
+                  <ArrowUpRight size={14} />
                 </a>
               )}
               {active.date && (

@@ -7,6 +7,28 @@ export const BRAND = {
   tagline: "MOTION DESIGN / 3D / VIDÉO",
 };
 
+// Marques et clients pour qui UPFLOW a réalisé une vidéo (bande « Ils m'ont
+// confié leur vidéo » sous le haut de page).
+export const BRANDS: {
+  name: string;
+  /** Logo in public/; brands without one are shown as their name. */
+  logo?: string;
+  /** "dark": single-colour logo shown as a dark silhouette (e.g. a white one). */
+  tone?: "dark";
+}[] = [
+  { name: "Adidas" },
+  { name: "Reebok", logo: "assets/brands/reebok.png", tone: "dark" },
+  { name: "Live Nation" },
+  { name: "UNLOCKED", logo: "assets/brands/unlocked.png" },
+  { name: "Maison Vivaldi", logo: "assets/brands/maison-vivaldi.png" },
+  { name: "Shot by 12", logo: "assets/brands/shotby12.png" },
+  { name: "Maxance Pics", logo: "assets/brands/maxance-pics.png" },
+  { name: "AuPropre", logo: "assets/brands/aupropre.png" },
+  { name: "Aura Vitres", logo: "assets/brands/aura-vitres.png" },
+  { name: "Lendy" },
+  { name: "RendUp" },
+];
+
 // La personne derrière UPFLOW, montrée au moment de la prise de contact.
 export const FOUNDER = {
   name: "Eliot",
@@ -143,6 +165,10 @@ export type PortfolioItem = {
   /** Main video shot in 9:16: shown whole (phone-shaped, over its own blurred
    * poster) instead of being cropped to 16:9, storyboard boards too. */
   vertical?: boolean;
+  /** A result shown on the card, e.g. { value: "10K", label: "vues" }. */
+  stat?: { value: string; label: string };
+  /** One short line shown on the portfolio card. */
+  tagline?: string;
   /** The client's own website, linked from the project's lightbox. */
   website?: string;
   /** Storyboard boards (16:9 key frames), shown in order under the video. */
@@ -158,6 +184,7 @@ const boards = (dir: string, count: number) =>
 export const PORTFOLIO_ITEMS: PortfolioItem[] = [
   {
     id: "au-propre",
+    tagline: "Agence web pour créatifs et indépendants.",
     duration: 40,
     date: "2026-10-13",
     website: "https://aupropreagency.fr/",
@@ -172,6 +199,7 @@ export const PORTFOLIO_ITEMS: PortfolioItem[] = [
   },
   {
     id: "aura-vitres",
+    tagline: "Nettoyage de vitres et vitrines en Île-de-France.",
     duration: 26,
     date: "2026-10-12",
     website: "https://auravitres.com/",
@@ -186,6 +214,7 @@ export const PORTFOLIO_ITEMS: PortfolioItem[] = [
   },
   {
     id: "maxance-pics",
+    tagline: "Photographe et vidéaste dans le sport.",
     duration: 33,
     date: "2026-10-14",
     website: "https://maxancepics.com/",
@@ -209,6 +238,7 @@ export const PORTFOLIO_ITEMS: PortfolioItem[] = [
   },
   {
     id: "maison-vivaldi",
+    tagline: "Atelier de personnalisation textile.",
     duration: 40,
     date: "2026-10-17",
     website: "https://www.maisonvivaldi.com/",
@@ -232,6 +262,7 @@ export const PORTFOLIO_ITEMS: PortfolioItem[] = [
   },
   {
     id: "shotby12",
+    tagline: "Les événements sportifs racontés en stories.",
     duration: 34,
     date: "2026-10-30",
     website: "https://shotby12.fr/",
@@ -246,6 +277,8 @@ export const PORTFOLIO_ITEMS: PortfolioItem[] = [
   },
   {
     id: "unlocked-reebok",
+    stat: { value: "10K", label: "vues" },
+    tagline: "Les détections Saison 3, expliquées aux joueurs.",
     duration: 50,
     date: "2026-11-04",
     vertical: true,

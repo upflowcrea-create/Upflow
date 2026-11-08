@@ -8,6 +8,7 @@ import { PageBackdrop } from "./components/PageBackdrop";
 import { Hero } from "./sections/Hero";
 import { VideoReveal } from "./sections/VideoReveal";
 import { Services } from "./sections/Services";
+import { Brands } from "./sections/Brands";
 import { Benefits } from "./sections/Benefits";
 import { Portfolio } from "./sections/Portfolio";
 import { Humor } from "./sections/Humor";
@@ -51,6 +52,7 @@ function App() {
 
       <main>
         <Hero onBookCall={openWhatsApp} ready={ready} />
+        <Brands />
         <VideoReveal />
         <Marquee />
         <Services onCta={openWhatsApp} />

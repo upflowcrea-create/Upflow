@@ -79,7 +79,7 @@ function pageHtml(item, { BRAND, CONTACT, LOCATION, WHATSAPP_URL }) {
     .join("");
 
   const website = item.website
-    ? `<a class="btn btn--grad" href="${esc(item.website)}" target="_blank" rel="noopener">Voir le site ${
+    ? `<a class="btn btn--small" href="${esc(item.website)}" target="_blank" rel="noopener">Voir le site ${
         /^[aeiouyàâäéèêëîïôöùûüh]/i.test(client) ? "d'" : "de "
       }${esc(client)} ↗</a>`
     : "";
@@ -126,6 +126,7 @@ function pageHtml(item, { BRAND, CONTACT, LOCATION, WHATSAPP_URL }) {
     .main-video { width: 100%; aspect-ratio: 16 / 9; border-radius: 20px; background: #21013e; display: block; margin-top: 1.5rem; box-shadow: 0 30px 70px -30px rgba(61, 19, 102, 0.5); }
     .actions { display: flex; flex-wrap: wrap; gap: 0.8rem; margin: 1.5rem 0; }
     .btn { display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.8rem 1.3rem; border-radius: 999px; font-weight: 600; text-decoration: none; border: 1px solid rgba(61, 19, 102, 0.2); background: #fff; }
+    .btn--small { padding: 0.45rem 0.9rem; font-size: 0.82rem; }
     .btn--grad { background: var(--grad); color: #fff; border-color: transparent; }
     .clip { margin: 0; }
     .clip video { width: 100%; border-radius: 16px; background: #000; }
