@@ -19,8 +19,8 @@ export function About() {
               {`MOI C'EST ${FOUNDER.name.toUpperCase()}.`}
             </RevealText>
             <p className="about__body">
-              Motion designer à Paris. Je réalise chaque vidéo moi-même, du script à l'animation : vous parlez
-              directement à la personne qui crée votre vidéo, sans intermédiaire.
+              Salut&nbsp;! Je suis celui qui confectionne vos vidéos, du script à l'animation. Motion designer à
+              Paris, je m'occupe de tout moi-même&nbsp;: vous parlez directement à la personne qui crée votre vidéo.
             </p>
             <a className="btn btn-ghost about__cta" href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer">
               <MessageCircle size={16} /> Écrire à {FOUNDER.name}
