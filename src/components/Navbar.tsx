@@ -69,12 +69,10 @@ export function Navbar() {
           </nav>
 
           <div className="navbar__actions">
-            {/* Goes to the script form rather than WhatsApp, so it never
-                duplicates the WhatsApp button right next to it. */}
-            <button className="navbar__cta" onClick={() => handleNav("#contact")}>
-              Envoyer mon script
+            <a className="navbar__cta" href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer">
+              Parler de mon projet
               <span className="navbar__cta-dot" aria-hidden="true" />
-            </button>
+            </a>
 
             <a
               href={WHATSAPP_URL}
@@ -104,13 +102,15 @@ export function Navbar() {
             {link.label}
           </button>
         ))}
-        <button
+        <a
           className="navbar__cta navbar__mobile-cta"
           style={{ transitionDelay: open ? `${0.05 + LINKS.length * 0.05}s` : "0s" }}
-          onClick={() => handleNav("#contact")}
+          href={WHATSAPP_URL}
+          target="_blank"
+          rel="noopener noreferrer"
         >
-          Envoyer mon script
-        </button>
+          Parler de mon projet
+        </a>
       </div>
     </>
   );

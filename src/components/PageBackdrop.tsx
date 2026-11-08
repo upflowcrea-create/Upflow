@@ -10,11 +10,10 @@ const TINTS: [selector: string, color: string][] = [
   ["#video", "#f7f1ff"],
   ["#services", "#faf3ff"],
   ["#portfolio", "#f6f0fd"],
-  [".humor", "#fcf2fe"],
+  ["#about", "#fcf2fe"],
   ["#process", "#fbf3ff"],
   ["#pricing", "#f7f0ff"],
   ["#faq", "#faf3ff"],
-  ["#contact", "#fcf2fe"],
 ];
 
 export function PageBackdrop() {

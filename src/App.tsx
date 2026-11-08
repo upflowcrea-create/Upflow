@@ -15,7 +15,6 @@ import { Portfolio } from "./sections/Portfolio";
 import { Process } from "./sections/Process";
 import { Pricing } from "./sections/Pricing";
 import { Faq } from "./sections/Faq";
-import { FinalCta } from "./sections/FinalCta";
 import { initSmoothScroll, setupScrollTriggerRefresh } from "./lib/smoothScroll";
 import { WHATSAPP_URL } from "./lib/config";
 
@@ -61,7 +60,6 @@ function App() {
         <About />
         <Process />
         <Pricing onCta={openWhatsApp} />
-        <FinalCta />
         <Faq />
       </main>
 
