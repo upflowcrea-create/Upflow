@@ -10,6 +10,7 @@ import { VideoReveal } from "./sections/VideoReveal";
 import { Services } from "./sections/Services";
 import { Brands } from "./sections/Brands";
 import { Benefits } from "./sections/Benefits";
+import { About } from "./sections/About";
 import { Portfolio } from "./sections/Portfolio";
 import { Humor } from "./sections/Humor";
 import { Process } from "./sections/Process";
@@ -56,8 +57,9 @@ function App() {
         <VideoReveal />
         <Marquee />
         <Services onCta={openWhatsApp} />
-        <Benefits />
+        <About />
         <Portfolio />
+        <Benefits />
         <Humor onCta={openWhatsApp} />
         <Process />
         <Pricing onCta={openWhatsApp} />

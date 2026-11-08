@@ -1019,12 +1019,65 @@ ul {
   max-width: 16ch;
 }
 
+/* Step tabs (1 → 5) over a swipeable row of step cards, like motion-lab. */
+.process__tabs {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.3rem;
+  width: fit-content;
+  max-width: 100%;
+  margin: 0 auto 1.6rem;
+  padding: 0.35rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.75);
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow-card);
+}
+
+.process__tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.55rem 1rem;
+  border-radius: 999px;
+  background: none;
+  border: 0;
+  color: rgba(61, 19, 102, 0.6);
+  font-weight: 700;
+  font-size: 0.85rem;
+  transition: background 0.3s, color 0.3s;
+}
+
+.process__tab-n {
+  font-family: var(--font-display);
+}
+
+.process__tab.is-active {
+  background: var(--gradient-main);
+  color: var(--white);
+  box-shadow: 0 8px 20px -8px rgba(183, 42, 216, 0.7);
+}
+
 .process__grid {
-  display: grid;
-  grid-template-columns: 1fr;
+  display: flex;
   gap: 1.25rem;
-  max-width: 1000px;
+  max-width: 1100px;
   margin-inline: auto;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory;
+  /* room above for the stickers, which stick out of the cards */
+  padding: 1.4rem 2px 1rem;
+  scrollbar-width: none;
+}
+
+.process__grid::-webkit-scrollbar {
+  display: none;
+}
+
+.process__grid > .process-step {
+  flex: 0 0 min(460px, 84%);
+  scroll-snap-align: start;
 }
 
 .process-step {
@@ -1305,26 +1358,14 @@ ul {
   line-height: 1.55;
 }
 
-@media (min-width: 700px) {
-  .process__grid {
-    grid-template-columns: 1fr 1fr;
-    gap: 1.5rem;
+@media (max-width: 560px) {
+  /* numbers only on phones, like motion-lab */
+  .process__tab-label {
+    display: none;
   }
 
-  .process-step--final {
-    grid-column: span 2;
-    flex-direction: row;
-    align-items: center;
-    gap: 2rem;
-  }
-
-  .process-step--final .process-step__visual {
-    flex: 0 0 240px;
-    height: 140px;
-  }
-
-  .process-step--final .process-step__body {
-    flex: 1;
+  .process__tab {
+    padding: 0.55rem 0.95rem;
   }
 }
 
@@ -2292,6 +2333,73 @@ main > section .lightbox * {
 }
 
 /* ---------------------------------------------------------------------- */
+/* About — "Moi c'est Eliot"                                               */
+/* ---------------------------------------------------------------------- */
+
+.about__card {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  gap: clamp(1.5rem, 4vw, 3.5rem);
+  max-width: 980px;
+  margin-inline: auto;
+  padding: clamp(1.4rem, 3vw, 2.4rem);
+  border-radius: var(--radius-lg);
+  background: rgba(255, 255, 255, 0.8);
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow-card);
+}
+
+.about__photo {
+  width: clamp(150px, 22vw, 260px);
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  object-position: 50% 35%;
+  border-radius: calc(var(--radius-lg) - 6px);
+  box-shadow: 0 24px 60px -24px rgba(156, 41, 198, 0.6);
+  rotate: -2deg;
+}
+
+.about__text {
+  display: grid;
+  gap: 0.9rem;
+  justify-items: start;
+}
+
+.about__title {
+  font-size: clamp(2rem, 5vw, 3.4rem);
+}
+
+.about__body {
+  max-width: 46ch;
+  color: rgba(61, 19, 102, 0.75);
+  font-size: clamp(1rem, 1.6vw, 1.12rem);
+  line-height: 1.55;
+}
+
+.about__cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+@media (max-width: 640px) {
+  .about__card {
+    grid-template-columns: 1fr;
+    justify-items: center;
+    text-align: center;
+  }
+
+  .about__text {
+    justify-items: center;
+  }
+
+  .about__photo {
+    width: min(70%, 240px);
+  }
+}
+
+/* ---------------------------------------------------------------------- */
 /* Brands band                                                             */
 /* ---------------------------------------------------------------------- */
 
@@ -2677,6 +2785,13 @@ main > section .lightbox * {
   grid-template-columns: repeat(6, 1fr);
 }
 
+/* On a phone, a vertical video fills the whole screen. */
+@media (max-width: 700px) {
+  .lightbox__media--vertical video {
+    object-fit: cover;
+  }
+}
+
 .lightbox__storyboard-grid--vertical .lightbox__board img {
   aspect-ratio: 9 / 16;
 }
@@ -2702,6 +2817,12 @@ main > section .lightbox * {
   .lightbox__media {
     height: auto;
     aspect-ratio: 16 / 9;
+  }
+
+  /* …but a vertical (9:16) video does fill the whole phone screen. */
+  .lightbox__media--vertical {
+    height: 100svh;
+    aspect-ratio: auto;
   }
 }
 
