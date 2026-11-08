@@ -12,7 +12,6 @@ import { Brands } from "./sections/Brands";
 import { Benefits } from "./sections/Benefits";
 import { About } from "./sections/About";
 import { Portfolio } from "./sections/Portfolio";
-import { Humor } from "./sections/Humor";
 import { Process } from "./sections/Process";
 import { Pricing } from "./sections/Pricing";
 import { Faq } from "./sections/Faq";
@@ -57,10 +56,9 @@ function App() {
         <VideoReveal />
         <Marquee />
         <Services onCta={openWhatsApp} />
-        <About />
         <Portfolio />
         <Benefits />
-        <Humor onCta={openWhatsApp} />
+        <About />
         <Process />
         <Pricing onCta={openWhatsApp} />
         <FinalCta />

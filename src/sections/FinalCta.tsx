@@ -69,27 +69,6 @@ export function FinalCta() {
         </p>
 
         <div ref={gridRef} className="script-cta__grid">
-          <div className="founder-card">
-            <img
-              className="founder-card__photo"
-              src={FOUNDER.photo}
-              alt={`${FOUNDER.name}, ${FOUNDER.role}`}
-              width={72}
-              height={72}
-              loading="lazy"
-            />
-            <div className="founder-card__text">
-              <p className="founder-card__name">
-                Vous parlez directement à {FOUNDER.name}
-                <span className="founder-card__online" aria-hidden="true" />
-              </p>
-              <p className="founder-card__role">{FOUNDER.role}</p>
-              <p className="founder-card__quote">
-                « Je lis chaque script moi-même et je vous réponds en moins de 48h. »
-              </p>
-            </div>
-          </div>
-
           <div className="script-cta__panel">
             {status === "success" ? (
               <div className="script-cta__success">
