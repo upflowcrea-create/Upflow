@@ -2013,6 +2013,8 @@ main > section .lightbox * {
   position: absolute;
   inset: 0;
   z-index: -1;
+  /* purely decorative: its scaled-up images spill over the tabs below */
+  pointer-events: none;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 10px;
@@ -2046,6 +2048,8 @@ main > section .lightbox * {
 
 /* Category tabs (on the dark panel) and the "Voir plus" toggle. */
 .portfolio__tabs {
+  position: relative;
+  z-index: 2;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;

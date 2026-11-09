@@ -187,8 +187,8 @@ const boards = (dir: string, count: number) =>
 // Portfolio tabs, so visitors find a video like the one they need.
 export const PORTFOLIO_CATEGORIES = [
   { id: "saas", label: "SaaS & applis" },
-  { id: "commerce", label: "Commerces & marques" },
-  { id: "freelance", label: "Freelances & créateurs" },
+  { id: "commerce", label: "Commerce" },
+  { id: "freelance", label: "Freelance" },
 ] as const;
 
 export const PORTFOLIO_ITEMS: PortfolioItem[] = [

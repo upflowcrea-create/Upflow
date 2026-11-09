@@ -321,7 +321,7 @@ export function Portfolio() {
         </div>
 
         <div className="portfolio__tabs" role="tablist" aria-label="Catégories de projets">
-          {[{ id: "all" as const, label: "Tous" }, ...PORTFOLIO_CATEGORIES].map((c) => (
+          {[{ id: "all" as const, label: "Tout" }, ...PORTFOLIO_CATEGORIES].map((c) => (
             <button
               key={c.id}
               role="tab"
