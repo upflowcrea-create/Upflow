@@ -165,6 +165,9 @@ export type PortfolioItem = {
   /** Main video shot in 9:16: shown whole (phone-shaped, over its own blurred
    * poster) instead of being cropped to 16:9, storyboard boards too. */
   vertical?: boolean;
+  /** Portfolio category (tabs) and rank inside the portfolio (1 = shown first). */
+  group?: "saas" | "commerce" | "freelance";
+  rank?: number;
   /** A result shown on the card, e.g. { value: "10K", label: "vues" }. */
   stat?: { value: string; label: string };
   /** One short line shown on the portfolio card. */
@@ -181,9 +184,50 @@ export type PortfolioItem = {
 const boards = (dir: string, count: number) =>
   Array.from({ length: count }, (_, i) => `assets/portfolio/${dir}/storyboard/board-${String(i + 1).padStart(2, "0")}.jpg`);
 
+// Portfolio tabs, so visitors find a video like the one they need.
+export const PORTFOLIO_CATEGORIES = [
+  { id: "saas", label: "SaaS & applis" },
+  { id: "commerce", label: "Commerces & marques" },
+  { id: "freelance", label: "Freelances & créateurs" },
+] as const;
+
 export const PORTFOLIO_ITEMS: PortfolioItem[] = [
   {
+    id: "aria",
+    group: "saas",
+    category: "MOTION / 3D / FINTECH",
+    rank: 3,
+    duration: 37,
+    date: "2026-11-02",
+    title: "Aria — Vidéo de présentation produit",
+    tagline: "Le paiement B2B différé, expliqué en 37 secondes.",
+    description:
+      "Une vidéo pour présenter Aria, la solution de paiement B2B différé : le problème des délais de paiement, la solution, et ce que ça change pour l'entreprise. Motion design, 3D et voix off.",
+    video: "assets/portfolio/aria/video.mp4",
+    previewVideo: "assets/portfolio/aria/preview.mp4",
+    poster: "assets/portfolio/aria/poster.jpg",
+    storyboard: boards("aria", 12),
+  },
+  {
+    id: "velto",
+    group: "saas",
+    category: "MOTION / SAAS",
+    rank: 5,
+    duration: 48,
+    date: "2026-11-06",
+    title: "Velto — Démo SaaS",
+    tagline: "Logiciel d'automatisation · marque fictive.",
+    description:
+      "Une démo de vidéo SaaS pour une marque fictive, Velto, qui automatise les processus métier : comment présenter un logiciel B2B clairement, en moins d'une minute.",
+    video: "assets/portfolio/velto/video.mp4",
+    previewVideo: "assets/portfolio/velto/preview.mp4",
+    poster: "assets/portfolio/velto/poster.jpg",
+    storyboard: boards("velto", 12),
+  },
+  {
     id: "au-propre",
+    group: "commerce",
+    rank: 7,
     tagline: "Agence web pour créatifs et indépendants.",
     duration: 40,
     date: "2026-10-13",
@@ -199,6 +243,8 @@ export const PORTFOLIO_ITEMS: PortfolioItem[] = [
   },
   {
     id: "aura-vitres",
+    group: "commerce",
+    rank: 8,
     tagline: "Nettoyage de vitres et vitrines en Île-de-France.",
     duration: 26,
     date: "2026-10-12",
@@ -214,6 +260,8 @@ export const PORTFOLIO_ITEMS: PortfolioItem[] = [
   },
   {
     id: "maxance-pics",
+    group: "freelance",
+    rank: 6,
     tagline: "Photographe et vidéaste dans le sport.",
     duration: 33,
     date: "2026-10-14",
@@ -238,6 +286,8 @@ export const PORTFOLIO_ITEMS: PortfolioItem[] = [
   },
   {
     id: "maison-vivaldi",
+    group: "commerce",
+    rank: 4,
     tagline: "Atelier de personnalisation textile.",
     duration: 40,
     date: "2026-10-17",
@@ -262,6 +312,8 @@ export const PORTFOLIO_ITEMS: PortfolioItem[] = [
   },
   {
     id: "shotby12",
+    group: "freelance",
+    rank: 2,
     tagline: "Les événements sportifs racontés en stories.",
     duration: 34,
     date: "2026-10-30",
@@ -277,6 +329,8 @@ export const PORTFOLIO_ITEMS: PortfolioItem[] = [
   },
   {
     id: "unlocked-reebok",
+    group: "commerce",
+    rank: 1,
     stat: { value: "10K", label: "vues" },
     tagline: "Les détections Saison 3, expliquées aux joueurs.",
     duration: 50,

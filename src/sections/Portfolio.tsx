@@ -1,5 +1,5 @@
 import type { CSSProperties } from "react";
-import { useLayoutEffect, useEffect, useRef, useState } from "react";
+import { useLayoutEffect, useEffect, useMemo, useRef, useState } from "react";
 import { ArrowUpRight, ChevronDown, Home, X, ChevronLeft, ChevronRight, Play } from "lucide-react";
 import { RevealText } from "../components/RevealText";
 import { useScrollReveal } from "../hooks/useScrollReveal";
@@ -7,34 +7,42 @@ import { useScrollLock } from "../hooks/useScrollLock";
 import { useTilt } from "../hooks/useTilt";
 import { useMediaQuery } from "../hooks/useMediaQuery";
 import { gsap, getLenis } from "../lib/smoothScroll";
-import { PORTFOLIO_ITEMS } from "../lib/config";
+import { PORTFOLIO_CATEGORIES, PORTFOLIO_ITEMS } from "../lib/config";
 
 type Item = (typeof PORTFOLIO_ITEMS)[number];
 
-// Newest projects first (undated ones keep their place at the end).
-const ITEMS: Item[] = [...PORTFOLIO_ITEMS].sort((a, b) => (b.date ?? "").localeCompare(a.date ?? ""));
+// Best projects first (rank), then newest.
+const byRank = (a: Item, b: Item) => (a.rank ?? 99) - (b.rank ?? 99) || (b.date ?? "").localeCompare(a.date ?? "");
+const ALL: Item[] = [...PORTFOLIO_ITEMS].sort(byRank);
+
+// How many projects a tab shows before "Voir plus": the best 4 overall, the
+// best 2 (one bento row) of a category.
+const SHOWN = { all: 4, category: 2 };
+
+type Slot = { item: Item; index: number; size: "big" | "small" };
 
 // Bento layout: two projects per row, one big (2/3) and one small (1/3),
 // alternating sides row after row. A vertical video always takes the small,
 // tall slot, where it's shown whole over its blurred poster.
-const ROWS: { item: Item; index: number; size: "big" | "small" }[][] = [];
-for (let i = 0; i < ITEMS.length; i += 2) {
-  const pair = ITEMS.slice(i, i + 2).map((item, k) => ({ item, index: i + k }));
-  if (pair.length === 1) {
-    ROWS.push([{ ...pair[0], size: "big" }]);
-    continue;
+function buildRows(items: Item[]): Slot[][] {
+  const rows: Slot[][] = [];
+  for (let i = 0; i < items.length; i += 2) {
+    const pair = items.slice(i, i + 2).map((item, k) => ({ item, index: i + k }));
+    if (pair.length === 1) {
+      rows.push([{ ...pair[0], size: "big" }]);
+      continue;
+    }
+    const smallFirst = (i / 2) % 2 === 1;
+    let [a, b] = pair;
+    if (smallFirst ? b.item.vertical && !a.item.vertical : a.item.vertical && !b.item.vertical) [a, b] = [b, a];
+    rows.push(
+      smallFirst
+        ? [{ ...a, size: "small" }, { ...b, size: "big" }]
+        : [{ ...a, size: "big" }, { ...b, size: "small" }],
+    );
   }
-  const smallFirst = (i / 2) % 2 === 1;
-  let [a, b] = pair;
-  // put the vertical one (if any) in the small slot
-  if (smallFirst ? b.item.vertical && !a.item.vertical : a.item.vertical && !b.item.vertical) [a, b] = [b, a];
-  ROWS.push(
-    smallFirst
-      ? [{ ...a, size: "small" }, { ...b, size: "big" }]
-      : [{ ...a, size: "big" }, { ...b, size: "small" }],
-  );
+  return rows;
 }
-
 
 // "de Maxance Pics" but "d'AuPropre" / "d'Aura Vitres": French elision before a vowel.
 const clientOf = (title: string) => {
@@ -133,6 +141,17 @@ function PortfolioCard({
 
 export function Portfolio() {
   const gridRef = useScrollReveal<HTMLDivElement>({ selector: ".portfolio-card", y: 40, blur: 6, stagger: 0.06 });
+  const [tab, setTab] = useState<"all" | (typeof PORTFOLIO_CATEGORIES)[number]["id"]>("all");
+  const [expanded, setExpanded] = useState(false);
+  // The current tab's projects (best first); the lightbox browses all of them.
+  const ITEMS = useMemo(() => (tab === "all" ? ALL : ALL.filter((item) => item.group === tab)), [tab]);
+  const limit = tab === "all" ? SHOWN.all : SHOWN.category;
+  const rows = useMemo(() => buildRows(expanded ? ITEMS : ITEMS.slice(0, limit)), [ITEMS, expanded, limit]);
+  const hidden = ITEMS.length - limit;
+  const pickTab = (id: typeof tab) => {
+    setTab(id);
+    setExpanded(false);
+  };
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
   const [originRect, setOriginRect] = useState<DOMRect | null>(null);
   const contentRef = useRef<HTMLDivElement | null>(null);
@@ -291,7 +310,7 @@ export function Portfolio() {
       <div className="container portfolio__panel">
         <div className="portfolio__head">
           <div className="portfolio__collage" aria-hidden="true">
-            {ITEMS.map((item) => item.poster && <img key={item.id} src={item.poster} alt="" loading="lazy" />)}
+            {ALL.map((item) => item.poster && <img key={item.id} src={item.poster} alt="" loading="lazy" />)}
           </div>
           <RevealText as="h2" className="portfolio__heading" accent={1} dark>
             DES TRUCS QUE J'AI FAITS.
@@ -301,8 +320,22 @@ export function Portfolio() {
           </p>
         </div>
 
+        <div className="portfolio__tabs" role="tablist" aria-label="Catégories de projets">
+          {[{ id: "all" as const, label: "Tous" }, ...PORTFOLIO_CATEGORIES].map((c) => (
+            <button
+              key={c.id}
+              role="tab"
+              aria-selected={tab === c.id}
+              className={`portfolio__tab${tab === c.id ? " is-active" : ""}`}
+              onClick={() => pickTab(c.id)}
+            >
+              {c.label}
+            </button>
+          ))}
+        </div>
+
         <div ref={gridRef} className="portfolio__grid">
-          {ROWS.map((row) => (
+          {rows.map((row) => (
             <div className="portfolio__row" key={row[0].item.id}>
               {row.map(({ item, index, size }) => (
                 <PortfolioCard key={item.id} item={item} size={size} onOpen={(rect) => open(index, rect)} />
@@ -310,6 +343,15 @@ export function Portfolio() {
             </div>
           ))}
         </div>
+
+        {hidden > 0 && (
+          <div className="portfolio__more">
+            <button className="portfolio__more-btn" onClick={() => setExpanded((v) => !v)}>
+              {expanded ? "Voir moins" : `Voir plus de projets (${hidden})`}
+              <ChevronDown size={18} className={expanded ? "is-flipped" : undefined} />
+            </button>
+          </div>
+        )}
       </div>
 
       {active && (
