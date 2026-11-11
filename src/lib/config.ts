@@ -134,7 +134,7 @@ export const PRICING: {
     id: "complet",
     name: "LANCEMENT COMPLET",
     subtitle: "Vidéo de 1 min",
-    price: "300€",
+    price: "250€",
     delivery: "Livrée en 7 jours",
     features: ["Script et storyboard", "Voix off", "2 révisions", "Formats LinkedIn et Instagram"],
     cta: "LANCER MA VIDÉO",
@@ -166,7 +166,7 @@ export type PortfolioItem = {
    * poster) instead of being cropped to 16:9, storyboard boards too. */
   vertical?: boolean;
   /** Portfolio category (tabs) and rank inside the portfolio (1 = shown first). */
-  group?: "saas" | "commerce" | "freelance";
+  group?: "saas" | "commerce";
   rank?: number;
   /** A result shown on the card, e.g. { value: "10K", label: "vues" }. */
   stat?: { value: string; label: string };
@@ -187,26 +187,25 @@ const boards = (dir: string, count: number) =>
 // Portfolio tabs, so visitors find a video like the one they need.
 export const PORTFOLIO_CATEGORIES = [
   { id: "saas", label: "SaaS & applis" },
-  { id: "commerce", label: "Commerce" },
-  { id: "freelance", label: "Freelance" },
+  { id: "commerce", label: "Freelance & commerce" },
 ] as const;
 
 export const PORTFOLIO_ITEMS: PortfolioItem[] = [
   {
-    id: "aria",
+    id: "fluvo",
     group: "saas",
-    category: "MOTION / 3D / FINTECH",
+    category: "MOTION / 3D / SAAS",
     rank: 3,
     duration: 37,
     date: "2026-11-02",
-    title: "Aria — Vidéo de présentation produit",
-    tagline: "Le paiement B2B différé, expliqué en 37 secondes.",
+    title: "Fluvo — Démo SaaS",
+    tagline: "Paiement B2B différé · marque fictive.",
     description:
-      "Une vidéo pour présenter Aria, la solution de paiement B2B différé : le problème des délais de paiement, la solution, et ce que ça change pour l'entreprise. Motion design, 3D et voix off.",
-    video: "assets/portfolio/aria/video.mp4",
-    previewVideo: "assets/portfolio/aria/preview.mp4",
-    poster: "assets/portfolio/aria/poster.jpg",
-    storyboard: boards("aria", 12),
+      "Une démo de vidéo SaaS pour une marque fictive, Fluvo, une solution de paiement B2B différé : le problème des délais de paiement, la solution, et ce que ça change pour l'entreprise. Motion design, 3D et voix off.",
+    video: "assets/portfolio/fluvo/video.mp4",
+    previewVideo: "assets/portfolio/fluvo/preview.mp4",
+    poster: "assets/portfolio/fluvo/poster.jpg",
+    storyboard: boards("fluvo", 12),
   },
   {
     id: "velto",
@@ -260,7 +259,7 @@ export const PORTFOLIO_ITEMS: PortfolioItem[] = [
   },
   {
     id: "maxance-pics",
-    group: "freelance",
+    group: "commerce",
     rank: 6,
     tagline: "Photographe et vidéaste dans le sport.",
     duration: 33,
@@ -312,7 +311,7 @@ export const PORTFOLIO_ITEMS: PortfolioItem[] = [
   },
   {
     id: "shotby12",
-    group: "freelance",
+    group: "commerce",
     rank: 2,
     tagline: "Les événements sportifs racontés en stories.",
     duration: 34,
