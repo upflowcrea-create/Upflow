@@ -2114,14 +2114,19 @@ main > section .lightbox * {
   rotate: 180deg;
 }
 
+/* Phones: the three tabs stay on one line. */
 @media (max-width: 560px) {
   .portfolio__tabs {
-    border-radius: 20px;
+    flex-wrap: nowrap;
+    gap: 0.15rem;
+    padding: 0.25rem;
   }
 
   .portfolio__tab {
-    padding: 0.5rem 0.8rem;
-    font-size: 0.78rem;
+    flex: none;
+    white-space: nowrap;
+    padding: 0.5rem 0.7rem;
+    font-size: 0.74rem;
   }
 }
 
