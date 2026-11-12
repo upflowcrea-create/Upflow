@@ -4262,12 +4262,40 @@ html.is-loading body {
   background: #06030a;
 }
 
-/* Edge to edge on phones: the loader bleeds under Safari's status bar and toolbar
-   (same overflow above and below, so the content stays centred) instead of leaving
-   flat bands there. */
-.preloader {
-  --bleed: max(120px, env(safe-area-inset-top), env(safe-area-inset-bottom));
-  top: calc(-1 * var(--bleed));
-  bottom: calc(-1 * var(--bleed));
-  height: auto;
+/* Seamless with Safari's bars on phones: Safari paints the status bar and the
+   toolbar itself in a flat colour (the page background, #06030a while loading);
+   a page can't draw under them. So the loader's top and bottom edges fade into
+   that exact colour, and the glows / scanlines die out before the edges: no seam,
+   the bars read as part of the same black screen. */
+.preloader::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: linear-gradient(to bottom, #06030a 0%, rgba(6, 3, 10, 0) 12%, rgba(6, 3, 10, 0) 88%, #06030a 100%);
+}
+
+.preloader--exiting::after {
+  display: none;
+}
+
+.preloader__scanlines {
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 14%, #000 86%, transparent 100%);
+  mask-image: linear-gradient(to bottom, transparent 0%, #000 14%, #000 86%, transparent 100%);
+}
+
+/* glows a little inside the screen instead of in the very corners */
+.preloader__panel--top {
+  background-image: radial-gradient(ellipse 60% 70% at 0% 22%, rgba(242, 41, 234, 0.3), transparent 70%),
+    radial-gradient(ellipse 45% 60% at 100% 25%, rgba(174, 64, 255, 0.16), transparent 70%);
+}
+
+.preloader__panel--bottom {
+  background-image: radial-gradient(ellipse 60% 70% at 100% 78%, rgba(174, 64, 255, 0.32), transparent 70%),
+    radial-gradient(ellipse 45% 60% at 0% 75%, rgba(242, 41, 234, 0.15), transparent 70%);
+}
+
+.preloader__content {
+  z-index: 2;
 }
