@@ -4165,6 +4165,14 @@ main > section .lightbox * {
 /* Glitch opening (replaces the panel wipe): on exit the black screen is cut into
    slices; each one jolts sideways with a magenta / violet echo, flickers, then
    snaps off-screen, in a stepped (glitchy) rhythm, revealing the site. */
+/* Nothing of the intro may stick out of the screen: on phones a slice sliding off the
+   side widened the page (iOS zooms out to fit it → the page jumped and shrank). */
+.preloader,
+.preloader__slices {
+  overflow: hidden;
+  overscroll-behavior: none;
+}
+
 .preloader__slices {
   position: absolute;
   inset: 0;
@@ -4189,8 +4197,10 @@ main > section .lightbox * {
   background-color: #06030a;
   background-image: radial-gradient(ellipse 55% 45% at 0% 0%, rgba(242, 41, 234, 0.32), transparent 70%),
     radial-gradient(ellipse 55% 45% at 100% 100%, rgba(174, 64, 255, 0.34), transparent 70%);
-  background-size: 100vw 100vh;
-  background-position: 0 calc(var(--i) * -100vh / 18);
+  /* one full-screen background shared by the 18 slices, sized on the real box (not 100vh,
+     which is taller than the visible screen on phones) */
+  background-size: 100% 1800%;
+  background-position: 0 calc(var(--i) / 17 * 100%);
   margin-bottom: -1px;
   animation: sliceGlitchOut 0.34s steps(1) var(--d) both;
 }
