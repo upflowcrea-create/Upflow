@@ -125,18 +125,18 @@ export const PRICING: {
     id: "essentiel",
     name: "LANCEMENT ESSENTIEL",
     subtitle: "Vidéo de 30 s",
-    price: "150€",
-    delivery: "Livrée en 7 jours",
-    features: ["Script inclus", "Voix off", "Musique", "1 révision", "1 format au choix"],
+    price: "350€",
+    delivery: "Livrée en 7 jours max",
+    features: ["Script inclus", "Voix off", "Musique", "Révisions illimitées", "1 format au choix"],
     cta: "LANCER MA VIDÉO",
   },
   {
     id: "complet",
     name: "LANCEMENT COMPLET",
     subtitle: "Vidéo de 1 min",
-    price: "250€",
-    delivery: "Livrée en 7 jours",
-    features: ["Script et storyboard", "Voix off", "2 révisions", "Formats LinkedIn et Instagram"],
+    price: "500€",
+    delivery: "Livrée en 7 jours max",
+    features: ["Script et storyboard", "Voix off", "Musique", "Révisions illimitées", "Formats LinkedIn et Instagram"],
     cta: "LANCER MA VIDÉO",
     highlight: true,
   },
@@ -408,7 +408,7 @@ export const FAQ = [
   },
   {
     q: "Combien coûte une vidéo motion design ?",
-    a: `Chez UPFLOW, deux formules à prix fixe, livrées en 7 jours maximum : le Lancement Essentiel à ${priceOf("essentiel")} (vidéo de 30 s, script inclus, voix off, musique, 1 révision, 1 format au choix) et le Lancement Complet à ${priceOf("complet")} (vidéo de 1 min, script et storyboard, voix off, 2 révisions, formats LinkedIn et Instagram). Besoin d'autre chose ? Envoyez-nous votre projet et on vous donne un tarif clair.`
+    a: `Chez UPFLOW, deux formules à prix fixe, livrées en 7 jours maximum : le Lancement Essentiel à ${priceOf("essentiel")} (vidéo de 30 s, script inclus, voix off, musique, révisions illimitées, 1 format au choix) et le Lancement Complet à ${priceOf("complet")} (vidéo de 1 min, script et storyboard, voix off, musique, révisions illimitées, formats LinkedIn et Instagram). Besoin d'autre chose ? Envoyez-nous votre projet et on vous donne un tarif clair.`
   },
   {
     q: "Vous travaillez avec des entreprises à Paris ?",
@@ -416,7 +416,7 @@ export const FAQ = [
   },
   {
     q: "En combien de temps ma vidéo est-elle prête ?",
-    a: "En 7 jours maximum. Les deux formules, Lancement Essentiel et Lancement Complet, sont livrées en 7 jours : script, animation, musique ou voix off et révisions prévues dans la formule.",
+    a: "En 7 jours maximum. Les deux formules, Lancement Essentiel et Lancement Complet, sont livrées en 7 jours : script, animation, voix off, musique et révisions illimitées.",
   },
   {
     q: "Je n'ai pas encore de script, vous pouvez m'aider ?",
