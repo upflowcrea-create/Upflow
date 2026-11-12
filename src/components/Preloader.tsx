@@ -41,6 +41,9 @@ export function Preloader({ onDone }: { onDone: () => void }) {
       setExiting(true);
 
       const panel = root.querySelector(".preloader__panel--top");
+      // back to the site's colours (page background + Safari / Android bars)
+      document.documentElement.classList.remove("is-loading");
+      document.querySelector('meta[name="theme-color"]')?.setAttribute("content", "#fbf3ff");
       const finish = () => setDone(true);
       let fallback: ReturnType<typeof setTimeout> | null = null;
 

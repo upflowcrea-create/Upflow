@@ -4253,3 +4253,11 @@ main > section .lightbox * {
     opacity: 0;
   }
 }
+
+/* While the black loader is on screen the page itself is black too, so Safari's
+   status bar and toolbar (tinted from the page background) aren't light bands.
+   Preloader.tsx removes .is-loading when the site opens. */
+html.is-loading,
+html.is-loading body {
+  background: #06030a;
+}
