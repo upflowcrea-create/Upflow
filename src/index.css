@@ -4261,3 +4261,13 @@ html.is-loading,
 html.is-loading body {
   background: #06030a;
 }
+
+/* Edge to edge on phones: the loader bleeds under Safari's status bar and toolbar
+   (same overflow above and below, so the content stays centred) instead of leaving
+   flat bands there. */
+.preloader {
+  --bleed: max(120px, env(safe-area-inset-top), env(safe-area-inset-bottom));
+  top: calc(-1 * var(--bleed));
+  bottom: calc(-1 * var(--bleed));
+  height: auto;
+}
